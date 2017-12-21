@@ -54,14 +54,14 @@ app.use("/api/resources", resourcesRoutes(knex));
 // HARDCODED DB, REMOVE ONCE ACTUAL DB IS INSTALLED
 const userDB = {};
 
-// Home page
+/* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
-  res.render("index");
-});
 
-//Resources Page
-app.get("/resources", (req, res) => {
-  res.render("resources");
+  let templateVars = {
+    username: req.session.username
+  };
+
+  res.render("index", templateVars);
 });
 
 /* ----------- REGISTRATION ---------- */
@@ -72,12 +72,14 @@ app.get("/registration", (req, res) => {
   //   res.redirect("/my-resources"); // ==>Still need to add a my-resources page
   //   return;
   // }
-
+  let templateVars = {
+    username: req.session.username
+  };
 
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 
-  res.render("registration");
+  res.render("registration", templateVars);
 });
 
 app.post("/registration", (req, res) => {
@@ -105,7 +107,12 @@ app.post("/registration", (req, res) => {
 /* ---------- LOGIN ---------- */
 // Login Page
 app.get("/login", (req, res) => {
-  res.render("login");
+
+  let templateVars = {
+    username: req.session.username
+  }
+
+  res.render("login", templateVars);
 });
 
 
@@ -114,6 +121,19 @@ app.post("/logout", (req, res) => {
   req.session = null;
   res.redirect("/");
 });
+
+
+/* ----------- RESOURCES ---------- */
+app.get("/resources", (req, res) => {
+
+  let templateVars = {
+    username: req.session.username
+  };
+
+  res.render("resources", templateVars);
+});
+
+
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
