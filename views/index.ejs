@@ -9,12 +9,48 @@
 
   <body>
     <% include partials/_header.ejs %>
-    <h1>Welcome to Resource Wall</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <article class="text-center">
+      <h1 class="m-4">Welcome to Resource Wall</h1>
+      <div class="border rounded bg-secondary text-white p-3 m-4">
+        <div>Your home for learning.</div>
+        <div>
+          Save any resource you find online that you'd like to learn. From tutorials to blogs to videos and anything in-between.
+        </div>
+        <div>Never forget what you're interested in by saving to your own page.</div>
+        <div>
+          Find what others are currently learning by searching through our extensive resource database.
+        </div>
+      </div>
+      <div>
+        <h3 class="text-info"> Latest resources added: </h3>
+        <div class="container d-lg-flex justify-content-around" id="resources-container">
+          <div class="row flex-row row p-1" id="resources-row">
+            <!-- CHANGE TO A LOOP FOR THE LATEST 3 -->
+                        <div class='content col-4 text-center'>
+                          <div class='border border-dark rounded m-1'>
+                            <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
+                            <div>title</div>
+                            <div>description</div>
+                            <div>comment</div>
+                            <i class="far fa-heart"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                            <i class="far fa-star"></i>
+                          </div>
+                        </div>
+                      </div>
+        </div>
+      </div>
+      <div class="m-4 mt-6">
+        <h2 class="text-success"> Register Now! </h2>
+        <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
+        </form>
+        <br>
+        <small class="mt-1"> Already registered? <a href="/login"> Log In Here </a></small>
+      </div>
+    </article>
   </body>
 </html>
