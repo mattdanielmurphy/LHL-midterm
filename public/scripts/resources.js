@@ -7,7 +7,6 @@ $(() => {
       let title = resource.title;
       let description = resource.description;
       let urls = resource.url;
-      console.log(title)
       $("#resources-row").append(`
         <div class='content col-4 text-center'>
           <div class='border border-dark rounded m-1'>
