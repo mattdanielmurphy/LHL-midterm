@@ -13,6 +13,8 @@ const knexConfig  = require("./knexfile");
 const knex        = require("knex")(knexConfig[ENV]);
 const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
+const bcrypt      = require('bcrypt');
+const cookieSession = require('cookie-session');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -36,9 +38,17 @@ app.use("/styles", sass({
 }));
 app.use(express.static("public"));
 
+app.use(cookieSession({
+  name: "session",
+  keys: ['key1', 'key2']
+}));
+
 // Mount all resource routes
 // app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
+
+// HARDCODED DB, REMOVE ONCE ACTUAL DB IS INSTALLED
+const userDB = {};
 
 // Home page
 app.get("/", (req, res) => {
@@ -50,11 +60,48 @@ app.get("/resources", (req, res) => {
   res.render("resources");
 });
 
-//Register Page
-app.get("/register", (req, res) => {
-  res.render("register");
+/* ----------- REGISTRATION ---------- */
+// Hardcoded database for testing:
+
+
+
+// Render the registration page.
+app.get("/registration", (req, res) => {
+  // // Checks if the user is logged in by looking for the cookie
+  // if (req.session.username) {
+  //   res.redirect("/my-resources"); // ==>Still need to add a my-resources page
+  //   return;
+  // }
+
+
+  // TO DO:
+  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
+
+  res.render("registration");
 });
 
+app.post("/registration", (req, res) => {
+  // Hash the password
+  const hashedPassword = bcrypt.hashSync(req.body.password, 15);
+
+  // Sets cookie for the username
+  req.session.username = req.body.username;
+
+  // Adds to the test DB until actual DB is ready
+  userDB[(Math.floor((Math.random() * 100) + 1))] = {
+    username: req.body.username,
+    email: req.body.email,
+    password: hashedPassword
+  };
+
+  // TO DO:
+  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
+  // ADD REGISTRATION INFO TO DATABASE HERE
+
+  res.redirect("/resources"); // ==>Change to my-resources page once created
+});
+
+/* ---------- LOGIN ---------- */
 // Login Page
 app.get("/login", (req, res) => {
   res.render("login");
