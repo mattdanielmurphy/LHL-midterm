@@ -15,6 +15,12 @@ $(() => {
             <div>${title}</div>
             <div>${description}</div>
             <div>comment</div>
+            <i class="far fa-heart"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
+            <i class="far fa-star"></i>
           </div>
         </div>
         `);
