@@ -8,11 +8,12 @@ $(() => {
       let description = resource.description;
       let urls = resource.url;
       console.log(title)
-      $("#resources-container").append(`
-        <div class='border border-dark rounded p-4'>
-          <div><a href='${urls}'><img src='http://fillmurray.com/300/300'></a></div>
+      $("#resources-row").append(`
+        <div class='border border-dark rounded p-4 content col-4 text-center'>
+          <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
           <div>${title}</div>
           <div>${description}</div>
+          <div>comment</div>
         </div>
         `);
     }

@@ -1,2 +1,8 @@
-#resources-container {
-}
+$grid-columns: 3 !default;
+$grid-gutter-width: 2em !default;
+
+$container-max-widths: (
+  sm: 420px,
+  md: 720px,
+  lg: 960px
+);
