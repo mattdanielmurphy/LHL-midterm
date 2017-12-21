@@ -16,6 +16,16 @@ exports.seed = function(knex, Promise) {
           url: 'www.example.com',
           title: 'example',
           description: 'It is example'
+        }),
+        knex('resources').insert({
+          url: 'www.yahoo.ca',
+          title: 'yahoo',
+          description: 'It is yahoo'
+        }),
+        knex('resources').insert({
+          url: 'www.nlh.com',
+          title: 'NHL',
+          description: 'It is NHL'
         })
       ]);
     });
