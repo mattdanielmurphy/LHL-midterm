@@ -25,7 +25,7 @@ const resourcesRoutes = require("./routes/resources");
 app.use(morgan('dev'));
 app.use(cookieSession({
   name: 'session',
-  keys: ['KEYS1', 'KEYS2']
+  keys: ['keys1', 'keys2']
 }));
 
 // Log knex SQL queries to STDOUT as well
