@@ -1,5 +1,13 @@
-input[type='text'], input[type='password'], label {
+input, label {
   padding: 5px;
+  width: 100%;
+  min-width: 10px;
+  max-width: 300px;
+}
+
+form table {
+  text-align: right;
+  white-space: nowrap;
 }
 
 .btn:hover {

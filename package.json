@@ -12,6 +12,7 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "autosize": "^4.0.0",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.15.2",
     "cookie-session": "^2.0.0-beta.3",
