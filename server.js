@@ -24,6 +24,10 @@ const resourcesRoutes = require("./routes/resources");
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(morgan('dev'));
+app.use(cookieSession({
+  name: 'session',
+  keys: ['KEYS1', 'KEYS2']
+}));
 
 // Log knex SQL queries to STDOUT as well
 app.use(knexLogger(knex));
