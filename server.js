@@ -65,10 +65,6 @@ app.get("/resources", (req, res) => {
 });
 
 /* ----------- REGISTRATION ---------- */
-// Hardcoded database for testing:
-
-
-
 // Render the registration page.
 app.get("/registration", (req, res) => {
   // // Checks if the user is logged in by looking for the cookie
@@ -105,6 +101,7 @@ app.post("/registration", (req, res) => {
   res.redirect("/resources"); // ==>Change to my-resources page once created
 });
 
+
 /* ---------- LOGIN ---------- */
 // Login Page
 app.get("/login", (req, res) => {
@@ -112,6 +109,11 @@ app.get("/login", (req, res) => {
 });
 
 
+/* ---------- LOGOUT ---------- */
+app.post("/logout", (req, res) => {
+  req.session = null;
+  res.redirect("/");
+});
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
