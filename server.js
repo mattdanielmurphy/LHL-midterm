@@ -56,6 +56,31 @@ app.use("/api/resources", resourcesRoutes(knex));
 /* --------- */ const userDB = {}; /* --------- */
 /* -------------------------------------------- */
 
+/* ------------ HELPER FUNCTIONS ------------- */
+
+
+// function matchUsername(username) {
+//   for (let key in users) {
+//     if (users[key].username === username) {
+//         return true;
+//       }
+//   }
+//   return false;
+// }
+
+// function authenticate(user,password) {
+//   for (let key in users) {
+//     if(users[key].user === user && matchPassword(password, users[key].password)) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
+
+// function matchPassword(password, hash) {
+//   return bcrypt.compareSync(password, hash);
+// }
+
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -115,6 +140,20 @@ app.get("/login", (req, res) => {
   }
 
   res.render("login", templateVars);
+});
+
+app.post("/login", (req, res) => {
+  knex('users')
+    .where('username', req.body.username)
+    .andWhere('password', req.body.password)
+    .then((result) => {
+      if (result.length !== 0) {
+        res.redirect("/resources/:id");
+      } else {
+        res.redirect("/login");
+      }
+    })
+    .catch((error) => console.log(error))
 });
 
 
