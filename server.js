@@ -143,21 +143,14 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-
   knex('users')
     .where('username', req.body.username)
+    .andWhere('password', req.body.password)
     .then((result) => {
       if (result.length !== 0) {
-        knex('users')
-          .where('password', req.body.password)
-          .then(() => {
-            console.log("in database")
-            res.redirect("/resources");
-          })
-          .catch((err) => console.log(err));
+        res.redirect("/resources/:id");
       } else {
-          console.log("Not in database")
-          res.redirect("/login");
+        res.redirect("/login");
       }
     })
     .catch((error) => console.log(error))
