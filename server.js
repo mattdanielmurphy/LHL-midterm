@@ -15,6 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const bcrypt      = require('bcrypt');
 const cookieSession = require('cookie-session');
+const takeScreenshot = require('./webshot');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -30,7 +31,7 @@ app.use(cookieSession({
 }));
 
 // Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
+//app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -49,12 +50,7 @@ app.use(cookieSession({
 
 // Mount all resource routes
 // app.use("/api/users", usersRoutes(knex));
-app.use("/api/resources", resourcesRoutes(knex));
-
-
-/* --- HARDCODED DB, REMOVE ONCE DB CREATED --- */
-/* --------- */ const userDB = {}; /* --------- */
-/* -------------------------------------------- */
+// app.use("/api/resources", resourcesRoutes(knex));
 
 /* ------------ HELPER FUNCTIONS ------------- */
 
@@ -94,14 +90,21 @@ app.get("/", (req, res) => {
 
 /* ----------- REGISTRATION ---------- */
 app.get("/registration", (req, res) => {
-  // // Checks if the user is logged in by looking for the cookie
-  // if (req.session.username) {
-  //   res.redirect("/my-resources"); // ==>Still need to add a my-resources page
-  //   return;
-  // }
+  // Checks if the user is logged in by looking for the cookie
+  if (req.session.username) {
+    res.redirect("/resources");
+    return;
+  }
+
   let templateVars = {
-    username: req.session.username
+    username: req.session.username,
+    blank: false
   };
+
+  if (req.session.blank) {
+    templateVars.blank = true;
+    req.session = null;
+  }
 
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
@@ -110,24 +113,40 @@ app.get("/registration", (req, res) => {
 });
 
 app.post("/registration", (req, res) => {
+
+  // Checks for blank inputs as well as duplicates in the database
+  if (req.body.username === '' || req.body.email === '' || req.body.password === '') {
+    req.session.blank = true;
+    res.redirect("/registration");
+    return;
+  }
+
+  // else if (req.body.email === users[j].email) {
+  //   req.session.duplicateEmail = true;
+  //   res.redirect("/registration");
+  //   return;
+  // }
+
   // Hash the password
   const hashedPassword = bcrypt.hashSync(req.body.password, 15);
 
-  // Sets cookie for the username
+  // Sets cookie for the user
   req.session.username = req.body.username;
 
-  // Adds to the test DB until actual DB is ready
-  userDB[(Math.floor((Math.random() * 100) + 1))] = {
+  // Insert the new user information into the database
+  knex("users")
+  .insert({
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword
-  };
+  }).then(() => {
+    res.redirect("/resources");
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-  // TO DO:
-  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
-  // ADD REGISTRATION INFO TO DATABASE HERE
 
-  res.redirect("/resources"); // ==>Change to my-resources page once created
 });
 
 
@@ -167,11 +186,21 @@ app.post("/logout", (req, res) => {
 /* ----------- RESOURCES ---------- */
 app.get("/resources", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+knex.select('*')
+    .from('resources')
+    .then((results) => {
 
-  res.render("resources", templateVars);
+      let templateVars = {
+        username: req.session.username,
+        resources: results
+      };
+
+      res.render("resources", templateVars);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
 });
 
 
@@ -185,9 +214,41 @@ app.get("/resources/new", (req, res) => {
   res.render("resource_new", templateVars);
 });
 
+// Retrieves the screenshot from the database
+app.get("/resources/:id/screenshot", (req, res) => {
+
+  knex.select('screenshot')
+    .from('resources')
+    .where('id', req.params.id)
+    .then((results) => {
+
+        res.header('Content-Type', 'image/png')
+        res.send(results[0].screenshot)
+    })
+});
+
+// Stores new resources into the database
+// and including screenshot taken by webshot
+app.post("/resources", (req, res) => {
+
+  takeScreenshot(req.body.url)
+    .then((screenshot) => {
+      return knex("resources")
+        .insert({
+          url: req.body.url,
+          title: req.body.title,
+          description: req.body.description,
+          screenshot: screenshot
+    })})
+    .then(() => {
+      res.redirect("/resources")
+    })
+
+});
+
 
 /* ----------- MY RESOURCES ---------- */
-app.get("/resources/:username", (req, res) => {
+app.get("/resources/:id", (req, res) => {
 
   let templateVars = {
     username: req.session.username
