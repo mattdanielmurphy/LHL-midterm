@@ -58,6 +58,30 @@ app.use("/api/resources", resourcesRoutes(knex));
 
 /* ------------ HELPER FUNCTIONS ------------- */
 
+
+// function matchUsername(username) {
+//   for (let key in users) {
+//     if (users[key].username === username) {
+//         return true;
+//       }
+//   }
+//   return false;
+// }
+
+// function authenticate(user,password) {
+//   for (let key in users) {
+//     if(users[key].user === user && matchPassword(password, users[key].password)) {
+//       return true;
+//     }
+//   }
+//   return false;
+// }
+
+// function matchPassword(password, hash) {
+//   return bcrypt.compareSync(password, hash);
+// }
+
+
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
 
@@ -116,6 +140,27 @@ app.get("/login", (req, res) => {
   }
 
   res.render("login", templateVars);
+});
+
+app.post("/login", (req, res) => {
+
+  knex('users')
+    .where('username', req.body.username)
+    .then((result) => {
+      if (result.length !== 0) {
+        knex('users')
+          .where('password', req.body.password)
+          .then(() => {
+            console.log("in database")
+            res.redirect("/resources");
+          })
+          .catch((err) => console.log(err));
+      } else {
+          console.log("Not in database")
+          res.redirect("/login");
+      }
+    })
+    .catch((error) => console.log(error))
 });
 
 
