@@ -52,11 +52,6 @@ app.use(cookieSession({
 app.use("/api/resources", resourcesRoutes(knex));
 
 
-/* --- HARDCODED DB, REMOVE ONCE DB CREATED --- */
-/* --------- */ const userDB = {}; /* --------- */
-/* -------------------------------------------- */
-
-
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
 
@@ -69,14 +64,21 @@ app.get("/", (req, res) => {
 
 /* ----------- REGISTRATION ---------- */
 app.get("/registration", (req, res) => {
-  // // Checks if the user is logged in by looking for the cookie
-  // if (req.session.username) {
-  //   res.redirect("/my-resources"); // ==>Still need to add a my-resources page
-  //   return;
-  // }
+  // Checks if the user is logged in by looking for the cookie
+  if (req.session.username) {
+    res.redirect("/resources");
+    return;
+  }
+
   let templateVars = {
-    username: req.session.username
+    username: req.session.username,
+    blank: false
   };
+
+  if (req.session.blank) {
+    templateVars.blank = true;
+    req.session = null;
+  }
 
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
@@ -85,24 +87,38 @@ app.get("/registration", (req, res) => {
 });
 
 app.post("/registration", (req, res) => {
+
+  // Checks for blank inputs as well as duplicates in the database
+  if (req.body.username === '' || req.body.email === '' || req.body.password === '') {
+    req.session.blank = true;
+    res.redirect("/registration");
+    return;
+  }
+
+  // else if (req.body.email === users[j].email) {
+  //   req.session.duplicateEmail = true;
+  //   res.redirect("/registration");
+  //   return;
+  // }
+
   // Hash the password
   const hashedPassword = bcrypt.hashSync(req.body.password, 15);
 
-  // Sets cookie for the username
+  // Sets cookie for the user
   req.session.username = req.body.username;
 
-  // Adds to the test DB until actual DB is ready
-  userDB[(Math.floor((Math.random() * 100) + 1))] = {
+  // Insert the new user information into the database
+  knex("users")
+  .insert({
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword
-  };
+  })
+  .catch((error) => {
+    console.error(error);
+  });
 
-  // TO DO:
-  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
-  // ADD REGISTRATION INFO TO DATABASE HERE
-
-  res.redirect("/resources"); // ==>Change to my-resources page once created
+  res.redirect("/resources");
 });
 
 
