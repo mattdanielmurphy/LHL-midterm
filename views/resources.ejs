@@ -26,7 +26,7 @@
           <% for (resource of resources) { %>
             <div class='content col-4 text-center'>
               <div class='border border-dark rounded m-1'>
-                <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
+                <div><a href='http://<% resource.url %>'><img src='/resources/<%= resource.id  %>/screenshot' class="img-thumbnail img-rounded"></a></div>
                 <div><%= resource.title %></div>
                 <div><%= resource.description %></div>
                 <div>comment</div>

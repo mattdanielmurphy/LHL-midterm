@@ -15,6 +15,7 @@ const morgan      = require('morgan');
 const knexLogger  = require('knex-logger');
 const bcrypt      = require('bcrypt');
 const cookieSession = require('cookie-session');
+const takeScreenshot = require('./webshot');
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -30,7 +31,7 @@ app.use(cookieSession({
 }));
 
 // Log knex SQL queries to STDOUT as well
-app.use(knexLogger(knex));
+//app.use(knexLogger(knex));
 
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -113,12 +114,14 @@ app.post("/registration", (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: hashedPassword
+  }).then(() => {
+    res.redirect("/resources");
   })
   .catch((error) => {
     console.error(error);
   });
 
-  res.redirect("/resources");
+
 });
 
 
@@ -147,7 +150,6 @@ app.get("/resources", (req, res) => {
 knex.select('*')
     .from('resources')
     .then((results) => {
-      console.log("lkhgjf", results)
 
       let templateVars = {
         username: req.session.username,
@@ -173,9 +175,41 @@ app.get("/resources/new", (req, res) => {
   res.render("resource_new", templateVars);
 });
 
+// Retrieves the screenshot from the database
+app.get("/resources/:id/screenshot", (req, res) => {
+
+  knex.select('screenshot')
+    .from('resources')
+    .where('id', req.params.id)
+    .then((results) => {
+
+        res.header('Content-Type', 'image/png')
+        res.send(results[0].screenshot)
+    })
+});
+
+// Stores new resources into the database
+// and including screenshot taken by webshot
+app.post("/resources", (req, res) => {
+
+  takeScreenshot(req.body.url)
+    .then((screenshot) => {
+      return knex("resources")
+        .insert({
+          url: req.body.url,
+          title: req.body.title,
+          description: req.body.description,
+          screenshot: screenshot
+    })})
+    .then(() => {
+      res.redirect("/resources")
+    })
+
+});
+
 
 /* ----------- MY RESOURCES ---------- */
-app.get("/resources/:username", (req, res) => {
+app.get("/resources/:id", (req, res) => {
 
   let templateVars = {
     username: req.session.username
