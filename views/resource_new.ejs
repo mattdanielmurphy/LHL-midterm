@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Resource Wall | Add New Resource</title>
+
+    <% include partials/_head.ejs %>
+  </head>
+
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+    </header>
+
+    <main class="container m-5">
+      <div class="row justify-content-sm-center">
+        <div>
+          <h3>Add a new resource:</h3>
+          <form action="/resources" method='POST'>
+            <table class='table'>
+              <tr>
+                <td><label for="url">URL for the resource:</label></td>
+                <td>
+                  <input type="text" name="url" placeholder='http://....'>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="resource-title">Title:</label>
+                </td>
+                <td>
+                  <input type="text" name="resource-title" placeholder='Title for the resource'>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <label for="resource-desc">Description:</label>
+                </td>
+                <td>
+                  <input type="text" name="resource-desc" placeholder='Description for the resource'>
+                </td>
+              </tr>
+            </table>
+            <button class='btn btn-primary' type="submit">Add new resource</button>
+          </form>
+        </div>
+      </div>
+    </main>
+
+
+
+    <footer></footer>
+
+  </body>
+
+  </html>
