@@ -4,7 +4,7 @@
     <title>Resources</title>
 
     <% include partials/_head.ejs %>
-    <script type="text/javascript" src="/scripts/resources.js"></script>
+<!--     <script type="text/javascript" src="/scripts/resources.js"></script> -->
   </head>
 
   <body>
@@ -23,6 +23,22 @@
 
       <div class="container d-lg-flex justify-content-around" id="resources-container">
         <div class="row flex-row row p-1" id="resources-row">
+          <% for (resource of resources) { %>
+            <div class='content col-4 text-center'>
+              <div class='border border-dark rounded m-1'>
+                <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
+                <div><%= resource.title %></div>
+                <div><%= resource.description %></div>
+                <div>comment</div>
+                <i class="far fa-heart"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+                <i class="far fa-star"></i>
+              </div>
+            </div>
+          <% } %>
 
         </div>
       </div>

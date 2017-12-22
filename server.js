@@ -49,7 +49,7 @@ app.use(cookieSession({
 
 // Mount all resource routes
 // app.use("/api/users", usersRoutes(knex));
-app.use("/api/resources", resourcesRoutes(knex));
+// app.use("/api/resources", resourcesRoutes(knex));
 
 
 /* ----------- LANDING PAGE ---------- */
@@ -144,11 +144,22 @@ app.post("/logout", (req, res) => {
 /* ----------- RESOURCES ---------- */
 app.get("/resources", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+knex.select('*')
+    .from('resources')
+    .then((results) => {
+      console.log("lkhgjf", results)
 
-  res.render("resources", templateVars);
+      let templateVars = {
+        username: req.session.username,
+        resources: results
+      };
+
+      res.render("resources", templateVars);
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
 });
 
 
