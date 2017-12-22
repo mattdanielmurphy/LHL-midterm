@@ -56,6 +56,7 @@ app.use("/api/resources", resourcesRoutes(knex));
 /* --------- */ const userDB = {}; /* --------- */
 /* -------------------------------------------- */
 
+/* ------------ HELPER FUNCTIONS ------------- */
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
