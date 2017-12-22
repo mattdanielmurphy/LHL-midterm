@@ -1,5 +1,9 @@
+const takeScreenshot = require("../../webshot")
+
+//.raw("DROP TABLE resources CASCADE;")
+
 exports.seed = function(knex, Promise) {
-  return knex('comments').del()
+  return knex("users")
     .then(function () {
       return Promise.all([
          knex('users').insert({
@@ -18,22 +22,34 @@ exports.seed = function(knex, Promise) {
           username: 'ginger', email:'ginger@mail.com', password:'g'
         })
       ])
-    }).then(() => {
+    })
+
+    .then( ()=> {
+        return Promise.all(["https://www.google.com",
+                            "https://www.lighthouselabs.ca",
+                            "https://www.example.com",
+                            "https://www.yahoo.com",
+                            "https://www.nhl.com"])
+    })
+
+    .then((urls) => {
+      return Promise.all(urls.map(takeScreenshot))
+    }).then((screenshots) => {
       return Promise.all([
         knex('resources').insert({
-          user_id: 1, url: 'www.google.com', title: 'google', description: 'It is google'
+          user_id: 1, url: 'www.google.com', title: 'google', description: 'It is google', screenshot: screenshots[0]
         }),
         knex('resources').insert({
-          user_id: 2, url: 'www.lighthouselabs.ca', title: 'lighthouselabs', description: 'It is lighthouselabs'
+          user_id: 2, url: 'www.lighthouselabs.ca', title: 'lighthouselabs', description: 'It is lighthouselabs', screenshot: screenshots[1]
         }),
         knex('resources').insert({
-          user_id: 3, url: 'www.example.com', title: 'example', description: 'It is example'
+          user_id: 3, url: 'www.example.com', title: 'example', description: 'It is example',  screenshot: screenshots[2]
         }),
         knex('resources').insert({
-          user_id: 4, url: 'www.yahoo.ca', title: 'yahoo', description: 'It is yahoo'
+          user_id: 4, url: 'www.yahoo.ca', title: 'yahoo', description: 'It is yahoo',  screenshot: screenshots[3]
         }),
         knex('resources').insert({
-          user_id: 5, url: 'www.nlh.com', title: 'NHL', description: 'It is NHL'
+          user_id: 5, url: 'www.nlh.com', title: 'NHL', description: 'It is NHL',  screenshot: screenshots[4]
         })
       ])
     }).then(()=> {
