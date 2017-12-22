@@ -13,31 +13,74 @@
 
     <main class="container mt-4">
       <h1 class="text-center"> Register </h1>
-      <article class="d-lg-flex justify-content-md-center flex-nowrap">
-        <form action="/registration" method="POST">
 
-          <div class="row">
-            <label for="username" class="col-2 text-right">Username:</label>
-            <input id="username" type="text" name="username" placeholder="Enter your username" style="width: 500px" class="col-6">
-          </div>
+      <% if (blank == true) {%>
 
-          <div class="row">
-            <label for="email" class="col-2 text-right">Email:</label>
-            <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 500px" class="col-6">
-          </div>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <strong>Oh no!</strong> You need to fill in all of those fields below.
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
 
-          <div class="row">
-            <label for="password" class="col-2 text-right">Password:</label>
-            <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 500px" class="col-6">
-          </div>
+        <article class="d-lg-flex justify-content-md-center flex-nowrap">
 
-          <br>
-          <div class="row">
-            <div class="col col-2"></div>
-            <input type="submit" value="Register now!" class="col-md-auto" styleonSubmit="Thank you for registering!">
-          </div>
-        </form>
-      </article>
+          <form action="/registration" method="POST">
+
+            <div class="row">
+              <label for="username" class="col-2 text-right">Username:</label>
+              <input id="username" type="text" name="username" placeholder="Enter your username" style="width: 500px" class="col-6">
+            </div>
+
+            <div class="row">
+              <label for="email" class="col-2 text-right">Email:</label>
+              <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 500px" class="col-6">
+            </div>
+
+            <div class="row">
+              <label for="password" class="col-2 text-right">Password:</label>
+              <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 500px" class="col-6">
+            </div>
+
+            <br>
+            <div class="row">
+              <div class="col col-2"></div>
+              <input type="submit" value="Register now!" class="col-md-auto" styleonSubmit="Thank you for registering!">
+            </div>
+          </form>
+
+        </article>
+
+      <% } else {%>
+
+        <article class="d-lg-flex justify-content-md-center flex-nowrap">
+          <form action="/registration" method="POST">
+
+            <div class="row">
+              <label for="username" class="col-2 text-right">Username:</label>
+              <input id="username" type="text" name="username" placeholder="Enter your username" style="width: 500px" class="col-6">
+            </div>
+
+            <div class="row">
+              <label for="email" class="col-2 text-right">Email:</label>
+              <input id="email" type="email" name="email" placeholder="Enter your email" style="width: 500px" class="col-6">
+            </div>
+
+            <div class="row">
+              <label for="password" class="col-2 text-right">Password:</label>
+              <input id="password" type="password" name="password" placeholder="Enter a password" style="width: 500px" class="col-6">
+            </div>
+
+            <br>
+            <div class="row">
+              <div class="col col-2"></div>
+              <input type="submit" value="Register now!" class="col-md-auto" styleonSubmit="Thank you for registering!">
+            </div>
+          </form>
+        </article>
+
+      <% } %>
+
 
     </main>
 
