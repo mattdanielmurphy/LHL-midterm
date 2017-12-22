@@ -1,11 +1,29 @@
 <nav class="navbar navbar-toggleable-md navbar-light">
 
   <div class="navbar" id="navbarSupportedContent">
-    <a class="navbar-brand" href="/resources"><img src="http://fillmurray.com/100/100" class="rounded"></a>
+    <a class="navbar-brand" href="/resources"><img src="http://fillmurray.com/110/110" class="rounded"></a>
       <a class="nav-link" href="/resources">Resources <span class="sr-only">(current)</span></a>
       <a class="nav-link" href="#">My resources</a>
   </div>
-  <form action="/logout" method="POST" title="LOGOUT" class="form-inline my-2 my-lg-0">
-    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
-  </form>
+
+  <% if (username) { %>
+    <div class="form-inline">
+      <h6 class="m-2"> **insert username </h6>
+      <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
+      </form>
+    </div>
+
+  <%  } else { %>
+    <div class="form-inline">
+      <form action="/registration" method="GET" title="registration" class="form-inline m-2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+      </form>
+
+      <form action="/login" method="GET" title="Log in" class="form-inline m-2">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
+      </form>
+    </div>
+  <%  } %>
+
 </nav>
