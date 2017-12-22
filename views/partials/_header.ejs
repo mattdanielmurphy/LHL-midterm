@@ -1,29 +1,40 @@
-<nav class="navbar navbar-toggleable-md navbar-light">
+<nav class="mt-3 mb-3 navbar navbar-toggleable-md navbar-dark">
 
-  <div class="navbar" id="navbarSupportedContent">
-    <a class="navbar-brand" href="/resources"><img src="http://fillmurray.com/110/110" class="rounded"></a>
-      <a class="nav-link" href="/resources">Resources <span class="sr-only">(current)</span></a>
-      <a class="nav-link" href="#">My resources</a>
-  </div>
+  <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <a class="navbar-brand" href="/home"><img src="http://fillmurray.com/50/50" class="rounded">RW</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon" deluminate_imagetype="unknown"></span>
+    </button>
 
-  <% if (username) { %>
-    <div class="form-inline">
-      <h6 class="m-2"> **insert username </h6>
-      <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log out</button>
-      </form>
+    <div class="collapse navbar-collapse" id="navbarColor03">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+           <a class="nav-link" href="/resources">All <span class="light">resources</span><span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">My resources</a>
+        </li>
+        <li class='nav-item'>
+          <a class='nav-link register' href="/registration">Register new user</a>
+        </li>
+        <li class='nav-item'>
+          <% if (username) { %>
+            <div class="form-inline">
+              <h6 class="m-2"> **insert username </h6>
+              <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
+                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Log out</button>
+              </form>
+            </div>
+
+          <%  } else { %>
+            <div class="text-center">
+              <form action="/login" method="GET" title="Log in" class="form-inline">
+                <button class="align-center btn btn-secondary my-2 my-sm-0" type="submit">Log in</button>
+              </form>
+            </div>
+          <%  } %>
+        </li>
+      </ul>
     </div>
-
-  <%  } else { %>
-    <div class="form-inline">
-      <form action="/registration" method="GET" title="registration" class="form-inline m-2">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
-      </form>
-
-      <form action="/login" method="GET" title="Log in" class="form-inline m-2">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Log in</button>
-      </form>
-    </div>
-  <%  } %>
-
+  </nav>
 </nav>
