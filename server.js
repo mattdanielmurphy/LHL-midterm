@@ -55,29 +55,6 @@ app.use(cookieSession({
 /* ------------ HELPER FUNCTIONS ------------- */
 
 
-// function matchUsername(username) {
-//   for (let key in users) {
-//     if (users[key].username === username) {
-//         return true;
-//       }
-//   }
-//   return false;
-// }
-
-// function authenticate(user,password) {
-//   for (let key in users) {
-//     if(users[key].user === user && matchPassword(password, users[key].password)) {
-//       return true;
-//     }
-//   }
-//   return false;
-// }
-
-// function matchPassword(password, hash) {
-//   return bcrypt.compareSync(password, hash);
-// }
-
-
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
 
@@ -91,63 +68,87 @@ app.get("/", (req, res) => {
 /* ----------- REGISTRATION ---------- */
 app.get("/registration", (req, res) => {
   // Checks if the user is logged in by looking for the cookie
-  if (req.session.username) {
-    res.redirect("/resources");
-    return;
-  }
+  // if (req.session.username) {
+  //   console.log("THIS IS SESSION USER NAME: " + req.session.username )
+  //   res.redirect("/resources");
+  //   return;
+  // }
 
-  let templateVars = {
-    username: req.session.username,
-    blank: false
-  };
+  // let templateVars = {
+  //   username: req.session.username,
+  //   blank: false,
+  //   usernameExists: false,
+  //   emailExists: false
+  // };
 
-  if (req.session.blank) {
-    templateVars.blank = true;
-    req.session = null;
-  }
+  // if (req.session.blank) {
+  //   templateVars.blank = true;
+  //   req.session = null;
+  // } else if (req.session.usernameExists) {
+  //   templateVars.usernameExists = true;
+  //   // req.session = null;
+  // } else if (req.session.emailExists) {
+  //   templateVars.emailExists = true;
+  //   // req.session = null;
+  // }
 
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 
-  res.render("registration", templateVars);
+  res.render("registration");
 });
 
 app.post("/registration", (req, res) => {
 
   // Checks for blank inputs as well as duplicates in the database
   if (req.body.username === '' || req.body.email === '' || req.body.password === '') {
-    req.session.blank = true;
-    res.redirect("/registration");
-    return;
-  }
+    res.status(403).send("Oh no! You need to fill in all of those fields.");
+  } else {
+      knex('users')
+        .where('username', req.body.username)
+        .orWhere('email', req.body.email)
+        .then((result) => {
 
-  // else if (req.body.email === users[j].email) {
-  //   req.session.duplicateEmail = true;
-  //   res.redirect("/registration");
-  //   return;
-  // }
+          if (result.length !== 0) { // username or email already exists in database
+            knex.column('username').select().from('users')
+              .where('username', req.body.username)
+              .then((result) => {
+                if (result.length !== 0) { // username exists
+                  res.status(403).send("Please choose another username.");
+                } else { // email exists
+                  res.status(403).send("Please choose another e-mail.");
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+              });
 
-  // Hash the password
-  const hashedPassword = bcrypt.hashSync(req.body.password, 15);
+          } else { // username and email is available for creation
+              knex("users")
+                .insert({
+                  username: req.body.username,
+                  email: req.body.email,
+                  password: hashedPassword
+                })
+                .then(() => {
+                  // After user sucessfully registered, then hashPassword and set cookie
+                  // Hash the password
+                  const hashedPassword = bcrypt.hashSync(req.body.password, 15);
 
-  // Sets cookie for the user
-  req.session.username = req.body.username;
-
-  // Insert the new user information into the database
-  knex("users")
-  .insert({
-    username: req.body.username,
-    email: req.body.email,
-    password: hashedPassword
-  }).then(() => {
-    res.redirect("/resources");
-  })
-  .catch((error) => {
-    console.error(error);
-  });
-
-
-});
+                  // Sets cookie for the user
+                  req.session.username = req.body.username;
+                  res.redirect("/resources");
+                })
+                .catch((error) => {
+                  console.error(error);
+                });
+            }
+        })
+        .catch((error) => {
+                console.log(error);
+        });
+    } // else
+}); // post registration
 
 
 /* ---------- LOGIN ---------- */
