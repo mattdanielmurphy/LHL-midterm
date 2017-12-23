@@ -1,17 +1,15 @@
-// Login & Registration Forms:
-
-input, label {
-	padding: 5px;
-	width: 100%;
-	min-width: 10px;
-	max-width: 300px;
-}
-
-form table {
-	text-align: right;
-	white-space: nowrap;
-}
-
 .btn:hover {
 	cursor: pointer;
+}
+
+main {
+	max-width: 800px;
+	margin: 4em auto 0 auto;
+}
+
+article {
+	padding: 5em;
+	p {
+		padding: 0 5em;
+	}
 }
