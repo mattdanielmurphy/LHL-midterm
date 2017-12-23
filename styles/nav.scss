@@ -14,7 +14,7 @@ div.container {
 		width: 100%;
 	}
 	.navbar .nav-item {
-		margin: none;
+		margin: 10px;
 	}
 	.btn {
 		margin-top: 10px;
@@ -56,4 +56,10 @@ div.container {
 #brand {
 	color: white;
 	padding-right: 10px;
+}
+
+#navbarColor03 {
+	@media (max-width: 767px) {
+		margin-right: auto;
+	}
 }
