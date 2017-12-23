@@ -114,10 +114,8 @@ app.post("/registration", (req, res) => {
               .where('username', req.body.username)
               .then((result) => {
                 if (result.length !== 0) { // username exists
-                  console.log("username unavailable for use")
                   res.status(403).send("Please choose another username.");
                 } else { // email exists
-                  console.log("email unavailable for use")
                   res.status(403).send("Please choose another e-mail.");
                 }
               })
@@ -126,8 +124,6 @@ app.post("/registration", (req, res) => {
               });
 
           } else { // username and email is available for creation
-              console.log("available!!")
-
               knex("users")
                 .insert({
                   username: req.body.username,
