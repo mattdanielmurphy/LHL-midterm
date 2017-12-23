@@ -13,7 +13,7 @@
         <li class='nav-item'>
           <% if (username) { %>
             <div class="form-inline">
-              <h6 class="m-2"> **insert username </h6>
+              <h6 class="m-2">Logged in as: <%= username %></h6>
               <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
                 <button class="btn btn-secondary my-2" type="submit">Log out</button>
               </form>
@@ -36,13 +36,16 @@
             <a class="nav-link d-inline-block" href="/resources">All<br/>resources</span><span class="sr-only">(current)</span></a>
         </li>
         <li class="nav-item d-inline-block">
-          <a class="nav-link d-inline-block" href="#">My<br/>resources</a>
+          <a class="nav-link d-inline-block" href="/resources_user">My<br/>resources</a>
         </li>
         <li class='nav-item d-inline-block'>
           <a class='nav-link d-inline-block register' href="/registration">Register<br/>new&nbsp;user</a>
         </li>
         <li class='nav-item d-inline-block'>
           <a class='nav-link d-inline-block' href="/update_profile">Update<br/>profile</a>
+        </li>
+        <li class='nav-item d-inline-block'>
+          <a class='nav-link d-inline-block' href="/resources_new">Add new resource</a>
         </li>
       </ul>
     </div>
