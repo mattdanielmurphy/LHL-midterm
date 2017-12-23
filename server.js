@@ -124,6 +124,8 @@ app.post("/registration", (req, res) => {
               });
 
           } else { // username and email is available for creation
+              // Hash the password
+              const hashedPassword = bcrypt.hashSync(req.body.password, 15);
               knex("users")
                 .insert({
                   username: req.body.username,
@@ -131,10 +133,6 @@ app.post("/registration", (req, res) => {
                   password: hashedPassword
                 })
                 .then(() => {
-                  // After user sucessfully registered, then hashPassword and set cookie
-                  // Hash the password
-                  const hashedPassword = bcrypt.hashSync(req.body.password, 15);
-
                   // Sets cookie for the user
                   req.session.username = req.body.username;
                   res.redirect("/resources");
