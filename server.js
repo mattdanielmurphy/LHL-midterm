@@ -16,6 +16,7 @@ const knexLogger  = require('knex-logger');
 const bcrypt      = require('bcrypt');
 const cookieSession = require('cookie-session');
 const takeScreenshot = require('./webshot');
+const methodOverride = require("method-override");
 
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
@@ -24,6 +25,7 @@ const resourcesRoutes = require("./routes/resources");
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
+app.use(methodOverride("_method"));
 app.use(morgan('dev'));
 app.use(cookieSession({
   name: 'session',
@@ -166,6 +168,8 @@ app.post("/login", (req, res) => {
     .andWhere('password', req.body.password)
     .then((result) => {
       if (result.length !== 0) {
+        // Sets cookie for the user
+        req.session.username = req.body.username;
         res.redirect("/resources/:id");
       } else {
         res.redirect("/login");
@@ -265,7 +269,26 @@ app.get("/update_profile", (req, res) => {
   res.render("update_profile", templateVars);
 });
 
+app.put("/update_profile", (req, res) => {
 
+  // Checks for blank inputs
+  if (req.body.email === '' || req.body.password === '') {
+    res.status(403).send("Oh no! You need to fill in all of those fields.");
+  } else {
+      knex('users')
+        .where('username', req.session.username)
+        .update({
+          email: req.body.email,
+          password: req.body.password
+        })
+        .then((result) => {
+            res.redirect("/resources")
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    } // else
+}); // Put profile_update
 
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
