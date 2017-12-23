@@ -256,6 +256,14 @@ app.get("/resources/:id", (req, res) => {
   res.render("resource_user", templateVars);
 });
 
+/* ----------- UPDATE PROFILE ---------- */
+app.get("/update_profile", (req, res) => {
+  let templateVars = {
+    username: req.session.username
+  };
+
+  res.render("update_profile", templateVars);
+});
 
 
 
