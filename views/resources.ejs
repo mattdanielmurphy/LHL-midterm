@@ -12,13 +12,15 @@
       <% include partials/_header.ejs %>
     </header>
     <main class="resources-container">
-      <div class="d-lg-flex justify-content-center flex-wrap">
-        <div class=“btn-group” role=“group” aria-label=“Basic example”>
-          <button type=“button” class=“btn btn-secondary”>Blog</button>
-          <button type=“button” class=“btn btn-secondary”>Tutorials</button>
-          <button type=“button” class=“btn btn-secondary”>Videos</button>
-          <button type=“button” class=“btn btn-secondary”>etc</button>
+      <div class="d-lg-flex justify-content-center flex-wrap m-3">
+
+        <div class="btn-group btn-group-lg" role="group">
+            <button type="button" class="filters btn btn-primary active" data-toggle="button" aria-pressed="true" autocomplete="off" id="all">All</button>
+            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Tutorial</button>
+            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Video</button>
+            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Blog</button>
         </div>
+
       </div>
 
       <div class="container d-lg-flex justify-content-around" id="resources-container">
