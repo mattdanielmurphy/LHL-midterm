@@ -3,5 +3,13 @@
 }
 
 main {
-	padding: 4em 5%;
+	max-width: 800px;
+	margin: 4em auto 0 auto;
+}
+
+article {
+	padding: 5em;
+	p {
+		padding: 0 5em;
+	}
 }

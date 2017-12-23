@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <% include partials/_head.ejs %>
+
     <title>Resources</title>
 
-    <% include partials/_head.ejs %>
     <script type="text/javascript" src="/scripts/app.js"></script>
   </head>
 
   <body>
     <% include partials/_header.ejs %>
+
     <main class'container'>
+
       <article class='jumbotron'>
-        <h1 class="text-left">
-          Welcome to Resource Wall<br />
-          <small class="text-muted">>Your home for learning</small>
+        <h1 class="text-left">Welcome to <span class="text-info">Resource Wall</span>,<br/>
+          <small class="text-muted">&nbsp;Your home for learning.</small>
         </h1>
-        <p>Save any resource you find online that you'd like to learn&mdash;from tutorials, to blogs, to videos&mdash;and everything in between.</p>
+        <p>Save any resource you find online that you'd like to learn&mdash;from tutorials, to blogs, to videos, and everything in between.</p>
         <p>Never forget what you're interested in by saving to your own page.</p>
         <p>Find what others are currently learning by searching through our extensive resource database.</p>
       </article>
+
       <article>
         <div>
           <h3 class="text-info"> Latest resources added: </h3>
@@ -52,5 +55,6 @@
         </div>
       </article>
     </main>
+    <% include partials/_foot.ejs %>
   </body>
 </html>

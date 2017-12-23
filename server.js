@@ -51,8 +51,11 @@ app.use(cookieSession({
 // app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 
-// HARDCODED DB, REMOVE ONCE ACTUAL DB IS INSTALLED
-const userDB = {};
+
+/* --- HARDCODED DB, REMOVE ONCE DB CREATED --- */
+/* --------- */ const userDB = {}; /* --------- */
+/* -------------------------------------------- */
+
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -65,7 +68,6 @@ app.get("/", (req, res) => {
 });
 
 /* ----------- REGISTRATION ---------- */
-// Render the registration page.
 app.get("/registration", (req, res) => {
   // // Checks if the user is logged in by looking for the cookie
   // if (req.session.username) {
@@ -132,6 +134,29 @@ app.get("/resources", (req, res) => {
 
   res.render("resources", templateVars);
 });
+
+
+/* ----------- ADD NEW RESOURCE ---------- */
+app.get("/resources/new", (req, res) => {
+
+  let templateVars = {
+    username: req.session.username
+  };
+
+  res.render("resource_new", templateVars);
+});
+
+
+/* ----------- MY RESOURCES ---------- */
+app.get("/resources/:username", (req, res) => {
+
+  let templateVars = {
+    username: req.session.username
+  };
+
+  res.render("resource_user", templateVars);
+});
+
 
 
 

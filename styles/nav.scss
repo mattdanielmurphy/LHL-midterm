@@ -1,15 +1,55 @@
-nav {
+@import 'variables';
+.row {
 	width: 100%;
+}
+div.container {
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+#nav {
+	padding: 0;
+	margin: 0;
 	nav {
-		padding: 1em;
+		width: 100%;
 	}
-	img {
-		margin-right: 1em;
+	.navbar .nav-item {
+		margin: none;
 	}
-	.register {
-		color: white;
+	.btn {
+		margin-top: 10px;
+	}
+	.nav-link {
+		transition: .3s ease;
+		&:hover {
+			background: $gray-700;
+		}
+		&.register {
+			color: $teal;
+			&:hover {
+				color: white;
+			}
+		}
 	}
 	span.light {
 		font-weight: 300;
 	}
+	.link-container {
+		width: 100%;
+	}
+	.navbar-toggler {
+		transition: .3s ease;
+		&:hover {
+			cursor: pointer;
+			background: rgba(0,0,0,0.2);
+			span {
+				filter: brightness(2);
+			}
+		}
+	}
+}
+
+#brand {
+	color: white;
+	padding-right: 10px;
 }
