@@ -74,12 +74,12 @@ app.get("/registration", (req, res) => {
   //   return;
   // }
 
-  // let templateVars = {
-  //   username: req.session.username,
-  //   blank: false,
-  //   usernameExists: false,
-  //   emailExists: false
-  // };
+  let templateVars = {
+    username: req.session.username,
+    blank: false,
+    usernameExists: false,
+    emailExists: false
+  };
 
   // if (req.session.blank) {
   //   templateVars.blank = true;
@@ -95,7 +95,7 @@ app.get("/registration", (req, res) => {
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 
-  res.render("registration");
+  res.render("registration", templateVars);
 });
 
 app.post("/registration", (req, res) => {
