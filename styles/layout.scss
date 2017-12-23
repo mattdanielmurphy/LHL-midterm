@@ -13,3 +13,23 @@ article {
 		padding: 0 5em;
 	}
 }
+
+.rating {
+	font-size: 0.5em;
+}
+#resources {
+	margin-top: 2em;
+}
+
+.jumbotron {
+	max-width: 50em;
+	margin: 0 auto;
+	ul {
+		max-width: 38em;
+		margin-top: 1em;
+		font-size: 1em;
+		li {
+			margin: .75em 0 0 0;
+		}
+	}
+}
