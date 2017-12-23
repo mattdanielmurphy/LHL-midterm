@@ -11,13 +11,9 @@
 	<main class="container mt-5">
       <div class="row justify-content-sm-center">
         <div>
-          <h3>Update Your Profile:</h3>
-          <form action="/registration" method="POST">
+          <h3>Update Your Profile</h3>
+          <form action="/update_profile/?_method=PUT" method="POST">
             <table class="table">
-              <tr>
-                <td><label for="username">Username:</label></td>
-                <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
-              </tr>
               <tr>
                 <td><label for="email">Email:</label></td>
                 <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
@@ -27,11 +23,10 @@
                 <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
               </tr>
             </table>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="submit">Update</button>
           </form>
         </div>
       </div>
-
   </main>
 </body>
 </html>
