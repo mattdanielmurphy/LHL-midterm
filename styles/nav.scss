@@ -19,8 +19,12 @@ div.container {
 	.btn {
 		margin-top: 10px;
 	}
+	.nav-item {
+		margin: 0;
+	}
 	.nav-link {
 		transition: .3s ease;
+		padding: 1em;
 		&:hover {
 			background: $gray-700;
 		}
