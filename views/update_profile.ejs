@@ -8,8 +8,30 @@
 	<header>
 		<% include partials/_header.ejs %>
 	</header>
-	<main>
-		<h1>Update Profile:</h1>
-	</main>
+	<main class="container mt-5">
+      <div class="row justify-content-sm-center">
+        <div>
+          <h3>Update Your Profile:</h3>
+          <form action="/registration" method="POST">
+            <table class="table">
+              <tr>
+                <td><label for="username">Username:</label></td>
+                <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
+              </tr>
+              <tr>
+                <td><label for="email">Email:</label></td>
+                <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
+              </tr>
+              <tr>
+                <td><label for="password">Password:</label></td>
+                <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
+              </tr>
+            </table>
+            <button class="btn btn-primary" type="submit">Submit</button>
+          </form>
+        </div>
+      </div>
+
+  </main>
 </body>
 </html>
