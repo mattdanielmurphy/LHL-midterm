@@ -30,7 +30,6 @@ $(document).ready(function() {
         });
       });
     });
-
   }
 
   function createResourceElement(resource) {
@@ -57,73 +56,97 @@ $(document).ready(function() {
   $(".filters").click(function () {
     // if ("#all" ==)
     if ($(this).text() === "All") {
-      $(".filters").removeClass("active");
-      removeResources();
-      renderAll();
+      $(".filters").removeClass("active"); // removes class active from everything EXCEPT all because all is active on default
+      $(() => {
+          $.ajax({
+            method: "GET",
+            url: "/api/resources"
+          }).done((resources) => {
+            resources.forEach(function() {
+              $('.each-resource').remove();
+            });
+            renderAll();
+          });
+        })
 
     } else {
       $("#all").removeClass("active");
 
 
       if ($(this).text() === "Blog") {
-        removeResources();
+
         filterTerms.push("blog");
         let urlParams = JSON.stringify({ data: filterTerms });
         console.log(urlParams)
 
-        $(() => {
-          $.ajax({
-            method: "GET",
-            url: `/api/resources?types=${urlParams}`
-          }).done((resources) => {
-            renderResources(resources);
+        function renderBlog() {
+          $(() => {
+            $.ajax({
+              method: "GET",
+              url: `/api/resources?types=${urlParams}`
+            }).done((resources) => {
+              renderResources(resources);
+            });
           });
-        });
-      }
-      if ($(this).text() === "Book") {
-        filterTerms.push("book");
-        let urlParams = JSON.stringify({ data: filterTerms });
-        console.log(urlParams)
+        }
 
+        // remove all resources, then render only the blog resources
         $(() => {
           $.ajax({
             method: "GET",
-            url: `/api/resources?types=${urlParams}`
+            url: "/api/resources"
           }).done((resources) => {
-            renderResources(resources);
+            resources.forEach(function() {
+              $('.each-resource').remove();
+            });
+            renderBlog();
           });
-        });
+        })
       }
-      if ($(this).text() === "Article") {
-        $(() => {
-          $.ajax({
-            method: "GET",
-            url: "/api/resources?type=article"
-          }).done((resources) => {
-            renderResources(resources);
-          });
-        });
-      }
-      if ($(this).text() === "Tutorial") {
-        $(() => {
-          $.ajax({
-            method: "GET",
-            url: "/api/resources?type=tutorial"
-          }).done((resources) => {
-            renderResources(resources);
-          });
-        });
-      }
-      if ($(this).text() === "Video") {
-        $(() => {
-          $.ajax({
-            method: "GET",
-            url: "/api/resources?type=video"
-          }).done((resources) => {
-            renderResources(resources);
-          });
-        });
-      }
+      // if ($(this).text() === "Book") {
+      //   filterTerms.push("book");
+      //   let urlParams = JSON.stringify({ data: filterTerms });
+      //   console.log(urlParams)
+
+      //   $(() => {
+      //     $.ajax({
+      //       method: "GET",
+      //       url: `/api/resources?types=${urlParams}`
+      //     }).done((resources) => {
+      //       renderResources(resources);
+      //     });
+      //   });
+      // }
+      // if ($(this).text() === "Article") {
+      //   $(() => {
+      //     $.ajax({
+      //       method: "GET",
+      //       url: "/api/resources?type=article"
+      //     }).done((resources) => {
+      //       renderResources(resources);
+      //     });
+      //   });
+      // }
+      // if ($(this).text() === "Tutorial") {
+      //   $(() => {
+      //     $.ajax({
+      //       method: "GET",
+      //       url: "/api/resources?type=tutorial"
+      //     }).done((resources) => {
+      //       renderResources(resources);
+      //     });
+      //   });
+      // }
+      // if ($(this).text() === "Video") {
+      //   $(() => {
+      //     $.ajax({
+      //       method: "GET",
+      //       url: "/api/resources?type=video"
+      //     }).done((resources) => {
+      //       renderResources(resources);
+      //     });
+      //   });
+      // }
 
 
     }
