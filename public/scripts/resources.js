@@ -51,11 +51,18 @@ $(document).ready(function() {
     );
   }
 
+  function removeFilterElement(array, elm) {
+    const index = array.indexOf(elm);
+    array.splice(index,1);
+  }
+
   let filterTerms = [];
+  let urlParams = JSON.stringify({ data: filterTerms });
 
   $(".filters").click(function () {
-    // if ("#all" ==)
+
     if ($(this).text() === "All") {
+      filterTerms.splice(0,filterTerms.length);
       $(".filters").removeClass("active"); // removes class active from everything EXCEPT all because all is active on default
       $(() => {
           $.ajax({
@@ -72,86 +79,98 @@ $(document).ready(function() {
     } else {
       $("#all").removeClass("active");
 
-
       if ($(this).text() === "Blog") {
+        $(this).toggleClass("active");
+        console.log("State of blog: " + $(this).hasClass("active"))
+        if ($(this).hasClass("active")) {
+          filterTerms.push("blog");
+          let urlParams = JSON.stringify({ data: filterTerms });
+          console.log("Url params inside Tutorial:" + urlParams)
 
-        filterTerms.push("blog");
-        let urlParams = JSON.stringify({ data: filterTerms });
-        console.log(urlParams)
+          function renderFilterItems() {
+            $(() => {
+              $.ajax({
+                method: "GET",
+                url: `/api/resources?types=${urlParams}`
+              }).done((resources) => {
+                renderResources(resources);
+              });
+            });
+          }
 
-        function renderBlog() {
+          // remove all resources, then render only the blog resources
           $(() => {
             $.ajax({
               method: "GET",
-              url: `/api/resources?types=${urlParams}`
+              url: "/api/resources"
             }).done((resources) => {
-              renderResources(resources);
+              resources.forEach(function() {
+                $('.each-resource').remove();
+              });
+              renderFilterItems();
             });
-          });
+          })
+        } else {
+          // console.log('should put inactive here')
+          removeFilterElement(filterTerms,'blog');
+          // console.log(filterTerms)
+          removeResources();
         }
-
-        // remove all resources, then render only the blog resources
-        $(() => {
-          $.ajax({
-            method: "GET",
-            url: "/api/resources"
-          }).done((resources) => {
-            resources.forEach(function() {
-              $('.each-resource').remove();
-            });
-            renderBlog();
-          });
-        })
       }
-      // if ($(this).text() === "Book") {
-      //   filterTerms.push("book");
-      //   let urlParams = JSON.stringify({ data: filterTerms });
-      //   console.log(urlParams)
 
-      //   $(() => {
-      //     $.ajax({
-      //       method: "GET",
-      //       url: `/api/resources?types=${urlParams}`
-      //     }).done((resources) => {
-      //       renderResources(resources);
-      //     });
-      //   });
-      // }
-      // if ($(this).text() === "Article") {
-      //   $(() => {
-      //     $.ajax({
-      //       method: "GET",
-      //       url: "/api/resources?type=article"
-      //     }).done((resources) => {
-      //       renderResources(resources);
-      //     });
-      //   });
-      // }
-      // if ($(this).text() === "Tutorial") {
-      //   $(() => {
-      //     $.ajax({
-      //       method: "GET",
-      //       url: "/api/resources?type=tutorial"
-      //     }).done((resources) => {
-      //       renderResources(resources);
-      //     });
-      //   });
-      // }
-      // if ($(this).text() === "Video") {
-      //   $(() => {
-      //     $.ajax({
-      //       method: "GET",
-      //       url: "/api/resources?type=video"
-      //     }).done((resources) => {
-      //       renderResources(resources);
-      //     });
-      //   });
-      // }
+      if ($(this).text() === "Tutorial") {
+        $(this).toggleClass("active");
+        console.log("State of tutorial: " + $(this).hasClass("active"))
+        if ($(this).hasClass("active")) {
+          filterTerms.push("tutorial");
+          console.log("Url params inside Tutorial: " + urlParams)
+
+          function renderFilterItems() {
+            $(() => {
+              $.ajax({
+                method: "GET",
+                url: `/api/resources?types=${urlParams}`
+              }).done((resources) => {
+                renderResources(resources);
+              });
+            });
+          }
+
+          // remove all resources, then render only the tutorial resources
+          $(() => {
+            $.ajax({
+              method: "GET",
+              url: "/api/resources"
+            }).done((resources) => {
+              resources.forEach(function() {
+                $('.each-resource').remove();
+              });
+              renderFilterItems();
+            });
+          })
+        } else {
+          // console.log('should put inactive here')
+          removeFilterElement(filterTerms,'tutorial');
+          // console.log(filterTerms)
+          $(() => {
+            $.ajax({
+              method: "GET",
+              url: "/api/resources"
+            }).done((resources) => {
+              resources.forEach(function() {
+                $('.each-resource').remove();
+              });
+              renderFilterItems();
+            });
+          })
+        }
+      }
 
 
-    }
 
-    $(this).toggleClass("active");
+    } // on.click of .filters
+
+    // $(this).toggleClass("active");
 
     // TO DO:
     // Filter the resources that are shown when a specific button is clicked.
@@ -159,4 +178,4 @@ $(document).ready(function() {
 
   renderAll();
 
-});
+}); // document ready
