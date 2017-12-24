@@ -32,34 +32,33 @@
           <div class="row">
 
             <div class="col-lg-4 col-md-6 card p-0 mb-3">
-              <h3 class="card-header">resource.title</h3>
+              <h3 class="card-header"><%=resourceOne.title%></h3>
               <div class="card-body">
-                <h5 class="card-title">resource.title</h5>
-                <h6 class="card-subtitle text-muted">Submitted by < username ></username></h6>
+                <h5 class="card-title"><%=resourceOne.title%></h5>
+                <h6 class="card-subtitle text-muted">Submitted by <%=resourceOne.username %></username></h6>
               </div>
               <div>
                 <a class='d-block text-center' href='http://${urls}'><img src='http://fillmurray.com/200/200'></a>
               </div>
               <div class="card-body">
-                <p class="card-text">resource.description</p>
+                <p class="card-text">Description: <%=resourceOne.description%></p>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Comments:</h5>
+                <h5 class="card-title">Comments:<%=resourceOne.content%></h5>
                 <ul class="list-group list-group-flush">
                   <li class="list-group-item">resource.comment</li>
                 </ul>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Ratings:</h5>
+                <h5 class="card-title">Ratings:<%=resourceOne.value%></h5>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">< ratings ></ratings></li>
+                  <li class="list-group-item"> <%=resourceOne.value%> </ratings></li>
                 </ul>
               </div>
               <div class="card-body">
-                <h5 class="card-title">Likes:</h5>
+                <h5 class="card-title">Likes:<%=resourceOne.like%></h5>
                 <ul class="list-group list-group-flush">
-                  <li class="list-group-item">< likes
-                  ></li>
+                  <li class="list-group-item"> <%=resourceOne.like%> </li>
                 </ul>
               </div>
 

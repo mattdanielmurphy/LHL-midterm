@@ -59,13 +59,24 @@ app.use(cookieSession({
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
+  knex.select('resources.url', 'resources.title', 'resources.description', 'u.username', 'c.content', 'l.like', 'r.value')
+    .from('resources')
+    .join('users as u', 'resources.user_id', 'u.id')
+    .join('comments as c', 'c.user_id', 'u.id')
+    .join('likes as l', 'l.user_id', 'u.id')
+    .join('ratings as r', 'r.user_id', 'u.id')
+    .then((result) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
-
-  res.render("index", templateVars);
+      let templateVars = {
+        username: req.session.username,
+        resourceOne: result[0]
+      };
+      res.render('index', templateVars);
+    })
+    .catch((error) => console.log(error));
 });
+
+
 
 /* ----------- REGISTRATION ---------- */
 app.get("/registration", (req, res) => {
