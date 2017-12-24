@@ -1,14 +1,16 @@
 
 $(document).ready(function() {
 
-  $(() => {
-    $.ajax({
-      method: "GET",
-      url: "/api/resources"
-    }).done((resources) => {
-      renderResources(resources);
-    });
-  });
+  function renderAll() {
+    $(() =>
+      $.ajax({
+        method: "GET",
+        url: "/api/resources"
+      }).done((resources) => {
+        renderResources(resources);
+      })
+    );
+  }
 
   function renderResources(resources) {
     resources.forEach(function(resource) {
@@ -17,11 +19,25 @@ $(document).ready(function() {
     });
   }
 
+  function removeResources() {
+    $(() => {
+      $.ajax({
+        method: "GET",
+        url: "/api/resources"
+      }).done((resources) => {
+        resources.forEach(function() {
+          $('.each-resource').remove();
+        });
+      });
+    });
+
+  }
+
   function createResourceElement(resource) {
     return (
-      `<div class='content col-4 text-center'>
+      `<div class='content col-4 text-center each-resource'>
           <div class='border border-dark rounded m-1'>
-            <div><a href='http://${resource.url}>'><img src='/resources/${resource.id}/screenshot' class="img-thumbnail img-rounded"></a></div>
+            <div><a href='http://${resource.url}'><img src='/resources/${resource.id}/screenshot' class="img-thumbnail img-rounded"></a></div>
             <div>${resource.title}</div>
             <div>${resource.description}</div>
             <div>comment</div>
@@ -36,21 +52,88 @@ $(document).ready(function() {
     );
   }
 
-
+  let filterTerms = [];
 
   $(".filters").click(function () {
     // if ("#all" ==)
     if ($(this).text() === "All") {
       $(".filters").removeClass("active");
+      removeResources();
+      renderAll();
+
     } else {
       $("#all").removeClass("active");
+
+
+      if ($(this).text() === "Blog") {
+        removeResources();
+        filterTerms.push("blog");
+        let urlParams = JSON.stringify({ data: filterTerms });
+        console.log(urlParams)
+
+        $(() => {
+          $.ajax({
+            method: "GET",
+            url: `/api/resources?types=${urlParams}`
+          }).done((resources) => {
+            renderResources(resources);
+          });
+        });
+      }
+      if ($(this).text() === "Book") {
+        filterTerms.push("book");
+        let urlParams = JSON.stringify({ data: filterTerms });
+        console.log(urlParams)
+
+        $(() => {
+          $.ajax({
+            method: "GET",
+            url: `/api/resources?types=${urlParams}`
+          }).done((resources) => {
+            renderResources(resources);
+          });
+        });
+      }
+      if ($(this).text() === "Article") {
+        $(() => {
+          $.ajax({
+            method: "GET",
+            url: "/api/resources?type=article"
+          }).done((resources) => {
+            renderResources(resources);
+          });
+        });
+      }
+      if ($(this).text() === "Tutorial") {
+        $(() => {
+          $.ajax({
+            method: "GET",
+            url: "/api/resources?type=tutorial"
+          }).done((resources) => {
+            renderResources(resources);
+          });
+        });
+      }
+      if ($(this).text() === "Video") {
+        $(() => {
+          $.ajax({
+            method: "GET",
+            url: "/api/resources?type=video"
+          }).done((resources) => {
+            renderResources(resources);
+          });
+        });
+      }
+
+
     }
+
     $(this).toggleClass("active");
 
     // TO DO:
     // Filter the resources that are shown when a specific button is clicked.
   });
 
-
+  renderAll();
 
 });

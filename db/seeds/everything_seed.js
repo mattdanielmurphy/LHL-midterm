@@ -118,10 +118,10 @@ exports.seed = function(knex, Promise) {
               type:'video'
             }),
             knex('tags').insert({
-              type:'blog'
+              type:'article'
             }),
             knex('tags').insert({
-              type:'tutorial'
+              type:'book'
             })
           ])
       }).then(() => {
