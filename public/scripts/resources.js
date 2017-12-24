@@ -59,11 +59,22 @@ $(document).ready(function() {
   let filterTerms = [];
   let urlParams = JSON.stringify({ data: filterTerms });
 
+  // function renderFilterItems() {
+  //           $(() => {
+  //             $.ajax({
+  //               method: "GET",
+  //               url: `/api/resources?types=${urlParams}`
+  //             }).done((resources) => {
+  //               renderResources(resources);
+  //             });
+  //           });
+  // }
+
   $(".filters").click(function () {
 
     if ($(this).text() === "All") {
-      filterTerms.splice(0,filterTerms.length);
-      $(".filters").removeClass("active"); // removes class active from everything EXCEPT all because all is active on default
+      filterTerms.splice(0, filterTerms.length); // removes all elements in filterTerms
+      $(".filters").removeClass("active"); // removes class 'active' from everything EXCEPT all because all is active on default
       $(() => {
           $.ajax({
             method: "GET",
@@ -77,11 +88,14 @@ $(document).ready(function() {
         })
 
     } else {
-      $("#all").removeClass("active");
+      $("#all").removeClass("active"); // makes "All" button inactive
 
       if ($(this).text() === "Blog") {
+
         $(this).toggleClass("active");
+
         console.log("State of blog: " + $(this).hasClass("active"))
+
         if ($(this).hasClass("active")) {
           filterTerms.push("blog");
           let urlParams = JSON.stringify({ data: filterTerms });
@@ -119,10 +133,14 @@ $(document).ready(function() {
       }
 
       if ($(this).text() === "Tutorial") {
+
         $(this).toggleClass("active");
+
         console.log("State of tutorial: " + $(this).hasClass("active"))
+
         if ($(this).hasClass("active")) {
           filterTerms.push("tutorial");
+          let urlParams = JSON.stringify({ data: filterTerms });
           console.log("Url params inside Tutorial: " + urlParams)
 
           function renderFilterItems() {
@@ -152,6 +170,19 @@ $(document).ready(function() {
           // console.log('should put inactive here')
           removeFilterElement(filterTerms,'tutorial');
           // console.log(filterTerms)
+          let urlParams = JSON.stringify({ data: filterTerms });
+
+          function renderFilterItems() {
+            $(() => {
+              $.ajax({
+                method: "GET",
+                url: `/api/resources?types=${urlParams}`
+              }).done((resources) => {
+                renderResources(resources);
+              });
+            });
+          }
+
           $(() => {
             $.ajax({
               method: "GET",
@@ -163,6 +194,19 @@ $(document).ready(function() {
               renderFilterItems();
             });
           })
+
+          // removeResources();
+          // $(() => {
+          //   $.ajax({
+          //     method: "GET",
+          //     url: "/api/resources"
+          //   }).done((resources) => {
+          //     resources.forEach(function() {
+          //       $('.each-resource').remove();
+          //     });
+          //     renderFilterItems();
+          //   });
+          // })
         }
       }
 
