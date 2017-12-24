@@ -257,56 +257,105 @@ app.post("/resources", (req, res) => {
             screenshot: screenshot
           }, 'id')
           .then((response) => {
-            console.log('after first insert')
-            console.log(response.id, 'response.id')
-            console.log(response[0], 'response[0]')
-            if (req.body.tags === 'blog') {
-              return knex('resources_tags')
-                .transacting(t)
-                .insert({
-                  tag_id: 1,
-                  resource_id: response[0]
-                });
+            let tagsArray = req.body.tags;
+
+            if ( (typeof (tagsArray)) === 'string' ) {
+
+              if (tagsArray === 'blog') {
+                return knex('resources_tags')
+                  .transacting(t)
+                  .insert({
+                    tag_id: 1,
+                    resource_id: response[0]
+                  });
+              }
+              if (tagsArray === 'tutorial') {
+                return knex('resources_tags')
+                  .transacting(t)
+                  .insert({
+                    tag_id: 2,
+                    resource_id: response[0]
+                  });
+              }
+              if (tagsArray === 'book') {
+                return knex('resources_tags')
+                  .transacting(t)
+                  .insert({
+                    tag_id: 3,
+                    resource_id: response[0]
+                  });
+              }
+              if (tagsArray === 'article') {
+                return knex('resources_tags')
+                  .transacting(t)
+                  .insert({
+                    tag_id: 4,
+                    resource_id: response[0]
+                  });
+              }
+              if (tagsArray === 'video') {
+                return knex('resources_tags')
+                  .transacting(t)
+                  .insert({
+                    tag_id: 5,
+                    resource_id: response[0]
+                  });
+              }
+
+            } else {
+
+              tagsArray.forEach((tag) => {
+                if (tag === 'blog') {
+                  return knex('resources_tags')
+                    .transacting(t)
+                    .insert({
+                      tag_id: 1,
+                      resource_id: response[0]
+                    });
+                }
+                if (tag === 'tutorial') {
+                  return knex('resources_tags')
+                    .transacting(t)
+                    .insert({
+                      tag_id: 2,
+                      resource_id: response[0]
+                    });
+                }
+                if (tag === 'book') {
+                  return knex('resources_tags')
+                    .transacting(t)
+                    .insert({
+                      tag_id: 3,
+                      resource_id: response[0]
+                    });
+                }
+                if (tag === 'article') {
+                  return knex('resources_tags')
+                    .transacting(t)
+                    .insert({
+                      tag_id: 4,
+                      resource_id: response[0]
+                    });
+                }
+                if (tag === 'video') {
+                  return knex('resources_tags')
+                    .transacting(t)
+                    .insert({
+                      tag_id: 5,
+                      resource_id: response[0]
+                    });
+                }
+              });
+
+
             }
-            if (req.body.tags === 'tutorial') {
-              return knex('resources_tags')
-                .transacting(t)
-                .insert({
-                  tag_id: 2,
-                  resource_id: response[0]
-                });
-                console.log('after resources tags insert')
-            }
-            if (req.body.tags === 'book') {
-              return knex('resources_tags')
-                .transacting(t)
-                .insert({
-                  tag_id: 3,
-                  resource_id: response[0]
-                });
-            }
-            if (req.body.tags === 'article') {
-              return knex('resources_tags')
-                .transacting(t)
-                .insert({
-                  tag_id: 4,
-                  resource_id: response[0]
-                });
-            }
-            if (req.body.tags === 'video') {
-              return knex('resources_tags')
-                .transacting(t)
-                .insert({
-                  tag_id: 5,
-                  resource_id: response[0]
-                });
-            }
+
 
           })
           .then(t.commit)
-          .catch(t.rollback)
+          .catch(t.rollback);
       })
-      .then(() => {console.log("Added successfully")})
+      .then(() => {console.log("Added successfully"); })
       .catch((error) => { console.error(error) });
 
     })
