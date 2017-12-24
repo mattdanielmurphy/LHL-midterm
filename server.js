@@ -247,16 +247,72 @@ app.post("/resources", (req, res) => {
 
   takeScreenshot(req.body.url)
     .then((screenshot) => {
-      return knex("resources")
-        .insert({
-          url: req.body.url,
-          title: req.body.title,
-          description: req.body.description,
-          screenshot: screenshot
-    })})
-    .then(() => {
-      res.redirect("/resources")
+      return knex.transaction((t) => {
+        return knex("resources")
+          .transacting(t)
+          .insert({
+            url: req.body.url,
+            title: req.body.title,
+            description: req.body.description,
+            screenshot: screenshot
+          }, 'id')
+          .then((response) => {
+            console.log('after first insert')
+            console.log(response.id, 'response.id')
+            console.log(response[0], 'response[0]')
+            if (req.body.tags === 'blog') {
+              return knex('resources_tags')
+                .transacting(t)
+                .insert({
+                  tag_id: 1,
+                  resource_id: response[0]
+                });
+            }
+            if (req.body.tags === 'tutorial') {
+              return knex('resources_tags')
+                .transacting(t)
+                .insert({
+                  tag_id: 2,
+                  resource_id: response[0]
+                });
+                console.log('after resources tags insert')
+            }
+            if (req.body.tags === 'book') {
+              return knex('resources_tags')
+                .transacting(t)
+                .insert({
+                  tag_id: 3,
+                  resource_id: response[0]
+                });
+            }
+            if (req.body.tags === 'article') {
+              return knex('resources_tags')
+                .transacting(t)
+                .insert({
+                  tag_id: 4,
+                  resource_id: response[0]
+                });
+            }
+            if (req.body.tags === 'video') {
+              return knex('resources_tags')
+                .transacting(t)
+                .insert({
+                  tag_id: 5,
+                  resource_id: response[0]
+                });
+            }
+
+          })
+          .then(t.commit)
+          .catch(t.rollback)
+      })
+      .then(() => {console.log("Added successfully")})
+      .catch((error) => { console.error(error) });
+
     })
+    .then(() => {
+      res.redirect("/resources");
+    });
 
 });
 
