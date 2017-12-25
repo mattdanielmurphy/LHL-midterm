@@ -4,6 +4,7 @@
     <title>Resources</title>
 
     <% include partials/_head.ejs %>
+    <link rel="stylesheet" type="text/css" href="/styles/resources.css"/>
   </head>
 
   <body>
@@ -13,13 +14,18 @@
     <main class="resources-container">
       <div class="d-lg-flex justify-content-center flex-wrap m-3">
 
-        <div class="btn-group btn-group-lg" role="group">
-            <button type="button" class="filters btn btn-primary active" data-toggle="button" aria-pressed="true" autocomplete="off" id="all">All</button>
-            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Blog</button>
-            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Tutorial</button>
-            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Book</button>
-            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Article</button>
-            <button type="button" class="filters btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off">Video</button>
+        <div class="filter-group filter-group--compound btn-group-lg">
+
+            <p class="filter-label">Categories</p>
+            <button type="button" class="btn btn-primary" id="blog">
+              <span>Blog</span>
+            </button>
+
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="tutorial">Tutorial</button>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="book">Book</button>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="article">Article</button>
+            <button type="button" class="btn btn-primary" data-toggle="button" aria-pressed="false" autocomplete="off" id="video">Video</button>
+
         </div>
 
       </div>
