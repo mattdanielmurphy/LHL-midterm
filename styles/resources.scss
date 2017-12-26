@@ -1,32 +1,29 @@
 // styling for check mark on the filter buttons
 .filter-group .btn {
-    position: relative
+    position: relative;
+    width: 120px;
 }
 
 .filter-group .btn.active:after,.filter-group .btn.active:before {
     content: "";
     height: 25px;
-    left: 15%;
-    // margin-left: -10px;
-    // margin-right: 10px;
-    // margin-top: -10px;
-    opacity: 0;
+    left: 12%;
+    opacity: 0.7;
     position: absolute;
-    // top: 50%;
     transition: .2s;
-    width: 40px;
+    width: 90px;
 }
 
 .filter-group .btn:before {
     background-color: #2c3e50;
-    border-radius: 20%;
+    border-radius: 25%;
 }
 
 .filter-group .btn:after {
     background-image: url(https://vestride.github.io/Shuffle/img/check.svg);
     background-position: 50%;
     background-repeat: no-repeat;
-    background-size: 60%;
+    background-size: 30%;
 }
 
 @charset "UTF-8";*,:after,:before {

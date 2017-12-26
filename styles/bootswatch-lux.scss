@@ -2488,7 +2488,7 @@
 
  .btn-primary {
 	 color: #fff;
-	 background-color: #1a1a1a;
+	 background-color: #333a40; // Mandy: changed this to same color as nav bar --this is for the resources filter btns
 	 border-color: #1a1a1a;
  }
 
@@ -3014,10 +3014,10 @@
  }
 
  .btn-lg, .btn-group-lg > .btn {
-	 padding: 2rem 3rem;
+	 // padding: 2rem 3rem; Mandy: I took this out for resources btns
 	 font-size: 1.09375rem;
 	 line-height: 1.5;
-	 border-radius: 0;
+	 border-radius: 50; // Mandy: changed border-radius from 0 to 50
  }
 
  .btn-sm, .btn-group-sm > .btn {
