@@ -236,22 +236,63 @@ app.get("/resources/:id/screenshot", (req, res) => {
 
 // Stores new resources into the database
 // and including screenshot taken by webshot
+// ***************** REMINDER: Add user_id to the new resource!!**********************
+
+function insertResourceTags(tagsArray, resourceId) {
+  tagsArray.forEach((tag) => {
+    if (tag === 'blog') {
+      knex('resources_tags')
+        .insert({tag_id: 1, resource_id: resourceId})
+        .then();
+    }
+    if (tag === 'tutorial') {
+      knex('resources_tags')
+        .insert({tag_id: 2, resource_id: resourceId})
+        .then();
+    }
+    if (tag === 'book') {
+      knex('resources_tags')
+        .insert({tag_id: 3, resource_id: resourceId})
+        .then();
+    }
+    if (tag === 'article') {
+      knex('resources_tags')
+        .insert({tag_id: 4, resource_id: resourceId})
+        .then();
+    }
+    if (tag === 'video') {
+      knex('resources_tags')
+        .insert({tag_id: 5, resource_id: resourceId})
+        .then();
+    }
+  });
+} // insertResourceTags
+
 app.post("/resources", (req, res) => {
 
   takeScreenshot(req.body.url)
     .then((screenshot) => {
-      return knex("resources")
-        .insert({
-          url: req.body.url,
-          title: req.body.title,
-          description: req.body.description,
-          screenshot: screenshot
-    })})
-    .then(() => {
-      res.redirect("/resources")
-    })
+        return knex("resources")
+          .insert({
+            url: req.body.url,
+            title: req.body.title,
+            description: req.body.description,
+            screenshot: screenshot
+          })
+          .then(() => {
 
-});
+            knex("resources")
+              .select("id")
+              .where("url", req.body.url)
+              .then((result) => {
+                let tagsArray = [];
+                typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
+                insertResourceTag(tagsArray, result[0].id);
+              }) // .then to use resource id
+          }) // .then to select resource id
+    }) // .then to insert new resource
+    .then(() => {res.redirect("/resources");});
+}); // POST resources
 
 
 /* ----------- MY RESOURCES ---------- */
