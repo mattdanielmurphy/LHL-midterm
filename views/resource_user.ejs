@@ -14,73 +14,57 @@
       <article class="resources-container justify-content-center">
         <div class="text-center">
           <h2 class="text-info"> My Resources </h2>
-          <section class="d-flex wrap-none justify-content-center">
-            <p class="secondary pr-2"> Sort by: </p>
-            <div class=“btn-group” role=“group” aria-label=“Basic example”>
-              <button type=“button” class=“btn btn-secondary”>Blog</button>
-              <button type=“button” class=“btn btn-secondary”>Tutorials</button>
-              <button type=“button” class=“btn btn-secondary”>Videos</button>
-              <button type=“button” class=“btn btn-secondary”>etc</button>
-            </div>
-          </section>
-        </div>
+          <div class="d-lg-flex justify-content-center flex-wrap m-3">
 
-        <div class="container d-lg-flex justify-content-around" id="resources-container">
-          <div class="row flex-row row p-1" id="resources-row">
-            <!-- CHANGE TO A LOOP FOR USERS RESOURCES -->
-                        <div class='content col-4 text-center'>
-                          <div class='border border-dark rounded m-1'>
-                            <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
-                            <div>title</div>
-                            <div>description</div>
-                            <div>comment</div>
-                            <i class="far fa-heart"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                          </div>
-                        </div>
-                      </div>
+            <div class="user-filter-group filter-group--compound btn-group-lg">
+              <h4 class="user-filter-label">Sort by:</h4>
+              <button type="button" class="btn btn-primary user-filter-btn" id="blog">Blog</button>
+              <button type="button" class="btn btn-primary user-filter-btn" id="tutorial">Tutorial</button>
+              <button type="button" class="btn btn-primary user-filter-btn" id="book">Book</button>
+              <button type="button" class="btn btn-primary user-filter-btn" id="article">Article</button>
+              <button type="button" class="btn btn-primary user-filter-btn" id="video">Video</button>
+
+            </div>
+
+          </div>
+
+          <div class="container d-lg-flex justify-content-around" id="resources-container">
+            <div class="row flex-row row p-1" id="resources-row">
+
+              <!-- Resources script inserts resources here -->
+
+            </div>
           </div>
         </div>
+
       </article>
 
       <article class="resources-container justify-content-center">
         <div class="text-center">
           <h2 class="text-info"> My Likes </h2>
-          <section class="d-flex wrap-none justify-content-center">
-            <p class="secondary pr-2"> Sort by: </p>
-            <div class=“btn-group” role=“group” aria-label=“Basic example”>
-              <button type=“button” class=“btn btn-secondary”>Blog</button>
-              <button type=“button” class=“btn btn-secondary”>Tutorials</button>
-              <button type=“button” class=“btn btn-secondary”>Videos</button>
-              <button type=“button” class=“btn btn-secondary”>etc</button>
-            </div>
-          </section>
-        </div>
+          <div class="d-lg-flex justify-content-center flex-wrap m-3">
 
-        <div class="container d-lg-flex justify-content-around" id="resources-container">
-          <div class="row flex-row row p-1" id="resources-row">
-            <!-- CHANGE TO A LOOP FOR USERS LIKED RESOURCES -->
-                        <div class='content col-4 text-center'>
-                          <div class='border border-dark rounded m-1'>
-                            <div><a href='http://${urls}'><img src='http://fillmurray.com/200/200'></a></div>
-                            <div>title</div>
-                            <div>description</div>
-                            <div>comment</div>
-                            <i class="far fa-heart"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                            <i class="far fa-star"></i>
-                          </div>
-                        </div>
-                      </div>
+            <div class="user-likes-filter-group filter-group--compound btn-group-lg">
+              <h4 class="user-likes-filter-label">Sort by:</h4>
+              <button type="button" class="btn btn-primary user-likes-filter-btn" id="blog">Blog</button>
+              <button type="button" class="btn btn-primary user-likes-filter-btn" id="tutorial">Tutorial</button>
+              <button type="button" class="btn btn-primary user-likes-filter-btn" id="book">Book</button>
+              <button type="button" class="btn btn-primary user-likes-filter-btn" id="article">Article</button>
+              <button type="button" class="btn btn-primary user-likes-filter-btn" id="video">Video</button>
+
+            </div>
+
+          </div>
+
+          <div class="container d-lg-flex justify-content-around" id="resources-container">
+            <div class="row flex-row row p-1" id="resources-row">
+
+              <!-- Resources script inserts resources here -->
+
+            </div>
           </div>
         </div>
+
       </article>
 
 
