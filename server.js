@@ -2,19 +2,19 @@
 
 require('dotenv').config();
 
-const PORT        = process.env.PORT || 8080;
-const ENV         = process.env.ENV || "development";
-const express     = require("express");
-const bodyParser  = require("body-parser");
-const sass        = require("node-sass-middleware");
-const app         = express();
+const PORT           = process.env.PORT || 8080;
+const ENV            = process.env.ENV || "development";
+const express        = require("express");
+const bodyParser     = require("body-parser");
+const sass           = require("node-sass-middleware");
+const app            = express();
 
-const knexConfig  = require("./knexfile");
-const knex        = require("knex")(knexConfig[ENV]);
-const morgan      = require('morgan');
-const knexLogger  = require('knex-logger');
-const bcrypt      = require('bcrypt');
-const cookieSession = require('cookie-session');
+const knexConfig     = require("./knexfile");
+const knex           = require("knex")(knexConfig[ENV]);
+const morgan         = require('morgan');
+const knexLogger     = require('knex-logger');
+const bcrypt         = require('bcrypt');
+const cookieSession  = require('cookie-session');
 const takeScreenshot = require('./webshot');
 const methodOverride = require("method-override");
 
