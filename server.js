@@ -247,114 +247,107 @@ app.post("/resources", (req, res) => {
 
   takeScreenshot(req.body.url)
     .then((screenshot) => {
-      return knex.transaction((t) => {
         return knex("resources")
-          .transacting(t)
           .insert({
             url: req.body.url,
             title: req.body.title,
             description: req.body.description,
             screenshot: screenshot
-          }, 'id')
-          .then((response) => {
-            let tagsArray = req.body.tags;
+          })
+          .then(() => {
 
-            if ( (typeof (tagsArray)) === 'string' ) {
+            knex("resources")
+              .select("id")
+              .where("url", req.body.url)
+              .then((result) => {
+                let tagsArray = req.body.tags;
+                console.log(result, "result", result[0].id, "<- result[0].id")
+                if ( (typeof (tagsArray)) === 'string' ) {
 
-              if (tagsArray === 'blog') {
-                return knex('resources_tags')
-                  .transacting(t)
-                  .insert({
-                    tag_id: 1,
-                    resource_id: response[0]
+                  if (tagsArray === 'blog') {
+                    return knex('resources_tags')
+                      .insert({
+                        tag_id: 1,
+                        resource_id: result[0].id
+                      });
+                  }
+                  if (tagsArray === 'tutorial') {
+                    return knex('resources_tags')
+                      .insert({
+                        tag_id: 2,
+                        resource_id: result[0].id
+                      });
+                  }
+                  if (tagsArray === 'book') {
+                    return knex('resources_tags')
+                      .insert({
+                        tag_id: 3,
+                        resource_id: result[0].id
+                      });
+                  }
+                  if (tagsArray === 'article') {
+                    return knex('resources_tags')
+                      .insert({
+                        tag_id: 4,
+                        resource_id: result[0].id
+                      });
+                  }
+                  if (tagsArray === 'video') {
+                    return knex('resources_tags')
+                      .insert({
+                        tag_id: 5,
+                        resource_id: result[0].id
+                      });
+                  }
+
+                } else {
+                  console.log("tagsarray:", tagsArray)
+                  tagsArray.forEach((tag) => {
+                    console.log("each tag:", tag)
+                    if (tag === 'blog') {
+                      console.log("inside blog if statement")
+                      console.log(result[0].id, "<- result[0].id")
+                      knex('resources_tags')
+                        .insert({
+                          tag_id: 1,
+                          resource_id: result[0].id
+                        });
+                    }
+                    if (tag === 'tutorial') {
+                      knex('resources_tags')
+                        .insert({
+                          tag_id: 2,
+                          resource_id: result[0].id
+                        });
+                    }
+                    if (tag === 'book') {
+                      knex('resources_tags')
+                        .insert({
+                          tag_id: 3,
+                          resource_id: result[0].id
+                        });
+                    }
+                    if (tag === 'article') {
+                      console.log("inside article if statement")
+                      knex('resources_tags')
+                        .insert({
+                          tag_id: 4,
+                          resource_id: result[0].id
+                        });
+                    }
+                    if (tag === 'video') {
+                      knex('resources_tags')
+                        .insert({
+                          tag_id: 5,
+                          resource_id: result[0].id
+                        });
+                    }
                   });
-              }
-              if (tagsArray === 'tutorial') {
-                return knex('resources_tags')
-                  .transacting(t)
-                  .insert({
-                    tag_id: 2,
-                    resource_id: response[0]
-                  });
-              }
-              if (tagsArray === 'book') {
-                return knex('resources_tags')
-                  .transacting(t)
-                  .insert({
-                    tag_id: 3,
-                    resource_id: response[0]
-                  });
-              }
-              if (tagsArray === 'article') {
-                return knex('resources_tags')
-                  .transacting(t)
-                  .insert({
-                    tag_id: 4,
-                    resource_id: response[0]
-                  });
-              }
-              if (tagsArray === 'video') {
-                return knex('resources_tags')
-                  .transacting(t)
-                  .insert({
-                    tag_id: 5,
-                    resource_id: response[0]
-                  });
-              }
-
-            } else {
-
-              tagsArray.forEach((tag) => {
-                if (tag === 'blog') {
-                  return knex('resources_tags')
-                    .transacting(t)
-                    .insert({
-                      tag_id: 1,
-                      resource_id: response[0]
-                    });
                 }
-                if (tag === 'tutorial') {
-                  return knex('resources_tags')
-                    .transacting(t)
-                    .insert({
-                      tag_id: 2,
-                      resource_id: response[0]
-                    });
-                }
-                if (tag === 'book') {
-                  return knex('resources_tags')
-                    .transacting(t)
-                    .insert({
-                      tag_id: 3,
-                      resource_id: response[0]
-                    });
-                }
-                if (tag === 'article') {
-                  return knex('resources_tags')
-                    .transacting(t)
-                    .insert({
-                      tag_id: 4,
-                      resource_id: response[0]
-                    });
-                }
-                if (tag === 'video') {
-                  return knex('resources_tags')
-                    .transacting(t)
-                    .insert({
-                      tag_id: 5,
-                      resource_id: response[0]
-                    });
-                }
-              });
 
-
-            }
-
+              })
 
           })
-          .then(t.commit)
-          .catch(t.rollback);
-      })
       .then(() => {console.log("Added successfully"); })
       .catch((error) => { console.error(error) });
 
