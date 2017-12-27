@@ -26,60 +26,11 @@
 
       <article>
         <h1>Latest resources</h1>
-        <div id='resources' class='container flex-container justify-content-around'>
-          <div class="row flex-row">
-          </div>
-          <div class="row">
-
-            <div class="col-lg-4 col-md-6 card p-0 mb-3">
-              <h3 class="card-header"><%=resourceOne.title%></h3>
-              <div class="card-body">
-                <h5 class="card-title"><%=resourceOne.title%></h5>
-                <h6 class="card-subtitle text-muted">Submitted by <%=resourceOne.username %></username></h6>
-              </div>
-              <div>
-                <a class='d-block text-center' href='http://${urls}'><img src='http://fillmurray.com/200/200'></a>
-              </div>
-              <div class="card-body">
-                <p class="card-text">Description: <%=resourceOne.description%></p>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Comments:<%=resourceOne.content%></h5>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item">resource.comment</li>
-                </ul>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Ratings:<%=resourceOne.value%></h5>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <%=resourceOne.value%> </ratings></li>
-                </ul>
-              </div>
-              <div class="card-body">
-                <h5 class="card-title">Likes:<%=resourceOne.like%></h5>
-                <ul class="list-group list-group-flush">
-                  <li class="list-group-item"> <%=resourceOne.like%> </li>
-                </ul>
-              </div>
-
-              <div class="card-footer text-muted">
-                Added 2 days ago
-              </div>
-          </div>
-          </div>
-          <div class="container d-lg-flex justify-content-around" id="resources-container">
-            <div class="row flex-row p-1" id="resources-row">
-              <!-- CHANGE TO A LOOP FOR THE LATEST 3 -->
-              <div class='content col-4 text-center'>
-                <div class='rounded m-1'>
-                  <form method="POST" action="/rating">
-                    <input id='rating' class='rating' data-size='xs'type="text">
-                  </form>
-                </div>
-              </div>
-            </div>
+        <div id="resources-container" class='container flex-container justify-content-around'>
+          <div id='resources-row' class="row flex-row">
           </div>
         </div>
+
         <div class="m-4 mt-6">
           <h2 class="text-success"> Register Now! </h2>
           <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
@@ -90,6 +41,5 @@
         </div>
       </article>
     </main>
-    <% include partials/_foot.ejs %>
   </body>
 </html>
