@@ -270,7 +270,7 @@ app.post("/resources", (req, res) => {
                         tag_id: 1,
                         resource_id: result[0].id
                       })
-                      .then(() => { });
+                      .then();
                   }
                   if (tagsArray === 'tutorial') {
                     knex('resources_tags')
@@ -278,7 +278,7 @@ app.post("/resources", (req, res) => {
                         tag_id: 2,
                         resource_id: result[0].id
                       })
-                      .then(() => { });
+                      .then();
                   }
                   if (tagsArray === 'book') {
                     knex('resources_tags')
@@ -286,7 +286,7 @@ app.post("/resources", (req, res) => {
                         tag_id: 3,
                         resource_id: result[0].id
                       })
-                      .then(() => { });
+                      .then();
                   }
                   if (tagsArray === 'article') {
                     knex('resources_tags')
@@ -294,7 +294,7 @@ app.post("/resources", (req, res) => {
                         tag_id: 4,
                         resource_id: result[0].id
                       })
-                      .then(() => { });
+                      .then();
                   }
                   if (tagsArray === 'video') {
                     knex('resources_tags')
@@ -302,7 +302,7 @@ app.post("/resources", (req, res) => {
                         tag_id: 5,
                         resource_id: result[0].id
                       })
-                      .then(() => { });
+                      .then();
                   }
 
                 } else {
@@ -313,7 +313,7 @@ app.post("/resources", (req, res) => {
                           tag_id: 1,
                           resource_id: result[0].id
                         })
-                        .then(() => { });
+                        .then();
                     }
                     if (tag === 'tutorial') {
                       knex('resources_tags')
@@ -321,7 +321,7 @@ app.post("/resources", (req, res) => {
                           tag_id: 2,
                           resource_id: result[0].id
                         })
-                        .then(() => { });
+                        .then();
                     }
                     if (tag === 'book') {
                       knex('resources_tags')
@@ -329,7 +329,7 @@ app.post("/resources", (req, res) => {
                           tag_id: 3,
                           resource_id: result[0].id
                         })
-                        .then(() => { });
+                        .then();
                     }
                     if (tag === 'article') {
                       knex('resources_tags')
@@ -337,7 +337,7 @@ app.post("/resources", (req, res) => {
                           tag_id: 4,
                           resource_id: result[0].id
                         })
-                        .then(() => { });
+                        .then();
                     }
                     if (tag === 'video') {
                       knex('resources_tags')
@@ -345,7 +345,7 @@ app.post("/resources", (req, res) => {
                           tag_id: 5,
                           resource_id: result[0].id
                         })
-                        .then(() => { });
+                        .then();
                     }
                   });
                 }
