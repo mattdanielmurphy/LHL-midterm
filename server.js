@@ -265,82 +265,87 @@ app.post("/resources", (req, res) => {
                 if ( (typeof (tagsArray)) === 'string' ) {
 
                   if (tagsArray === 'blog') {
-                    return knex('resources_tags')
+                    knex('resources_tags')
                       .insert({
                         tag_id: 1,
                         resource_id: result[0].id
-                      });
+                      })
+                      .then(() => { });
                   }
                   if (tagsArray === 'tutorial') {
-                    return knex('resources_tags')
+                    knex('resources_tags')
                       .insert({
                         tag_id: 2,
                         resource_id: result[0].id
-                      });
+                      })
+                      .then(() => { });
                   }
                   if (tagsArray === 'book') {
-                    return knex('resources_tags')
+                    knex('resources_tags')
                       .insert({
                         tag_id: 3,
                         resource_id: result[0].id
-                      });
+                      })
+                      .then(() => { });
                   }
                   if (tagsArray === 'article') {
-                    return knex('resources_tags')
+                    knex('resources_tags')
                       .insert({
                         tag_id: 4,
                         resource_id: result[0].id
-                      });
+                      })
+                      .then(() => { });
                   }
                   if (tagsArray === 'video') {
-                    return knex('resources_tags')
+                    knex('resources_tags')
                       .insert({
                         tag_id: 5,
                         resource_id: result[0].id
-                      });
+                      })
+                      .then(() => { });
                   }
 
                 } else {
-                  console.log("tagsarray:", tagsArray)
                   tagsArray.forEach((tag) => {
-                    console.log("each tag:", tag)
                     if (tag === 'blog') {
-                      console.log("inside blog if statement")
-                      console.log(result[0].id, "<- result[0].id")
                       knex('resources_tags')
                         .insert({
                           tag_id: 1,
                           resource_id: result[0].id
-                        });
+                        })
+                        .then(() => { });
                     }
                     if (tag === 'tutorial') {
                       knex('resources_tags')
                         .insert({
                           tag_id: 2,
                           resource_id: result[0].id
-                        });
+                        })
+                        .then(() => { });
                     }
                     if (tag === 'book') {
                       knex('resources_tags')
                         .insert({
                           tag_id: 3,
                           resource_id: result[0].id
-                        });
+                        })
+                        .then(() => { });
                     }
                     if (tag === 'article') {
-                      console.log("inside article if statement")
                       knex('resources_tags')
                         .insert({
                           tag_id: 4,
                           resource_id: result[0].id
-                        });
+                        })
+                        .then(() => { });
                     }
                     if (tag === 'video') {
                       knex('resources_tags')
                         .insert({
                           tag_id: 5,
                           resource_id: result[0].id
-                        });
+                        })
+                        .then(() => { });
                     }
                   });
                 }
