@@ -58,7 +58,9 @@ app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
 
 /* ------------ HELPER FUNCTIONS ------------- */
-function RenderCarouselAndIndex(req,res) {
+
+/* ----------- LANDING PAGE ---------- */
+app.get("/", (req, res) => {
   knex('resources')
     .count('id')
     .then((count) => {
@@ -74,12 +76,6 @@ function RenderCarouselAndIndex(req,res) {
         });
     })
     .catch((error) => console.log(error));
-}
-
-
-/* ----------- LANDING PAGE ---------- */
-app.get("/", (req, res) => {
-  RenderCarouselAndIndex(req,res);
 });
 
 
@@ -88,13 +84,6 @@ app.get("/", (req, res) => {
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
-  // Checks if the user is logged in by looking for the cookie
-  // if (req.session.username) {
-  //   console.log("THIS IS SESSION USER NAME: " + req.session.username )
-  //   res.redirect("/resources");
-  //   return;
-  // }
-
   const currentUser = req.session.username
   if (!currentUser) {
     console.log("no one is logged in")
@@ -103,13 +92,8 @@ app.get("/registration", (req, res) => {
     };
     res.render("registration", templateVars);
   } else {
-    // let templateVars = {
-    //   username: req.session.username,
-    // };
-    console.log("you are logged in as: " )
-    // res.render('index', templateVars);
-
-    RenderCarouselAndIndex(req);
+    console.log("you are logged in, redirect to" )
+    res.redirect("/");
   }
 });
 
