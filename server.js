@@ -78,21 +78,15 @@ app.get("/", (req, res) => {
     .catch((error) => console.log(error));
 });
 
-
-
 /* ----------- REGISTRATION ---------- */
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
   const currentUser = req.session.username
   if (!currentUser) {
-    console.log("no one is logged in")
-    let templateVars = {
-      username: req.session.username,
-    };
+    let templateVars = { username: req.session.username,};
     res.render("registration", templateVars);
   } else {
-    console.log("you are logged in, redirect to" )
     res.redirect("/");
   }
 });
