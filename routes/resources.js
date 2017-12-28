@@ -11,12 +11,20 @@ module.exports = (knex) => {
 
       console.log(filterTypes, 'filter types')
         knex
-          .distinct('resource_id','resources.url')
-          .select('resources.id', 'resources.url', 'resources.title', 'resources.description', 'resources.screenshot')
-          .from('resources')
-          .fullOuterJoin('resources_tags','resources.id','resources_tags.resource_id')
-          .fullOuterJoin('tags','resources_tags.tag_id','tags.id')
-          .whereIn('tags.type', filterTypes)
+          .distinct('re.id','re.url')
+          .select(
+            're.id', 're.title', 're.description', 're.url', 're.screenshot',
+            'l.like', 'r.value', 'c.content', 'c.created_at',
+            'u.username'
+          )
+          .from('resources AS re')
+          .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
+          .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
+          .fullOuterJoin('ratings AS r', 're.id', 'r.resource_id')
+          .fullOuterJoin('users AS u', 're.user_id', 'u.id')
+          .fullOuterJoin('resources_tags AS rt', 're.id', 'rt.resource_id')
+          .fullOuterJoin('tags AS t', 't.id', 'rt.tag_id')
+          .whereIn('t.type', filterTypes)
           .then((results) => {
             res.json(results);
           });

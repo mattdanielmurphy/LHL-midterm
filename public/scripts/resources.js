@@ -49,7 +49,7 @@ function createResourceElement(resource) {
             </p>
             <p>
               <h6>All ratings</h6>
-              <li class="list-group-item">${resource.rating}</li>
+              <li class="list-group-item">${resource.value}</li>
             </p>
           </li>
         </ul>
@@ -62,7 +62,7 @@ function createResourceElement(resource) {
             <textarea name="new-comment" cols="40" rows="4"></textarea>
             <input type="submit" value="Submit comment" />
           </form>
-          <li class="list-group-item">${resource.comment}</li>
+          <li class="list-group-item">${resource.content}</li>
         </ul>
       </div>
       <div class="card-body">
