@@ -55,15 +55,16 @@
           </a>
 
         </div>
-
-        <div id="index-register" class="m-4 mt-6">
-          <h2 class="text-success"> Register Now! </h2>
-          <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
-          </form>
-          <br>
-          <small class="mt-1">Already registered? <a href="/login">Log in here.</a></small>
-        </div>
+        <% if (!username) { %>
+          <div id="index-register" class="m-4 mt-6">
+            <h2 class="text-success"> Register Now! </h2>
+            <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
+            </form>
+            <br>
+            <small class="mt-1">Already registered? <a href="/login">Log in here.</a></small>
+          </div>
+        <%  } %>
       </article>
     </main>
   </body>
