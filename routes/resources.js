@@ -13,10 +13,10 @@ module.exports = (knex) => {
         knex
           .distinct('re.id','re.url')
           .select(
-            're.id', 're.title', 're.description', 're.url', 're.screenshot',
-            'l.like', 'r.value', 'c.content', 'c.created_at',
-            'u.username'
-          )
+              're.id', 're.title', 're.description', 're.url', 're.screenshot',
+              'l.like', 'r.value', 'c.content', 'c.created_at',
+              'u.username'
+            )
           .from('resources AS re')
           .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
           .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
@@ -30,8 +30,16 @@ module.exports = (knex) => {
           });
     } else {
       knex
-        .select('*')
-        .from('resources')
+        .select(
+            're.id', 're.title', 're.description', 're.url', 're.screenshot',
+            'l.like', 'r.value', 'c.content', 'c.created_at',
+            'u.username'
+          )
+        .from('resources AS re')
+        .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
+        .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
+        .fullOuterJoin('ratings AS r', 're.id', 'r.resource_id')
+        .fullOuterJoin('users AS u', 're.user_id', 'u.id')
         .then((results) => {
           res.json(results);
         });
