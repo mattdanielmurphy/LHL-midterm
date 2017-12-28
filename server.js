@@ -81,19 +81,36 @@ app.get("/", (req, res) => {
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
   const currentUser = req.session.username;
-  if (!currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("registration", templateVars);
-  } else {
+  if (currentUser) {
     res.redirect("/");
   }
+
+  let templateVars = {
+    username: req.session.username,
+    blank: false,
+    un: false,
+    email: false
+  };
+
+  if (req.session.blank) {
+    templateVars.blank = true;
+    req.session = null;
+  } else if (req.session.un) {
+    templateVars.un = true;
+    req.session = null;
+  } else if (req.session.email) {
+    templateVars.email = true;
+    req.session = null;
+  }
+  res.render("registration", templateVars);
 });
 
 app.post("/registration", (req, res) => {
 
   // Checks for blank inputs as well as duplicates in the database
   if (req.body.username === '' || req.body.email === '' || req.body.password === '') {
-    res.status(403).send("Oh no! You need to fill in all of those fields.");
+    req.session.blank = true;
+    res.redirect("/registration");
   } else {
       knex('users')
         .where('username', req.body.username)
@@ -105,9 +122,11 @@ app.post("/registration", (req, res) => {
               .where('username', req.body.username)
               .then((result) => {
                 if (result.length !== 0) { // username exists
-                  res.status(403).send("Please choose another username.");
+                  req.session.un = true;
+                  res.redirect("/registration");
                 } else { // email exists
-                  res.status(403).send("Please choose another e-mail.");
+                  req.session.email = true;
+                  res.redirect("/registration");
                 }
               })
               .catch((error) => {
