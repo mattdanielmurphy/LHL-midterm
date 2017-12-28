@@ -10,7 +10,9 @@ module.exports = (knex) => {
       let filterTypes = JSON.parse(req.query.types).data;
 
       console.log(filterTypes, 'filter types')
-        knex.select('resources.id', 'resources.url', 'resources.title', 'resources.description', 'resources.screenshot')
+        knex
+          .distinct('resource_id','resources.url')
+          .select('resources.id', 'resources.url', 'resources.title', 'resources.description', 'resources.screenshot')
           .from('resources')
           .fullOuterJoin('resources_tags','resources.id','resources_tags.resource_id')
           .fullOuterJoin('tags','resources_tags.tag_id','tags.id')

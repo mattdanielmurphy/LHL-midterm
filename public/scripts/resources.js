@@ -3,18 +3,15 @@ function renderAllResources() {
     method: "GET",
     url: "/api/resources"
   }).then((resources) => {
-    console.log("inside renderAllResources: ", resources)
     createAndAppendResource(resources);
   })
 }
 
 function renderFilteredResources(resourceCategories) {
-  console.log("resource categories: ", resourceCategories)
   $.ajax({
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
-    console.log("inside resources, this is the resource: ", resources)
     createAndAppendResource(resources);
   });
 }
@@ -136,17 +133,12 @@ function loadAllResources(filterBtn) {
 }
 
 function renderResourcesOnClick(filterBtn, activeFilterBtns) {
-  console.log("inside render Resources on Click")
   $(filterBtn).click(function() {
-
     let resourcesToFilter = [];
     for (btn of $(activeFilterBtns)) {
-      console.log(btn.id, "<- button id")
       resourcesToFilter.push(btn.id)
     }
-    console.log(resourcesToFilter, "<-resources to filter")
     let resourceCategories = JSON.stringify({ data: resourcesToFilter });
-    console.log(resourceCategories, "<-resourcesCategories to filter")
     removeResources(resourceCategories, renderFilteredResources);
 
     if (resourcesToFilter.length === 0) {
