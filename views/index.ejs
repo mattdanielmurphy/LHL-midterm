@@ -28,6 +28,11 @@
       <article>
         <h1 id="title-for-carousel">Newest resources added</h1>
         <div id="carousel-container" class='carousel slide bg-light' data-ride="carousel">
+          <ol class="carousel-indicators">
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="0" class="active"></li>
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="1"></li>
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="2"></li>
+            </ol>
           <div class="carousel-inner">
             <!-- First active resource (third oldest created) -->
             <div class="carousel-item active">
@@ -37,10 +42,18 @@
                 <p id="carousel-description" class="text-center text-dark"><%=resourceActive.description%></p>
               </div>
             </div>
-
             <!-- Carousel two newest resources rendered here with script -->
-
           </div>
+
+          <a class="carousel-control-prev" href="#carousel-container" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel-container" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
         </div>
 
         <div id="index-register" class="m-4 mt-6">
