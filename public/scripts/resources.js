@@ -58,7 +58,7 @@ function createResourceElement(resource) {
         <h5 class="card-title">Comments</h5>
         <ul class="list-group list-group-flush">
           <button class='toggle-comment'>Add comment</button>
-          <form class='new-comment' method="POST" action="/comment">
+          <form class='new-comment' method="POST" action="/resources/comment">
             <textarea name="new-comment" cols="40" rows="4"></textarea>
             <input type="submit" value="Submit comment" />
           </form>

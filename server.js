@@ -191,6 +191,11 @@ app.get("/resources", (req, res) => {
 
 });
 
+/* ----------- ADD RESOURCE COMMENT ---------- */
+app.post("/resources/comment", (req,res) => {
+  console.log("hello");
+  res.redirect("/");
+});
 
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {
