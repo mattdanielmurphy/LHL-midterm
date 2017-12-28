@@ -58,11 +58,7 @@ app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
 
 /* ------------ HELPER FUNCTIONS ------------- */
-
-
-/* ----------- LANDING PAGE ---------- */
-app.get("/", (req, res) => {
-
+function RenderCarouselAndIndex(req,res) {
   knex('resources')
     .count('id')
     .then((count) => {
@@ -78,12 +74,19 @@ app.get("/", (req, res) => {
         });
     })
     .catch((error) => console.log(error));
+}
 
+
+/* ----------- LANDING PAGE ---------- */
+app.get("/", (req, res) => {
+  RenderCarouselAndIndex(req,res);
 });
 
 
 
 /* ----------- REGISTRATION ---------- */
+  // TO DO:
+  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
   // Checks if the user is logged in by looking for the cookie
   // if (req.session.username) {
@@ -92,28 +95,22 @@ app.get("/registration", (req, res) => {
   //   return;
   // }
 
-  let templateVars = {
-    username: req.session.username,
-    blank: false,
-    usernameExists: false,
-    emailExists: false
-  };
+  const currentUser = req.session.username
+  if (!currentUser) {
+    console.log("no one is logged in")
+    let templateVars = {
+      username: req.session.username,
+    };
+    res.render("registration", templateVars);
+  } else {
+    // let templateVars = {
+    //   username: req.session.username,
+    // };
+    console.log("you are logged in as: " )
+    // res.render('index', templateVars);
 
-  // if (req.session.blank) {
-  //   templateVars.blank = true;
-  //   req.session = null;
-  // } else if (req.session.usernameExists) {
-  //   templateVars.usernameExists = true;
-  //   // req.session = null;
-  // } else if (req.session.emailExists) {
-  //   templateVars.emailExists = true;
-  //   // req.session = null;
-  // }
-
-  // TO DO:
-  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
-
-  res.render("registration", templateVars);
+    RenderCarouselAndIndex(req);
+  }
 });
 
 app.post("/registration", (req, res) => {
