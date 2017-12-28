@@ -1,22 +1,18 @@
 function renderAllResources() {
-  $(() =>
-    $.ajax({
-      method: "GET",
-      url: "/api/resources"
-    }).then((resources) => {
-      createAndAppendResource(resources);
-    })
-  );
+  $.ajax({
+    method: "GET",
+    url: "/api/resources"
+  }).then((resources) => {
+    createAndAppendResource(resources);
+  })
 }
 
 function renderFilteredResources(resourceCategories) {
-  $(() => {
-    $.ajax({
-      method: "GET",
-      url: `/api/resources?types=${resourceCategories}`
-    }).then((resources) => {
-      createAndAppendResource(resources);
-    });
+  $.ajax({
+    method: "GET",
+    url: `/api/resources?types=${resourceCategories}`
+  }).then((resources) => {
+    createAndAppendResource(resources);
   });
 }
 
@@ -113,16 +109,14 @@ function createResourceElement(resource) {
 // </div>
 
 function removeResources(resourcesToRender, cb) {
-  $(() => {
-    $.ajax({
-      method: "GET",
-      url: "/api/resources"
-    }).then((resources) => {
-      resources.forEach(function() {
-        $('.each-resource').remove();
-      });
-      cb(resourcesToRender);
+  $.ajax({
+    method: "GET",
+    url: "/api/resources"
+  }).then((resources) => {
+    resources.forEach(function() {
+      $('.each-resource').remove();
     });
+    cb(resourcesToRender);
   });
 }
 
@@ -140,7 +134,6 @@ function loadAllResources(filterBtn) {
 
 function renderResourcesOnClick(filterBtn, activeFilterBtns) {
   $(filterBtn).click(function() {
-
     let resourcesToFilter = [];
     for (btn of $(activeFilterBtns)) {
       resourcesToFilter.push(btn.id)
@@ -160,3 +153,5 @@ $(() => {
   loadAllResources(".filter-btn");
   renderResourcesOnClick(".filter-btn", ".filter-btn.active");
 });
+
+
