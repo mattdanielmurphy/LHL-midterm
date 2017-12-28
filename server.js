@@ -21,6 +21,7 @@ const methodOverride = require("method-override");
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
+const carouselResources = require("./routes/carousel");
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -52,30 +53,32 @@ app.use(cookieSession({
 }));
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
-
+app.use("/api/carousel", carouselResources(knex));
 
 /* ------------ HELPER FUNCTIONS ------------- */
 
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
-  knex.select('resources.url', 'resources.title', 'resources.description', 'u.username', 'c.content', 'l.like', 'r.value')
-    .from('resources')
-    .join('users as u', 'resources.user_id', 'u.id')
-    .join('comments as c', 'c.user_id', 'u.id')
-    .join('likes as l', 'l.user_id', 'u.id')
-    .join('ratings as r', 'r.user_id', 'u.id')
-    .then((result) => {
 
-      let templateVars = {
-        username: req.session.username,
-        resourceOne: result[0]
-      };
-      res.render('index', templateVars);
+  knex('resources')
+    .count('id')
+    .then((count) => {
+      knex('resources')
+        .select('id', 'title', 'description', 'screenshot')
+        .where('id', ((count[0].count) - 2))
+        .then((results) => {
+          let templateVars = {
+            username: req.session.username,
+            resourceActive: results[0]
+          };
+          res.render('index', templateVars);
+        });
     })
     .catch((error) => console.log(error));
+
 });
 
 
