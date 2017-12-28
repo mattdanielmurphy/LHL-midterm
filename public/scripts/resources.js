@@ -1,22 +1,21 @@
 function renderAllResources() {
-  $(() =>
-    $.ajax({
-      method: "GET",
-      url: "/api/resources"
-    }).then((resources) => {
-      createAndAppendResource(resources);
-    })
-  );
+  $.ajax({
+    method: "GET",
+    url: "/api/resources"
+  }).then((resources) => {
+    console.log("inside renderAllResources: ", resources)
+    createAndAppendResource(resources);
+  })
 }
 
 function renderFilteredResources(resourceCategories) {
-  $(() => {
-    $.ajax({
-      method: "GET",
-      url: `/api/resources?types=${resourceCategories}`
-    }).then((resources) => {
-      createAndAppendResource(resources);
-    });
+  console.log("resource categories: ", resourceCategories)
+  $.ajax({
+    method: "GET",
+    url: `/api/resources?types=${resourceCategories}`
+  }).then((resources) => {
+    console.log("inside resources, this is the resource: ", resources)
+    createAndAppendResource(resources);
   });
 }
 
@@ -113,16 +112,14 @@ function createResourceElement(resource) {
 // </div>
 
 function removeResources(resourcesToRender, cb) {
-  $(() => {
-    $.ajax({
-      method: "GET",
-      url: "/api/resources"
-    }).then((resources) => {
-      resources.forEach(function() {
-        $('.each-resource').remove();
-      });
-      cb(resourcesToRender);
+  $.ajax({
+    method: "GET",
+    url: "/api/resources"
+  }).then((resources) => {
+    resources.forEach(function() {
+      $('.each-resource').remove();
     });
+    cb(resourcesToRender);
   });
 }
 
@@ -139,13 +136,17 @@ function loadAllResources(filterBtn) {
 }
 
 function renderResourcesOnClick(filterBtn, activeFilterBtns) {
+  console.log("inside render Resources on Click")
   $(filterBtn).click(function() {
 
     let resourcesToFilter = [];
     for (btn of $(activeFilterBtns)) {
+      console.log(btn.id, "<- button id")
       resourcesToFilter.push(btn.id)
     }
+    console.log(resourcesToFilter, "<-resources to filter")
     let resourceCategories = JSON.stringify({ data: resourcesToFilter });
+    console.log(resourceCategories, "<-resourcesCategories to filter")
     removeResources(resourceCategories, renderFilteredResources);
 
     if (resourcesToFilter.length === 0) {
@@ -160,3 +161,5 @@ $(() => {
   loadAllResources(".filter-btn");
   renderResourcesOnClick(".filter-btn", ".filter-btn.active");
 });
+
+
