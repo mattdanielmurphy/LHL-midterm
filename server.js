@@ -21,6 +21,7 @@ const methodOverride = require("method-override");
 // Seperated Routes for each Resource
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
+const carouselResources = require("./routes/carousel");
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -52,65 +53,40 @@ app.use(cookieSession({
 }));
 
 // Mount all resource routes
-// app.use("/api/users", usersRoutes(knex));
+app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
-
-
-/* ------------ HELPER FUNCTIONS ------------- */
-
+app.use("/api/carousel", carouselResources(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
-  knex.select('resources.url', 'resources.title', 'resources.description', 'u.username', 'c.content', 'l.like', 'r.value')
-    .from('resources')
-    .join('users as u', 'resources.user_id', 'u.id')
-    .join('comments as c', 'c.user_id', 'u.id')
-    .join('likes as l', 'l.user_id', 'u.id')
-    .join('ratings as r', 'r.user_id', 'u.id')
-    .then((result) => {
-
-      let templateVars = {
-        username: req.session.username,
-        resourceOne: result[0]
-      };
-      res.render('index', templateVars);
+  knex('resources')
+    .count('id')
+    .then((count) => {
+      knex('resources')
+        .select('id', 'title', 'description', 'screenshot')
+        .where('id', ((count[0].count) - 2))
+        .then((results) => {
+          let templateVars = {
+            username: req.session.username,
+            resourceActive: results[0]
+          };
+          res.render('index', templateVars);
+        });
     })
     .catch((error) => console.log(error));
 });
 
-
-
 /* ----------- REGISTRATION ---------- */
-app.get("/registration", (req, res) => {
-  // Checks if the user is logged in by looking for the cookie
-  // if (req.session.username) {
-  //   console.log("THIS IS SESSION USER NAME: " + req.session.username )
-  //   res.redirect("/resources");
-  //   return;
-  // }
-
-  let templateVars = {
-    username: req.session.username,
-    blank: false,
-    usernameExists: false,
-    emailExists: false
-  };
-
-  // if (req.session.blank) {
-  //   templateVars.blank = true;
-  //   req.session = null;
-  // } else if (req.session.usernameExists) {
-  //   templateVars.usernameExists = true;
-  //   // req.session = null;
-  // } else if (req.session.emailExists) {
-  //   templateVars.emailExists = true;
-  //   // req.session = null;
-  // }
-
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
-
-  res.render("registration", templateVars);
+app.get("/registration", (req, res) => {
+  const currentUser = req.session.username;
+  if (!currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("registration", templateVars);
+  } else {
+    res.redirect("/");
+  }
 });
 
 app.post("/registration", (req, res) => {
@@ -168,11 +144,14 @@ app.post("/registration", (req, res) => {
 // Login Page
 app.get("/login", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
+  const currentUser = req.session.username;
+  if (!currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("login", templateVars);
+  } else {
+    res.redirect("/");
   }
 
-  res.render("login", templateVars);
 });
 
 app.post("/login", (req, res) => {
@@ -188,7 +167,7 @@ app.post("/login", (req, res) => {
         res.redirect("/login");
       }
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 });
 
 
@@ -202,11 +181,13 @@ app.post("/logout", (req, res) => {
 /* ----------- RESOURCES ---------- */
 app.get("/resources", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username,
-  };
-
-  res.render("resources", templateVars);
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resources", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
 });
 
@@ -214,11 +195,14 @@ app.get("/resources", (req, res) => {
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resource_new", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
-  res.render("resource_new", templateVars);
 });
 
 // Retrieves the screenshot from the database
@@ -229,9 +213,9 @@ app.get("/resources/:id/screenshot", (req, res) => {
     .where('id', req.params.id)
     .then((results) => {
 
-        res.header('Content-Type', 'image/png')
-        res.send(results[0].screenshot)
-    })
+        res.header('Content-Type', 'image/png');
+        res.send(results[0].screenshot);
+    });
 });
 
 // Stores new resources into the database
@@ -279,20 +263,27 @@ app.post("/resources", (req, res) => {
 /* ----------- MY RESOURCES ---------- */
 app.get("/resources/:id", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resource_user", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
-  res.render("resource_user", templateVars);
 });
 
 /* ----------- UPDATE PROFILE ---------- */
 app.get("/update_profile", (req, res) => {
-  let templateVars = {
-    username: req.session.username
-  };
 
-  res.render("update_profile", templateVars);
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("update_profile", templateVars);
+  } else {
+    res.redirect("/");
+  }
+
 });
 
 app.put("/update_profile", (req, res) => {

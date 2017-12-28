@@ -6,12 +6,14 @@
     <title>Resources</title>
 
     <script type="text/javascript" src="/scripts/app.js"></script>
+    <script type="text/javascript" src="/scripts/carousel.js"> </script>
+    <link rel="stylesheet" type="text/css" href="/styles/carousel.css" />
   </head>
 
   <body>
     <% include partials/_header.ejs %>
 
-    <main class'container'>
+    <main class='container'>
 
       <article class='jumbotron'>
         <h1 class="text-left">Welcome to <span class="text-info">Resource Wall</span>!<br/>
@@ -25,20 +27,45 @@
       </article>
 
       <article>
-        <h1>Latest resources</h1>
-        <div id="resources-container" class='container flex-container justify-content-around'>
-          <div id='resources-row' class="row flex-row">
+        <h1 id="title-for-carousel">Newest resources added</h1>
+        <div id="carousel-container" class='carousel slide bg-light' data-ride="carousel">
+          <ol class="carousel-indicators">
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="0" class="active"></li>
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="1"></li>
+              <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="2"></li>
+            </ol>
+          <div class="carousel-inner">
+            <!-- First active resource (third oldest created) -->
+            <div class="carousel-item active">
+              <img id="carousel-image" class="d-block w-100" src="/resources/<%=resourceActive.id%>/screenshot">
+              <div id="carousel-caption" class="carousel-caption d-non d-md-block">
+                <h3 id="carousel-title" class="text-center"><%=resourceActive.title%></h3>
+                <p id="carousel-description" class="text-center text-dark"><%=resourceActive.description%></p>
+              </div>
+            </div>
+            <!-- Carousel two newest resources rendered here with script -->
           </div>
-        </div>
 
-        <div class="m-4 mt-6">
-          <h2 class="text-success"> Register Now! </h2>
-          <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
-          </form>
-          <br>
-          <small class="mt-1">Already registered? <a href="/login">Log in here.</a></small>
+          <a class="carousel-control-prev" href="#carousel-container" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carousel-container" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+
         </div>
+        <% if (!username) { %>
+          <div id="index-register" class="m-4 mt-6">
+            <h2 class="text-success"> Register Now! </h2>
+            <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
+            </form>
+            <br>
+            <small class="mt-1">Already registered? <a href="/login">Log in here.</a></small>
+          </div>
+        <%  } %>
       </article>
     </main>
   </body>
