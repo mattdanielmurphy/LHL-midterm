@@ -57,8 +57,6 @@ app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
 
-/* ------------ HELPER FUNCTIONS ------------- */
-
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
   knex('resources')
@@ -82,7 +80,7 @@ app.get("/", (req, res) => {
   // TO DO:
   // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
-  const currentUser = req.session.username
+  const currentUser = req.session.username;
   if (!currentUser) {
     let templateVars = { username: req.session.username,};
     res.render("registration", templateVars);
@@ -146,11 +144,14 @@ app.post("/registration", (req, res) => {
 // Login Page
 app.get("/login", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
+  const currentUser = req.session.username;
+  if (!currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("login", templateVars);
+  } else {
+    res.redirect("/");
   }
 
-  res.render("login", templateVars);
 });
 
 app.post("/login", (req, res) => {
@@ -166,7 +167,7 @@ app.post("/login", (req, res) => {
         res.redirect("/login");
       }
     })
-    .catch((error) => console.log(error))
+    .catch((error) => console.log(error));
 });
 
 
@@ -180,11 +181,13 @@ app.post("/logout", (req, res) => {
 /* ----------- RESOURCES ---------- */
 app.get("/resources", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username,
-  };
-
-  res.render("resources", templateVars);
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resources", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
 });
 
@@ -192,11 +195,14 @@ app.get("/resources", (req, res) => {
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resource_new", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
-  res.render("resource_new", templateVars);
 });
 
 // Retrieves the screenshot from the database
@@ -207,9 +213,9 @@ app.get("/resources/:id/screenshot", (req, res) => {
     .where('id', req.params.id)
     .then((results) => {
 
-        res.header('Content-Type', 'image/png')
-        res.send(results[0].screenshot)
-    })
+        res.header('Content-Type', 'image/png');
+        res.send(results[0].screenshot);
+    });
 });
 
 // Stores new resources into the database
@@ -257,20 +263,27 @@ app.post("/resources", (req, res) => {
 /* ----------- MY RESOURCES ---------- */
 app.get("/resources/:id", (req, res) => {
 
-  let templateVars = {
-    username: req.session.username
-  };
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("resource_user", templateVars);
+  } else {
+    res.redirect("/");
+  }
 
-  res.render("resource_user", templateVars);
 });
 
 /* ----------- UPDATE PROFILE ---------- */
 app.get("/update_profile", (req, res) => {
-  let templateVars = {
-    username: req.session.username
-  };
 
-  res.render("update_profile", templateVars);
+  const currentUser = req.session.username;
+  if (currentUser) {
+    let templateVars = { username: req.session.username,};
+    res.render("update_profile", templateVars);
+  } else {
+    res.redirect("/");
+  }
+
 });
 
 app.put("/update_profile", (req, res) => {
