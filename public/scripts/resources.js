@@ -61,8 +61,8 @@ function createResourceElement(resource) {
       <div class="card-body">
         <h5 class="card-title">Comments</h5>
         <ul class="list-group list-group-flush">
-          <button id='toggle-comment'>Add comment</button>
-          <form id='new-comment' method="POST" action="/comment">
+          <button class='toggle-comment'>Add comment</button>
+          <form class='new-comment' method="POST" action="/comment">
             <textarea name="new-comment" cols="40" rows="4"></textarea>
             <input type="submit" value="Submit comment" />
           </form>
@@ -89,28 +89,14 @@ function createResourceElement(resource) {
 
       $('.clear-rating').tooltip();
 
+      $('.new-comment').hide();
       // unbind click to avoid multiple toggles:
-      $('#toggle-comment').unbind('click').click( () => {
-        $('#new-comment').slideToggle();
+      $('.toggle-comment').unbind('click').click( () => {
+        $('.new-comment').slideToggle();
       });
     </script>`
   );
 }
-
-// <div class='content col-4 text-center each-resource'>
-// <div class='border border-dark rounded m-1'>
-//   <div><a href='http://${resource.url}'><img src='/resources/${resource.id}/screenshot' class="img-thumbnail img-rounded"></a></div>
-//   <div>${resource.title}</div>
-//   <div></div>
-//   <div>comment</div>
-//   <i class="far fa-heart"></i>
-//   <i class="far fa-star"></i>
-//   <i class="far fa-star"></i>
-//   <i class="far fa-star"></i>
-//   <i class="far fa-star"></i>
-//   <i class="far fa-star"></i>
-// </div>
-// </div>
 
 function removeResources(resourcesToRender, cb) {
   $(() => {
