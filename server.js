@@ -282,27 +282,39 @@ function insertResourceTags(tagsArray, resourceId) {
 }
 
 app.post("/resources", (req, res) => {
-  takeScreenshot(req.body.url)
-    .then((screenshot) => {
-        return knex("resources")
-          .insert({
-            url: req.body.url,
-            title: req.body.title,
-            description: req.body.description,
-            screenshot: screenshot
-          })
-          .then(() => {
-            knex("resources")
-              .select("id")
-              .where("url", req.body.url)
-              .then((result) => {
-                let tagsArray = [];
-                typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
-                insertResourceTags(tagsArray, result[0].id);
-              }) // .then to use resource id
-          }) // .then to select resource id
-    }) // .then to insert new resource
-    .then(() => {res.redirect("/resources");});
+  let un = req.session.username;
+
+  knex("users")
+    .select("id")
+    .where("username", un)
+    .then((resultID) => {
+      takeScreenshot(req.body.url)
+        .then((screenshot) => {
+            return knex("resources")
+              .insert({
+                url: req.body.url,
+                title: req.body.title,
+                description: req.body.description,
+                user_id: resultID[0].id,
+                screenshot: screenshot
+              })
+              .then(() => {
+                knex("resources")
+                  .select("id")
+                  .where("url", req.body.url)
+                  .then((result) => {
+                    let tagsArray = [];
+                    typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
+                    insertResourceTags(tagsArray, result[0].id);
+                  }); // .then to use resource id
+              }); // .then to select resource id
+        }) // .then to insert new resource
+
+        .then(() => {res.redirect("/resources");});
+
+    });
+
+
 }); // POST resources
 
 
