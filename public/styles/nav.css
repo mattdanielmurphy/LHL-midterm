@@ -5,8 +5,14 @@
 
 #nav-links a {
   padding: 1em;
-  background: rgba(255, 255, 255, 0.3);
+  background: #55595c;
   color: white;
+  text-decoration: none;
+}
+
+#nav-links a:hover {
+  color: white;
+  background: #20c997;
 }
 
 #nav {
@@ -37,20 +43,12 @@
 }
 
 #nav .nav-link {
-  transition: .3s ease;
-  padding: 1em;
+  text-decoration: none;
 }
 
 #nav .nav-link:hover {
-  background: #55595c;
-}
-
-#nav .nav-link.register {
-  color: #20c997;
-}
-
-#nav .nav-link.register:hover {
   color: white;
+  background: #20c997;
 }
 
 #nav span.light {
@@ -76,5 +74,6 @@
 
 #brand {
   color: white;
+  border: none;
   padding-right: 10px;
 }

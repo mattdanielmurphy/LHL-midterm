@@ -1,3 +1,16 @@
+@import 'variables';
+
+a {
+	color: $teal;
+	border-bottom: 2px solid $teal;
+	padding: .9em 1em 1em 1.2em;
+	&:hover {
+		color: white;
+		background: $teal;
+		text-decoration: none;
+	}
+}
+
 .btn:hover {
 	cursor: pointer;
 }

@@ -9,7 +9,7 @@
         </button>
       <div class='ml-auto'>
         <div class="form-inline">
-          <h6 class="m-2 text-light">Logged in as <%= username %>.</h6>
+          <h6 class="m-2 text-light">Logged in as <a href="/update_profile"><%= username %></a>.</h6>
           <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
             <button class="btn btn-secondary my-2" type="submit">Log out</button>
             <a class='nav-link d-inline-block' href="/update_profile">Update<br/>profile</a>
