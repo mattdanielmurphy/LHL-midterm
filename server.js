@@ -22,6 +22,7 @@ const methodOverride = require("method-override");
 const usersRoutes = require("./routes/users");
 const resourcesRoutes = require("./routes/resources");
 const carouselResources = require("./routes/carousel");
+const commentsRoutes = require("./routes/comments");
 
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
@@ -56,6 +57,7 @@ app.use(cookieSession({
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
+app.use("/api/comments", commentsRoutes(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -233,10 +235,10 @@ app.get("/resources", (req, res) => {
 });
 
 /* ----------- ADD RESOURCE COMMENT ---------- */
-app.post("/resources/comment", (req,res) => {
-  console.log("hello");
-  res.redirect("/");
-});
+// app.post("/resources/comment", (req,res) => {
+//   console.log("hello");
+//   res.redirect("/");
+// });
 
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {

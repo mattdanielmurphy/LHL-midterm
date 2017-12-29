@@ -61,10 +61,10 @@ function createResourceElement(resource) {
       </ul>
 
       <ul class="list-group list-group-flush">
-        <button class='toggle-comment'>Add comment</button>
-        <form class='new-comment' method="POST" action="/resources/comment">
-          <textarea name="new-comment" cols="26" rows="4"></textarea>
-          <input type="submit" value="Submit comment" />
+<!--         <button id='add-comment-btn' class='toggle-comment'>Add comment</button> -->
+        <form class='new-comment' method="POST" action="/api/comments">
+          <textarea id="comment-text-area" name="new-comment" cols="26" rows="4"></textarea>
+          <input id="submit-comment-btn" type="submit" value="Add Comment" />
         </form>
       </ul>
 
@@ -78,14 +78,52 @@ function createResourceElement(resource) {
 
       $('.clear-rating').tooltip();
 
-      $('.new-comment').hide();
+      // $('.new-comment').hide();
 
-      $('.toggle-comment').unbind('click').click(function() {
-        $(this).siblings('.new-comment').slideToggle();
+      $('#submit-comment-btn').unbind('click').click(function() {
+        // $(this).siblings('.new-comment').slideToggle();
+        console.log("inside submit button")
+        let $commentTextArea = $(this).siblings('#comment-text-area');
+        let text = $commentTextArea.val();
+        console.log(text);
+
+        $.ajax({
+            url: '/api/comments',
+            data: {text: text},
+            method: 'POST',
+          }).then(function() {
+            console.log('inside post comment')
+          });
+
       });
+
     </script>`
   );
 }
+
+// function loadComments() {
+//   $.ajax({
+//     url: '/resources/comment',
+//     dataType: "json",
+//     method: 'GET',
+//   }).then(function(tweets) {
+//     renderTweets(tweets);
+//   });
+// }
+
+// function postComment() {
+//   let serializeText = $("#comment-text-area").serialize();
+//   console.log(serializeText)
+
+//   $.ajax({
+//       url: '/resources/comment',
+//       data: serializeText,
+//       method: 'POST',
+//     }).then(function() {
+//       // loadComments();
+//       $("#comment-text-area").val('');
+//     });
+// }
 
 function removeResources(resourcesToRender, cb) {
   $.ajax({
@@ -131,6 +169,16 @@ $(() => {
   toggleBtnActive(".filter-btn");
   loadAllResources(".filter-btn");
   renderResourcesOnClick(".filter-btn", ".filter-btn.active");
+
+      // $('.new-comment').hide();
+
+  $('#submit-comment-btn').on('click', function() {
+    console.log('HELLO')
+    // $(this).siblings('.new-comment').slideToggle();
+    // let $commentTextArea = $(this).siblings('.new-comment').find('#comment-text-area');
+    // console.log($commentTextArea.val());
+  });
+
 });
 
 
