@@ -11,16 +11,16 @@
       <% include partials/_header.ejs %>
     </header>
 
-    <main class="container m-5">
-      <div class="row justify-content-sm-center">
+    <main class="container">
+      <article class="justify-content-sm-center">
         <div>
           <h3>Add a new resource:</h3>
-          <form action="/resources" method='POST'>
-            <table class='table'>
+          <form action="/resources" method="POST">
+            <table class="table">
               <tr>
-                <td><label for="url">URL for the resource:</label></td>
+                <td><label for="url">Resource URL:</label></td>
                 <td>
-                  <input type="text" name="url" placeholder='http://....'>
+                  <input type="text" name="url" placeholder="http://www.example.com">
                 </td>
               </tr>
               <tr>
@@ -28,7 +28,7 @@
                   <label for="title">Title:</label>
                 </td>
                 <td>
-                  <input type="text" name="title" placeholder='Title for the resource'>
+                  <input type="text" name="title" placeholder="My Resource">
                 </td>
               </tr>
               <tr>
@@ -36,12 +36,13 @@
                   <label for="description">Description:</label>
                 </td>
                 <td>
-                  <input type="text" name="description" placeholder='Description for the resource'>
+                  <input type="text" name="description" placeholder="The one weird tip doctors DON'T want you to know!">
                 </td>
               </tr>
               <tr>
                 <td>
                   <label for="tags">Category Tags:</label>
+                  <p><small>hold <strong>ctrl</strong> (<strong>cmd</strong> on MacOS) to select multiple tags</small></p>
                 </td>
                 <td>
                   <select multiple class="form-control rounded" id="tags" name="tags">
@@ -54,10 +55,10 @@
                 </td>
               </tr>
             </table>
-            <button class='btn btn-primary' type="submit">Add new resource</button>
+            <button class="m-auto btn btn-primary mb-6" type="submit">Add new resource</button>
           </form>
         </div>
-      </div>
+      </article>
     </main>
 
 

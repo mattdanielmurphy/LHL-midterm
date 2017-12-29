@@ -1,46 +1,46 @@
 @charset "UTF-8";
 
 h3 {
-    font-size: 1em;
+	font-size: 1em;
 }
 
 *, *:after, *:before {
-    box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 textarea {
-    width: 100%;
-    margin: 10px 0 2px 0;
+	width: 100%;
+	margin: 10px 0 2px 0;
 }
 
 // styling for check mark on the filter buttons
 .filter-group .btn {
-    position: relative;
-    width: 120px;
+	position: relative;
+	width: 120px;
 }
 
 .filter-group .btn.active:after,.filter-group .btn.active:before {
-    content: "";
-    height: 25px;
-    left: 12%;
-    opacity: 0.7;
-    position: absolute;
-    transition: .2s;
-    width: 90px;
+	content: "";
+	height: 25px;
+	left: 12%;
+	opacity: 0.7;
+	position: absolute;
+	transition: .2s;
+	width: 90px;
 }
 
 .filter-group .btn:before {
-    background-color: #2c3e50;
-    border-radius: 25%;
+	background-color: #2c3e50;
+	border-radius: 25%;
 }
 
 .filter-group .btn:after {
-    background-image: url(https://vestride.github.io/Shuffle/img/check.svg);
-    background-position: 50%;
-    background-repeat: no-repeat;
-    background-size: 30%;
+	background-image: url(https://vestride.github.io/Shuffle/img/check.svg);
+	background-position: 50%;
+	background-repeat: no-repeat;
+	background-size: 30%;
 }
 
 .filter-group .btn.active:after,.filter-group .btn.active:before {
-    opacity: 0.7
+	opacity: 0.7;
 }

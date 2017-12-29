@@ -1,7 +1,55 @@
+tr td:first-of-type {
+  width: 17em;
+}
+
+tr td:first-of-type p {
+  float: right;
+  text-align: right;
+}
+
+tr td:last-of-type {
+  width: 28em;
+}
+
+tr td input {
+  width: 100%;
+  padding: .5em;
+}
+
+tr td label {
+  float: right;
+  padding: .5em 0;
+}
+
+.form-control {
+  height: 17em;
+  background-color: white;
+  width: 13.5em;
+}
+
+.form-control option {
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: .05em;
+  padding: .8em 1em;
+  border-bottom: 1px solid #ced4da;
+}
+
+.form-control option:hover {
+  cursor: pointer;
+  color: #20c997;
+  background-color: #f8f9fa;
+}
+
+.form-control option:last-of-type {
+  border: none;
+}
+
 a {
   color: #20c997;
   border-bottom: 2px solid #20c997;
-  padding: .9em 1em 1em 1.2em;
+  padding: .4em .3em .2em .5em;
+  margin-right: .4em;
 }
 
 a:hover {
@@ -15,12 +63,18 @@ a:hover {
 }
 
 main {
-  max-width: 800px;
-  margin: 4em auto 0 auto;
+  margin: 0 auto;
 }
 
 article {
+  margin: 0 auto;
+  padding: 5em 5em 10em 5em;
+  max-width: 800px;
+}
+
+footer {
   padding: 5em;
+  background: #f8f9fa;
 }
 
 .star-rating {
