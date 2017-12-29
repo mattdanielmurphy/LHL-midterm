@@ -28,53 +28,46 @@ function createResourceElement(resource) {
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
       <div class="card-body">
-        <h5 class="card-title">${resource.title}</h5>
         <h6 class="card-subtitle text-muted">Submitted by ${resource.username}</username></h6>
+      </div>
+      <div class="card-body">
+        <p class="card-text">desc:${resource.description}</p>
       </div>
       <div>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
       </div>
       <div class="card-body">
-        <p class="card-text">${resource.description}</p>
+        <h6 class="card-title">Overall Ratings:</h6>
+        <li class="list-group list-group-flush">${resource.value}</li>
       </div>
       <div class="card-body">
-        <h5 class="card-title">Ratings</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">
-            <p>
-              <h6>Your rating</h6>
-              <form method="POST" action="/rating">
-                <input class='rating' data-size='xs'type="text">
-              </form>
-            </p>
-            <p>
-              <h6>All ratings</h6>
-              <li class="list-group-item">${resource.value}</li>
-            </p>
-          </li>
-        </ul>
+        <h6 class="card-title">Overall Likes:</h6>
+          <li class="list-group list-group-flush"> ${resource.like}</li>
       </div>
       <div class="card-body">
-        <h5 class="card-title">Comments</h5>
-        <ul class="list-group list-group-flush">
-          <button class='toggle-comment'>Add comment</button>
-          <form class='new-comment' method="POST" action="/resources/comment">
-            <textarea name="new-comment" cols="40" rows="4"></textarea>
-            <input type="submit" value="Submit comment" />
-          </form>
-          <li class="list-group-item">${resource.content}</li>
-        </ul>
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">Likes</h5>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item"> ${resource.like}</li>
-        </ul>
+        <h6 class="card-title">Comments:</h6>
+        <li class="list-group list-group-flush">${resource.content}</li>
       </div>
 
-      <div class="card-footer text-muted">
-        Added 2 days ago
-      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">
+          <p>
+            <h6>Your rating</h6>
+            <form method="POST" action="/rating">
+              <input class='rating' data-size='xs'type="text">
+            </form>
+          </p>
+        </li>
+      </ul>
+
+      <ul class="list-group list-group-flush">
+        <button class='toggle-comment'>Add comment</button>
+        <form class='new-comment' method="POST" action="/resources/comment">
+          <textarea name="new-comment" cols="26" rows="4"></textarea>
+          <input type="submit" value="Submit comment" />
+        </form>
+      </ul>
+
     </div>
     <script>
       $('.rating').rating({
@@ -86,9 +79,9 @@ function createResourceElement(resource) {
       $('.clear-rating').tooltip();
 
       $('.new-comment').hide();
-      // unbind click to avoid multiple toggles:
-      $('.toggle-comment').unbind('click').click( () => {
-        $('.new-comment').slideToggle();
+
+      $('.toggle-comment').unbind('click').click(function() {
+        $(this).siblings('.new-comment').slideToggle();
       });
     </script>`
   );
