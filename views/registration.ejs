@@ -12,29 +12,124 @@
 
     <main class="container mt-5">
       <div class="row justify-content-sm-center">
+
+        <% if (blank === true) {%>
+          <div>
+            <div id="registration-error" class="alert alert-danger" role="alert">
+              <strong>
+                EMPTY FIELD(S)..
+              </strong>
+              Please fill out all fields!
+            </div>
+            <h3>Register:</h3>
+            <form action="/registration" method="POST">
+              <table class="table">
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
+                </tr>
+                <tr>
+                  <td><label for="email">Email:</label></td>
+                  <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
+                </tr>
+              </table>
+              <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+          </div>
+
+        <% } else if (un === true) {%>
+
+          <div>
+            <div id="registration-error" class="alert alert-danger" role="alert">
+              <strong>
+                USERNAME TAKEN!
+              </strong>
+              Please choose another username.
+            </div>
+            <h3>Register:</h3>
+            <form action="/registration" method="POST">
+              <table class="table">
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
+                </tr>
+                <tr>
+                  <td><label for="email">Email:</label></td>
+                  <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
+                </tr>
+              </table>
+              <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+          </div>
+
+        <% } else if (email === true) {%>
+
+          <div>
+            <div id="registration-error" class="alert alert-danger" role="alert">
+              <strong>
+                EMAIL ALREADY IN USE!
+              </strong>
+              <a href="/login" class="alert-link">CLICK HERE to login</a>
+              or enter a different email to register.
+            </div>
+            <h3>Register:</h3>
+            <form action="/registration" method="POST">
+              <table class="table">
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
+                </tr>
+                <tr>
+                  <td><label for="email">Email:</label></td>
+                  <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
+                </tr>
+              </table>
+              <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+          </div>
+
+        <% } else {%>
+
         <div>
-          <h3>Register:</h3>
-          <form action="/registration" method="POST">
-            <table class="table">
-              <tr>
-                <td><label for="username">Username:</label></td>
-                <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
-              </tr>
-              <tr>
-                <td><label for="email">Email:</label></td>
-                <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
-              </tr>
-              <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
-              </tr>
-            </table>
-            <button class="btn btn-primary" type="submit">Register</button>
-          </form>
-        </div>
+            <h3>Register:</h3>
+            <form action="/registration" method="POST">
+              <table class="table">
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input id="username" type="text" name="username" placeholder="Enter your username"></td>
+                </tr>
+                <tr>
+                  <td><label for="email">Email:</label></td>
+                  <td><input id="email" type="email" name="email" placeholder="Enter your email"></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input id="password" type="password" name="password" placeholder="Enter a password"></td>
+                </tr>
+              </table>
+              <button class="btn btn-primary" type="submit">Register</button>
+            </form>
+          </div>
+
+        <% } %>
+
       </div>
 
     </main>
+
+
     <footer></footer>
 
   </body>
