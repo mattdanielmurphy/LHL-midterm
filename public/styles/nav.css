@@ -1,20 +1,27 @@
-.row {
-  width: 100%;
+#nav-links {
+  max-width: 800px;
+  margin: 1.5em auto 0 auto;
 }
 
-div.container {
-  width: 100%;
-  margin: 0;
-  padding: 0;
+#nav-links a {
+  padding: 1em;
+  background: rgba(255, 255, 255, 0.3);
+  color: white;
 }
 
 #nav {
   padding: 0;
-  margin: 0;
+}
+
+#nav .row {
+  width: 100%;
+  padding: 0 5%;
 }
 
 #nav nav {
   width: 100%;
+  margin: 0 auto;
+  max-width: 1050px;
 }
 
 #nav .navbar .nav-item {
@@ -70,10 +77,4 @@ div.container {
 #brand {
   color: white;
   padding-right: 10px;
-}
-
-@media (max-width: 767px) {
-  #navbarColor03 {
-    margin-right: auto;
-  }
 }
