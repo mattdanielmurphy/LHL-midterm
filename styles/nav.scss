@@ -3,21 +3,25 @@
 #nav-links {
 	max-width: 800px;
 	margin: 1.5em auto 0 auto;
+	padding: 1em 0;
 	a {
-		padding: 1em;
-		background: $gray-700;
+		padding: 1em 1em .9em 1em;
+		background-color: $gray-700;
 		color: white;
 		text-decoration: none;
+		transition: background-color 0.15s ease-in-out;
 		&:hover {
 			color: white;
-			background: $teal;
+			background-color: $teal;
 		}
 	}
 }
 
 #nav {
-	a {
-
+	.button {
+		background-color: $gray-700;
+		color: white;
+		padding: 1em 1em .9em 1em;
 	}
 	padding: 0;
 	.row {
@@ -29,11 +33,15 @@
 		margin: 0 auto;
 		max-width: 1050px;
 	}
-	.navbar .nav-item {
-		margin: 10px;
-	}
 	.btn {
-		margin-top: 10px;
+		background-color: $teal;
+		border-bottom: 2px solid $gray-200;
+		color: white;
+		padding: 1em 1em .9em 1em;
+		&:hover {
+			background-color: $gray-200;
+			color: $teal;
+		}
 	}
 	.nav-item {
 		margin: 0;
@@ -67,4 +75,8 @@
 	color: white;
 	border: none;
 	padding-right: 10px;
+	&:hover {
+		background: none;
+		opacity: 0.9;
+	}
 }

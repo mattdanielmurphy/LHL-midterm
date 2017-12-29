@@ -1,22 +1,30 @@
 #nav-links {
   max-width: 800px;
   margin: 1.5em auto 0 auto;
+  padding: 1em 0;
 }
 
 #nav-links a {
-  padding: 1em;
-  background: #55595c;
+  padding: 1em 1em .9em 1em;
+  background-color: #55595c;
   color: white;
   text-decoration: none;
+  transition: background-color 0.15s ease-in-out;
 }
 
 #nav-links a:hover {
   color: white;
-  background: #20c997;
+  background-color: #20c997;
 }
 
 #nav {
   padding: 0;
+}
+
+#nav .button {
+  background-color: #55595c;
+  color: white;
+  padding: 1em 1em .9em 1em;
 }
 
 #nav .row {
@@ -30,12 +38,16 @@
   max-width: 1050px;
 }
 
-#nav .navbar .nav-item {
-  margin: 10px;
+#nav .btn {
+  background-color: #20c997;
+  border-bottom: 2px solid #f7f7f9;
+  color: white;
+  padding: 1em 1em .9em 1em;
 }
 
-#nav .btn {
-  margin-top: 10px;
+#nav .btn:hover {
+  background-color: #f7f7f9;
+  color: #20c997;
 }
 
 #nav .nav-item {
@@ -76,4 +88,9 @@
   color: white;
   border: none;
   padding-right: 10px;
+}
+
+#brand:hover {
+  background: none;
+  opacity: 0.9;
 }

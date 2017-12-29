@@ -1,9 +1,52 @@
 @import 'variables';
 
+tr td {
+	&:first-of-type {
+		width: 17em;
+		p {
+			float: right;
+			text-align: right;
+		}
+	}
+	&:last-of-type {
+		width: 28em;
+	}
+	input {
+		width: 100%;
+		padding: .5em;
+	}
+	label {
+		float: right;
+		padding: .5em 0;
+	}
+}
+
+.form-control {
+	height: 17em;
+	background-color: white;
+	width: 13.5em;
+	option {
+		text-transform: uppercase;
+		font-weight: 700;
+		letter-spacing: .05em;
+		padding: .8em 1em;
+		border-bottom: 1px solid $gray-400;
+		&:hover {
+			cursor: pointer;
+			color: $teal;
+			background-color: $gray-100;
+		}
+		&:last-of-type {
+			border: none;
+		}
+	}
+}
+
 a {
 	color: $teal;
 	border-bottom: 2px solid $teal;
-	padding: .9em 1em 1em 1.2em;
+	padding: .4em .3em .2em .5em;
+	margin-right: .4em;
 	&:hover {
 		color: white;
 		background: $teal;
@@ -16,12 +59,18 @@ a {
 }
 
 main {
-	max-width: 800px;
-	margin: 4em auto 0 auto;
+	margin: 0 auto;
 }
 
 article {
+	margin: 0 auto;
+	padding: 5em 5em 10em 5em;
+	max-width: 800px;
+}
+
+footer {
 	padding: 5em;
+	background: $gray-100;
 }
 
 .star-rating {

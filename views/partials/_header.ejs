@@ -1,19 +1,19 @@
 <nav id='nav' class="navbar navbar-toggleable-md navbar-dark bg-dark">
   <nav class="container-fluid navbar navbar-expand-md navbar-dark">
     <div class="row flex-row">
-      <a id='brand' href="/"><img src="/images/MPS.png" class="rounded mr-3" width="150px"></a>
+      <a id='brand' href="/"><img src="/images/MPS.png" width="175px"></a>
 
       <% if (username) { %>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-links-container" aria-controls="nav-links-container" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon" deluminate_imagetype="unknown"></span>
-        </button>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-links-container" aria-controls="nav-links-container" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" deluminate_imagetype="unknown"></span>
+      </button>
       <div class='ml-auto'>
         <div class="form-inline">
-          <h6 class="m-2 text-light">Logged in as <a href="/update_profile"><%= username %></a>.</h6>
-          <form action="/logout" method="POST" title="LOGOUT" class="form-inline m-2">
-            <button class="btn btn-secondary my-2" type="submit">Log out</button>
-            <a class='nav-link d-inline-block' href="/update_profile">Update<br/>profile</a>
+          <h6 class="text-light">Logged in as <a href="/update_profile"><%= username %></a>.</h6>
+          <form action="/logout" method="POST" title="LOGOUT" class="mx-3 form-inline">
+            <button class="btn" type="submit">Log out</button>
           </form>
+          <a class='nav-link button d-inline-block' href="/update_profile">Update profile</a>
         </div>
       </div>
     </div>
@@ -32,7 +32,7 @@
       <div class='ml-auto'>
           <div class="form-inline">
             <form action="/login" method="GET" title="Log in" class="d-inline nav-item">
-              <button class="btn btn-secondary my-2" type="submit">Log in</button>
+              <button class="btn my-2" type="submit">Log in</button>
               <a class='d-inline nav-link register text-nowrap' href="/registration">Register</a>
             </form>
           </div>
