@@ -4,6 +4,7 @@
     <title> My Resources </title>
 
     <% include partials/_head.ejs %>
+    <script type="text/javascript" src="/scripts/my-resources.js"> </script>
   </head>
 
   <body>
@@ -14,22 +15,9 @@
       <article class="resources-container justify-content-center">
         <div class="text-center">
           <h2 class="text-info"> My Resources </h2>
-          <div class="d-lg-flex justify-content-center flex-wrap m-3">
 
-            <div class="user-filter-group filter-group--compound btn-group-lg">
-              <h4 class="user-filter-label">Sort by:</h4>
-              <button type="button" class="btn btn-primary user-filter-btn" id="blog">Blog</button>
-              <button type="button" class="btn btn-primary user-filter-btn" id="tutorial">Tutorial</button>
-              <button type="button" class="btn btn-primary user-filter-btn" id="book">Book</button>
-              <button type="button" class="btn btn-primary user-filter-btn" id="article">Article</button>
-              <button type="button" class="btn btn-primary user-filter-btn" id="video">Video</button>
-
-            </div>
-
-          </div>
-
-          <div class="container d-lg-flex justify-content-around" id="resources-container">
-            <div class="row flex-row row p-1" id="resources-row">
+          <div class="container d-lg-flex justify-content-around" id="my-resources-container">
+            <div class="row flex-row row p-1" id="my-resources-row">
 
               <!-- Resources script inserts resources here -->
 
@@ -42,22 +30,9 @@
       <article class="resources-container justify-content-center">
         <div class="text-center">
           <h2 class="text-info"> My Likes </h2>
-          <div class="d-lg-flex justify-content-center flex-wrap m-3">
 
-            <div class="user-likes-filter-group filter-group--compound btn-group-lg">
-              <h4 class="user-likes-filter-label">Sort by:</h4>
-              <button type="button" class="btn btn-primary user-likes-filter-btn" id="blog">Blog</button>
-              <button type="button" class="btn btn-primary user-likes-filter-btn" id="tutorial">Tutorial</button>
-              <button type="button" class="btn btn-primary user-likes-filter-btn" id="book">Book</button>
-              <button type="button" class="btn btn-primary user-likes-filter-btn" id="article">Article</button>
-              <button type="button" class="btn btn-primary user-likes-filter-btn" id="video">Video</button>
-
-            </div>
-
-          </div>
-
-          <div class="container d-lg-flex justify-content-around" id="resources-container">
-            <div class="row flex-row row p-1" id="resources-row">
+          <div class="container d-lg-flex justify-content-around" id="my-likes-container">
+            <div class="row flex-row row p-1" id="my-likes-row">
 
               <!-- Resources script inserts resources here -->
 
