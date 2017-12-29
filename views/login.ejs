@@ -12,7 +12,40 @@
       <% include partials/_header.ejs %>
     </header>
 
-    <main class="container mt-5">
+    <% if (blank === true) {%>
+      <div id="registration-error" class="alert alert-danger text-center" role="alert">
+        Please fill out both fields!
+      </div>
+      <main id="login-main" class="container mt-5">
+        <div class="row justify-content-sm-center">
+          <div>
+            <h3>Log in to your account:</h3>
+            <form action="/login" method='POST'>
+              <table class='table'>
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input type="text" id="login-username" name="username" placeholder='username'></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
+                </tr>
+              </table>
+              <button class='btn btn-primary' type="submit">Log in</button>
+            </form>
+          </div>
+        </div>
+      </main>
+
+    <% } else if (match === true) {%>
+
+    <div id="registration-error" class="alert alert-danger text-center" role="alert">
+      <strong>
+        Uh oh!
+      </strong>
+      Username and Password did not match! Please login again.
+    </div>
+    <main id="login-main" class="container mt-5">
       <div class="row justify-content-sm-center">
         <div>
           <h3>Log in to your account:</h3>
@@ -20,11 +53,11 @@
             <table class='table'>
               <tr>
                 <td><label for="username">Username:</label></td>
-                <td><input type="text" name="username" placeholder='username'></td>
+                <td><input type="text" id="login-username" name="username" placeholder='username'></td>
               </tr>
               <tr>
                 <td><label for="password">Password:</label></td>
-                <td><input type="password" name="password" placeholder='••••••••••'></td>
+                <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
               </tr>
             </table>
             <button class='btn btn-primary' type="submit">Log in</button>
@@ -33,7 +66,30 @@
       </div>
     </main>
 
+    <% } else {%>
 
+      <main id="login-main" class="container mt-5">
+        <div class="row justify-content-sm-center">
+          <div>
+            <h3>Log in to your account:</h3>
+            <form action="/login" method='POST'>
+              <table class='table'>
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input type="text" id="login-username" name="username" placeholder='username'></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
+                </tr>
+              </table>
+              <button class='btn btn-primary' type="submit">Log in</button>
+            </form>
+          </div>
+        </div>
+      </main>
+
+    <% } %>
 
     <footer></footer>
 

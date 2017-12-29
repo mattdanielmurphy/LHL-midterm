@@ -164,29 +164,51 @@ app.post("/registration", (req, res) => {
 app.get("/login", (req, res) => {
 
   const currentUser = req.session.username;
-  if (!currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("login", templateVars);
-  } else {
+  if (currentUser) {
     res.redirect("/");
   }
 
+  let templateVars = {
+    username: req.session.username,
+    blank: false,
+    match: false
+  };
+
+  if (req.session.blank) {
+    templateVars.blank = true;
+    req.session = null;
+  } else if (req.session.match) {
+    templateVars.match = true;
+    req.session = null;
+  }
+
+  res.render("login", templateVars);
 });
 
 app.post("/login", (req, res) => {
-  knex('users')
-    .where('username', req.body.username)
-    .andWhere('password', req.body.password)
-    .then((result) => {
-      if (result.length !== 0) {
-        // Sets cookie for the user
-        req.session.username = req.body.username;
-        res.redirect("/resources/:id");
-      } else {
-        res.redirect("/login");
-      }
-    })
-    .catch((error) => console.log(error));
+
+  if (req.body.username === '' || req.body.password === '') {
+    req.session.blank = true;
+    res.redirect("/login");
+  } else {
+
+    knex('users')
+      .where('username', req.body.username)
+      .andWhere('password', req.body.password)
+      .then((result) => {
+        if (result.length !== 0) {
+          // Sets cookie for the user
+          req.session.username = req.body.username;
+          res.redirect("/resources/:id");
+        } else {
+          req.session.match = true;
+          res.redirect("/login");
+        }
+      })
+      .catch((error) => console.log(error));
+
+  }
+
 });
 
 
