@@ -61,10 +61,10 @@ function createResourceElement(resource) {
       </ul>
 
       <ul class="list-group list-group-flush">
-<!--         <button id='add-comment-btn' class='toggle-comment'>Add comment</button> -->
+        <button id='add-comment-btn' class='toggle-comment'>Add comment</button>
         <form class='new-comment' method="POST" action="/api/comments">
           <textarea id="comment-text-area" name="new-comment" cols="26" rows="4"></textarea>
-          <input id="submit-comment-btn" type="submit" value="Add Comment" />
+<!--           <input id="submittype="submit" value="Submit comment" /> -->
         </form>
       </ul>
 
@@ -80,12 +80,11 @@ function createResourceElement(resource) {
 
       // $('.new-comment').hide();
 
-      $('#submit-comment-btn').unbind('click').click(function() {
+      $('.toggle-comment').unbind('click').click(function() {
         // $(this).siblings('.new-comment').slideToggle();
-        console.log("inside submit button")
-        let $commentTextArea = $(this).siblings('#comment-text-area');
+        let $commentTextArea = $(this).siblings('.new-comment').find('#comment-text-area');
         let text = $commentTextArea.val();
-        console.log(text);
+        // console.log(text);
 
         $.ajax({
             url: '/api/comments',
@@ -172,12 +171,12 @@ $(() => {
 
       // $('.new-comment').hide();
 
-  $('#submit-comment-btn').on('click', function() {
-    console.log('HELLO')
-    // $(this).siblings('.new-comment').slideToggle();
-    // let $commentTextArea = $(this).siblings('.new-comment').find('#comment-text-area');
-    // console.log($commentTextArea.val());
-  });
+  // $('.toggle-comment').click(function() {
+  //   console.log('HELLO')
+  //   // $(this).siblings('.new-comment').slideToggle();
+  //   // let $commentTextArea = $(this).siblings('.new-comment').find('#comment-text-area');
+  //   // console.log($commentTextArea.val());
+  // });
 
 });
 
