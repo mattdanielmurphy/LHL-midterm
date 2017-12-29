@@ -1,0 +1,36 @@
+#title-for-carousel {
+  text-align: center;
+}
+
+#carousel-container {
+  border: 2px solid #F7F7F9;
+  border-radius: 10px;
+  background-color: #F7F7F9;
+  width: 89%;
+  margin: 0 auto;
+}
+
+#carousel-container #carousel-caption {
+  background-color: #F7F7F9;
+  float: center;
+  opacity: 0.9;
+  margin: 2%;
+  border-radius: 15px;
+}
+
+#carousel-container #carousel-caption #carousel-image {
+  border-radius: 10px;
+}
+
+#carousel-container #carousel-caption #carousel-title {
+  opacity: 1;
+}
+
+#carousel-container #carousel-caption #carousel-description {
+  opacity: 1;
+}
+
+#index-register {
+  text-align: center;
+  margin: 5em auto 0 auto;
+}
