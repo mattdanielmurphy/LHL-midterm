@@ -198,8 +198,9 @@ app.post("/login", (req, res) => {
       .then((result) => {
         if (result.length !== 0) {
           // Sets cookie for the user
+          let userid = result[0].id
           req.session.username = req.body.username;
-          res.redirect("/resources/:id");
+          res.redirect(`/resources/${userid}`);
         } else {
           req.session.match = true;
           res.redirect("/login");
@@ -322,12 +323,26 @@ app.post("/resources", (req, res) => {
 app.get("/resources/:id", (req, res) => {
 
   const currentUser = req.session.username;
-  if (currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("resource_user", templateVars);
-  } else {
-    res.redirect("/");
+
+  if (!currentUser) {
+    return res.redirect("/login");
   }
+
+  knex("users")
+    .select("id", "username")
+    .where("username", currentUser)
+    .then((resultID) => {
+      if (req.params.id == resultID[0].id) {
+        let templateVars = {
+          username: req.session.username,
+          id: req.session.id
+        };
+        res.render("resource_user", templateVars);
+      } else {
+        res.redirect(`/resources/${resultID[0].id}`)
+      }
+    });
+
 
 });
 
