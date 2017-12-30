@@ -23,7 +23,6 @@ function renderFilteredResources(resourceCategories) {
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
-    console.log("before create and append: ", resources)
     createAndAppendResource(resources);
   });
 }
@@ -44,14 +43,16 @@ function createAndAppendResource(resources) {
       event.preventDefault();
       let $submitCommentBtn = $(this)
       let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
-      console.log(commentTextArea);
-
-      // use $this to bubble up in the DOM, to get the resource.url, use it to join to get the resource_id
-      // use session to get username, do a join to find user id
+      let $ul = $submitCommentBtn.parent().parent();
+      let $hrefLong = $ul.siblings('#resource-url').find('a').attr('href')
+      let $hrefShort = ($hrefLong).replace('http://', '');
 
       $.ajax({
         url: '/api/comments',
-        data: {text: commentTextArea},
+        data: {
+          text: commentTextArea,
+          url: $hrefShort
+        },
         method: 'POST'
       }).then(function() {
         console.log('Successfully Posted comment')
@@ -69,10 +70,10 @@ function createResourceElement(resource) {
       </div>
 
       <div class="card-body">
-        <p class="card-text">desc:${resource.description}</p>
+        <p class="card-text">${resource.description}</p>
       </div>
 
-      <div>
+      <div id='resource-url'>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
       </div>
 
@@ -112,30 +113,6 @@ function createResourceElement(resource) {
     </div>`
   );
 }
-
-// function loadComments() {
-//   $.ajax({
-//     url: '/resources/comment',
-//     dataType: "json",
-//     method: 'GET',
-//   }).then(function(tweets) {
-//     renderTweets(tweets);
-//   });
-// }
-
-// function postComment() {
-//   let serializeText = $("#comment-text-area").serialize();
-//   console.log(serializeText)
-
-//   $.ajax({
-//       url: '/resources/comment',
-//       data: serializeText,
-//       method: 'POST',
-//     }).then(function() {
-//       // loadComments();
-//       $("#comment-text-area").val('');
-//     });
-// }
 
 function removeResources(resourcesToRender, cb) {
   $.ajax({
@@ -182,5 +159,3 @@ $(() => {
   loadAllResources(".filter-btn");
   renderResourcesOnClick(".filter-btn", ".filter-btn.active");
 });
-
-
