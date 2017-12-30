@@ -390,3 +390,9 @@ app.put("/update_profile", (req, res) => {
 app.listen(PORT, () => {
   console.log("Example app listening on port " + PORT);
 });
+
+/* ----------- 404 Page ---------- */
+
+app.use(function (req, res, next) {
+  res.render("404");
+})
