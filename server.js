@@ -22,8 +22,9 @@ const methodOverride = require("method-override");
 const usersRoutes       = require("./routes/users");
 const resourcesRoutes   = require("./routes/resources");
 const carouselResources = require("./routes/carousel");
-const myResourcesRoutes = require("./routes/my-resources");
 const myLikesRoutes     = require("./routes/my-likes");
+const commentsRoutes = require("./routes/comments");
+const myResourcesRoutes = require("./routes/my-resources");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -59,6 +60,7 @@ app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
 app.use("/api/my-resources", myResourcesRoutes(knex));
 app.use("/api/my-likes", myLikesRoutes(knex));
+app.use("/api/comments", commentsRoutes(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -239,10 +241,10 @@ app.get("/resources", (req, res) => {
 });
 
 /* ----------- ADD RESOURCE COMMENT ---------- */
-app.post("/resources/comment", (req,res) => {
-  console.log("hello");
-  res.redirect("/");
-});
+// app.post("/resources/comment", (req,res) => {
+//   console.log("hello");
+//   res.redirect("/");
+// });
 
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {
