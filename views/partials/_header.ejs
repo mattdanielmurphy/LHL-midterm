@@ -20,7 +20,7 @@
 
     <div class="row">
       <div id='nav-links-container' class="collapse navbar-collapse">
-        <div class='container-fluid d-flex justify-content-around' id="nav-links">
+        <div class='container-fluid d-flex justify-content-center' id="nav-links">
           <a href="/resources">All&nbsp;resources</a>
           <a href="/resources/:id">My&nbsp;resources<span class="sr-only">(current)</span></a>
           <a href="/resources/new">New&nbsp;resource</a>
@@ -31,10 +31,10 @@
     <%  } else { %>
       <div class='ml-auto'>
           <div class="form-inline">
-            <form action="/login" method="GET" title="Log in" class="d-inline nav-item">
-              <button class="btn my-2" type="submit">Log in</button>
-              <a class='d-inline nav-link register text-nowrap' href="/registration">Register</a>
+            <form action="/login" method="GET" title="Log in" class="d-inline nav-item mx-3">
+              <button class="btn" type="submit">Log in</button>
             </form>
+            <a class='d-inline nav-link button register text-nowrap' href="/registration">Register</a>
           </div>
         </div>
       </div>

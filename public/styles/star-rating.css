@@ -8,7 +8,7 @@
  * Licensed under the BSD 3-Clause
  * https://github.com/kartik-v/bootstrap-star-rating/blob/master/LICENSE.md
  */
-.rating-loading {
+ .rating-loading {
     width: 25px;
     height: 25px;
     font-size: 0;
@@ -163,20 +163,10 @@
 
 .rating-container .caption {
     color: #999;
-    display: inline-block;
+    display: block;
     vertical-align: middle;
     font-size: 60%;
-    margin-top: -0.6em;
-}
-
-.rating-container .caption {
-    margin-left: 5px;
-    margin-right: 0;
-}
-
-.rating-rtl .caption {
-    margin-right: 5px;
-    margin-left: 0;
+    margin: 4px 0 0 19px;
 }
 
 /**

@@ -16,8 +16,8 @@
     <main class='container'>
 
       <article class='jumbotron'>
-        <h1 class="text-left">Welcome to <br/><span class="text-info">My Personal Syllabus</span>!<br/>
-          <small class="text-muted">&nbsp;Your custom home for learning.</small>
+        <h1 class="text-left">Welcome to <span class="text-info">My Personal Syllabus</span>!<br/>
+          <small class="text-muted">Your custom home for learning</small>
         </h1>
         <ul>
           <li><strong>Save any resource you find online that you'd like to learn</strong>&mdash;from tutorials, to blogs, to videos, and everything in between.</li>
@@ -27,7 +27,7 @@
       </article>
 
       <article>
-        <h1 id="title-for-carousel">Newest resources added</h1>
+        <h1 id="title-for-carousel">Most recent resources</h1>
         <div id="carousel-container" class='carousel slide bg-light' data-ride="carousel">
           <ol class="carousel-indicators">
               <li id="carousel-indicators" data-target="#carousel-container" data-slide-to="0" class="active"></li>
@@ -57,13 +57,12 @@
 
         </div>
         <% if (!username) { %>
-          <div id="index-register" class="m-4 mt-6">
+          <div id="index-register">
             <h2 class="text-success"> Register Now! </h2>
             <form action="/registration" method="GET" title="Click here to register" class="d-inline form-inline my-2 my-lg-0">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Click HERE to register</button>
             </form>
-            <br>
-            <small class="mt-1">Already registered? <a href="/login">Log in here.</a></small>
+            <p>Already registered? <a href="/login"><strong>Log in</strong></a></p>
           </div>
         <%  } %>
       </article>
