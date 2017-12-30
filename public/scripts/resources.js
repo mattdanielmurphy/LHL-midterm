@@ -5,7 +5,7 @@ function renderAllResources() {
     url: "/api/resources"
   }).then((resources) => {
     console.log("Rendering all resources: ", resources)
-    createAndAppendResource(resources);
+    createAndAppendResource(resources, filterCommentsByResourceId);
   })
 }
 
@@ -23,18 +23,21 @@ function renderFilteredResources(resourceCategories) {
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
-    createAndAppendResource(resources);
+    createAndAppendResource(resources, filterCommentsByResourceId);
   });
 }
 
-// function filterCommentsByResourceId(id) {
-//   $.ajax({
-//     method: "GET",
-//     url: `/api/get-comments?resid=${id}`,
-//   }).then((result) => {
-//     createComments(result)
-//   });
-// }
+function filterCommentsByResourceId(resourceId, idToAppend) {
+  $.ajax({
+    method: "GET",
+    url: `/api/get-comments?resid=${resourceId}`
+  }).then((result) => {
+    console.log(result)
+    console.log(idToAppend)
+    $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[0].content}</li>
+      <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+  });
+}
 
 // function createComments(comment) {
 //   $('#comment-heading').append(
@@ -42,43 +45,37 @@ function renderFilteredResources(resourceCategories) {
 //     <li class="list-group list-group-flush"> Posted by: ${comment.username}</li>`)
 // }
 
-function createAndAppendResource(resources) {
+function createAndAppendResource(resources, cb) {
   let counter = 0;
+
   resources.forEach(function(resource) {
     console.log(resource.id, '<- resourceId in createAndAppendResource')
+    let resourceId = resource.id;
     // 1. get the resource ID to do an knex query on comments with that id!
     // 2. append the comments with that specific resource
 
     // $commentHeading = filterCommentsByResourceId(resource.id)
     // console.log($commentHeading, "<--commentHeading");
+    $resource = createResourceElement(resource,counter);
+    $('#resources-row').append($resource);
+    cb(resourceId, counter)
+    counter = counter + 1;
 
-
-    let resourceId = resource.id;
-
-    $.ajax({
-      method: "GET",
-      url: `/api/get-comments?resid=${resourceId}`,
-    }).then((result) => {
-      $resource = createResourceElement(resource);
-      $('#resources-row').append($resource);
-      console.log(result +"<--result[0]")
-      console.log(resourceId + " should match: " + result[0].resource_id)
-      if (resourceId === result[0].resource_id) {
-
-        $('.insert-comments').append(`<li class="list-group list-group-flush">${result[0].content}</li>
-            <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
-      }
-
-
-
-    //     `<div id='${counter}''></div`)
+    // $.ajax({
+    //   method: "GET",
+    //   url: `/api/get-comments?resid=${resourceId}`
+    // }).then((result) => {
     //   console.log(result)
-    //   console.log(counter)
-    //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
-    // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
-    //   counter = counter + 1;
+    // //   $resource = createResourceElement(resource);
+    // //   $('#resources-row').append($resource);
+    // //   $('#comment-heading').append(`<div id='${counter}''></div`)
+    // //   console.log(result)
+    // //   console.log(counter)
+    // //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
+    // // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+    // //   counter = counter + 1;
 
-    });
+    // });
 
     // $resource = createResourceElement(resource);
     // $('#resources-row').append($resource);
@@ -111,8 +108,8 @@ function createAndAppendResource(resources) {
       });
     }); // submit comment btn
 }
+function createResourceElement(resource, counter) {
 
-function createResourceElement(resource) {
   return (
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
@@ -139,11 +136,9 @@ function createResourceElement(resource) {
           <li class="list-group list-group-flush"> ${resource.like}</li>
       </div>
 
-      <div class="card-body">
+      <div class="card-body comment-div">
         <h6 id="comment-heading" class="card-title">Comments:</h6>
-          <div class="insert-comments">
-
-          </div>
+        <div id='${counter}'></div>
       </div>
 
 
