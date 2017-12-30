@@ -8,8 +8,51 @@ h3 {
 	box-sizing: border-box;
 }
 
+#resource-img {
+	transition: .15s ease-in-out;
+	.img-thumbnail {
+		padding: 0;
+		border: none;
+	}
+	a {
+		padding: 0;
+		margin: 0;
+		border: none;
+	}
+	&:hover {
+		opacity: .7;
+		> #resource-options {
+			background-color: #20c997;
+		}
+	}
+}
+
+#resource-options {
+	text-align: center;
+	background-color: #f7f7f9;
+	transition: .15s ease-in-out;
+	button {
+		background: none;
+		outline: none;
+		border: none;
+		color: #55595c;
+		transition: color .15s ease-in-out;
+		padding: 10px 0;
+		margin: 0 5px;
+		&:hover {
+			cursor: pointer;
+			color: white;
+		}
+	}
+	&:hover {
+		background-color: #20c997;
+	}
+}
+
 #new-comment-form {
 	padding: 1em;
+	max-width: 35em;
+	margin: 0 auto;
 	textarea {
 		margin: 10px 0 2px 0;
 		border: 1px solid #adb5bd;

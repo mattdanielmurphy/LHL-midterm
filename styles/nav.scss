@@ -8,11 +8,11 @@
 		padding: 1em 1em .9em 1em;
 		margin: 0 2em;
 		background-color: $gray-700;
-		color: white;
+		color: #fff;
 		text-decoration: none;
 		transition: background-color 0.15s ease-in-out;
 		&:hover {
-			color: white;
+			color: #fff;
 			background-color: $teal;
 		}
 	}
@@ -21,8 +21,11 @@
 #nav {
 	.button {
 		background-color: $gray-700;
-		color: white;
+		color: #fff;
 		padding: 1em 1em .9em 1em;
+		&:hover {
+			border-bottom: 2px solid #fff;
+		}
 	}
 	padding: 0;
 	.row {
@@ -36,12 +39,12 @@
 	}
 	.btn {
 		background-color: $teal;
+		border: none;
 		border-bottom: 2px solid $gray-200;
-		color: white;
+		color: #fff;
 		padding: 1em 1em .9em 1em;
 		&:hover {
-			background-color: $gray-200;
-			color: $teal;
+			background-color: darken(#20c997, 5);
 		}
 	}
 	.nav-item {
@@ -50,7 +53,7 @@
 	.nav-link {
 		text-decoration: none;
 		&:hover {
-			color: white;
+			color: #fff;
 			background: $teal;
 		}
 	}
@@ -72,7 +75,7 @@
 }
 
 #brand {
-	color: white;
+	color: #fff;
 	border: none;
 	padding-right: 10px;
 	&:hover {

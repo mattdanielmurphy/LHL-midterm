@@ -28,35 +28,80 @@ function renderFilteredResources(resourceCategories) {
   });
 }
 
+function likeResource() {
+  let liked = false;
+
+  $('.like-resource-btn').click(() => {
+    if(liked) {
+      $('.like-resource-btn')
+        .hover(
+          $('.like-resource-btn')
+            .css('color', 'white'),
+          $('.like-resource-btn')
+            .css('color', '#55595c')
+        );
+      liked = false;
+    } else {
+      $('.like-resource-btn')
+        .hover(
+          $('.like-resource-btn')
+            .css('color', 'white'),
+          $('.like-resource-btn')
+            .css('color', 'red')
+        );
+      liked = true;
+    }
+  });
+  $('.like-resource-btn').hover( () => {
+    if(liked) {
+      $('.like-resource-btn')
+      .css('color', 'pink')
+    } else {
+      $('.like-resource-btn')
+      .css('color', 'white')
+    }
+  }, () => {
+    if(liked) {
+      $('.like-resource-btn')
+      .css('color', 'red')
+    } else {
+      $('.like-resource-btn')
+      .css('color', '#55595c')
+    }
+  });
+}
+
 function createAndAppendResource(resources) {
   resources.forEach(function(resource) {
     $resource = createResourceElement(resource);
     $('#resources-row').append($resource);
   });
-    // Accessing resource's DOM object after AJAX call.
-    // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
+  // Accessing resource's DOM object after AJAX call.
+  // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 
-    // Add star ratings from font awesome
-    createStarRatings('.rating','.clear-rating')
+  // Add star ratings from font awesome
+  createStarRatings('.rating','.clear-rating')
 
-    // TRY the AJAX call here!
-    $('.submit-comment-btn').click(function() {
-      event.preventDefault();
-      let $submitCommentBtn = $(this)
-      let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
-      console.log(commentTextArea);
+  likeResource();
 
-      // use $this to bubble up in the DOM, to get the resource.url, use it to join to get the resource_id
-      // use session to get username, do a join to find user id
+  // TRY the AJAX call here!
+  $('.submit-comment-btn').click(function() {
+    event.preventDefault();
+    let $submitCommentBtn = $(this)
+    let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
+    console.log(commentTextArea);
 
-      $.ajax({
-        url: '/api/comments',
-        data: {text: commentTextArea},
-        method: 'POST'
-      }).then(function() {
-        console.log('Successfully Posted comment')
-      });
-    }); // submit comment btn
+    // use $this to bubble up in the DOM, to get the resource.url, use it to join to get the resource_id
+    // use session to get username, do a join to find user id
+
+    $.ajax({
+      url: '/api/comments',
+      data: {text: commentTextArea},
+      method: 'POST'
+    }).then(function() {
+      console.log('Successfully Posted comment')
+    });
+  }); // submit comment btn
 }
 
 function createResourceElement(resource) {
@@ -72,9 +117,19 @@ function createResourceElement(resource) {
         <p class="card-text">desc:${resource.description}</p>
       </div>
 
-      <div>
+      <div id='resource-img'>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
+
+        <div id='resource-options'>
+          <button class='like-resource-btn'>
+            <i class="fas fa-lg fa-heart"></i>
+          </button>
+          <button class='add-comment-btn'>
+            <i class="fas fa-lg fa-comment"></i>
+          </button>
+        </div>
       </div>
+
 
       <div class="card-body">
         <h6 class="card-title">Overall Ratings:</h6>
@@ -104,7 +159,7 @@ function createResourceElement(resource) {
 
       <ul class="list-group list-group-flush">
         <form id="new-comment-form" method="POST" action="/api/comments">
-          <textarea id="comment-text-area" name="new-comment" cols="26" rows="4"></textarea>
+          <textarea id="comment-text-area" name="new-comment" rows="4"></textarea>
           <input class="submit-comment-btn" type="submit" value="Add Comment" />
         </form>
       </ul>

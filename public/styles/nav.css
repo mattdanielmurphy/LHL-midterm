@@ -8,13 +8,13 @@
   padding: 1em 1em .9em 1em;
   margin: 0 2em;
   background-color: #55595c;
-  color: white;
+  color: #fff;
   text-decoration: none;
   transition: background-color 0.15s ease-in-out;
 }
 
 #nav-links a:hover {
-  color: white;
+  color: #fff;
   background-color: #20c997;
 }
 
@@ -24,8 +24,12 @@
 
 #nav .button {
   background-color: #55595c;
-  color: white;
+  color: #fff;
   padding: 1em 1em .9em 1em;
+}
+
+#nav .button:hover {
+  border-bottom: 2px solid #fff;
 }
 
 #nav .row {
@@ -41,14 +45,14 @@
 
 #nav .btn {
   background-color: #20c997;
+  border: none;
   border-bottom: 2px solid #f7f7f9;
-  color: white;
+  color: #fff;
   padding: 1em 1em .9em 1em;
 }
 
 #nav .btn:hover {
-  background-color: #f7f7f9;
-  color: #20c997;
+  background-color: #1cb386;
 }
 
 #nav .nav-item {
@@ -60,7 +64,7 @@
 }
 
 #nav .nav-link:hover {
-  color: white;
+  color: #fff;
   background: #20c997;
 }
 
@@ -84,7 +88,7 @@
 }
 
 #brand {
-  color: white;
+  color: #fff;
   border: none;
   padding-right: 10px;
 }
