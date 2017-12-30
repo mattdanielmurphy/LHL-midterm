@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Resource already exists </title>
+
+    <% include partials/_head.ejs %>
+  </head>
+
+  <body>
+    <header>
+      <% include partials/_header.ejs %>
+      <script type="text/javascript" src="/scripts/same-resource.js"> </script>
+    </header>
+    <main class="my-3">
+      <article class="resources-container justify-content-center">
+        <div class="text-center">
+          <h1 class="text-secondary" style="text-shadow: 1px 1px #000"><strong><%= url %></strong></h1>
+          <h2 class="text-secondary"> has already been created! </h2>
+          <h5 class="text-info"> Like the resource below to add to</h4>
+          <h5 class="text-info mt-3"><a href="/resources/:id">your resources page!</a></h4>
+          <div class="container d-lg-flex justify-content-around" id="same-resources-container">
+            <div class="row flex-row row p-1" id="same-resources-row">
+
+              <!-- Same resources script inserts resources here -->
+
+            </div>
+          </div>
+        </div>
+
+      </article>
+
+    </main>
+
+
+    <footer></footer>
+
+  </body>
+
+  </html>
