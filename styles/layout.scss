@@ -84,14 +84,22 @@ footer {
 	margin-top: 2em;
 }
 
+#index-register {
+	margin-top: 2em;
+	p {
+		margin-top: 20px;
+		font-size: .8em;
+	}
+}
+
 .jumbotron {
 	max-width: 50em;
-	margin: 0 auto;
+	margin: 4em auto 0 auto;
 	ul {
 		max-width: 38em;
 		margin-top: 1em;
 		font-size: 1em;
-		li {
+	li {
 			margin: .75em 0 0 0;
 		}
 	}
