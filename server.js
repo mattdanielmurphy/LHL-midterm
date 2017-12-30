@@ -25,7 +25,7 @@ const carouselResources = require("./routes/carousel");
 const myLikesRoutes     = require("./routes/my-likes");
 const commentsRoutes    = require("./routes/comments");
 const myResourcesRoutes = require("./routes/my-resources");
-const sameResource     = require("./routes/same-resource");
+const sameResource      = require("./routes/same-resource");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -123,7 +123,6 @@ app.post("/registration", (req, res) => {
         .where('username', req.body.username)
         .orWhere('email', req.body.email)
         .then((result) => {
-
           if (result.length !== 0) { // username or email already exists in database
             knex.column('username').select().from('users')
               .where('username', req.body.username)
@@ -149,11 +148,17 @@ app.post("/registration", (req, res) => {
                   email: req.body.email,
                   password: hashedPassword
                 })
-                .then((result) => {
-                  // Sets cookie for the user
-                  req.session.username = req.body.username;
-                  req.session.id = result[0].id;
-                  res.redirect("/resources");
+                .then(() => {
+                  knex("users")
+                    .select("id")
+                    .where("username", req.body.username)
+                    .then((result) => {
+                      // Sets cookie for the user id
+                      req.session.id = result[0].id;
+                    });
+                    //Sets cookie for username and redirects
+                    req.session.username = req.body.username;
+                    res.redirect("/resources");
                 })
                 .catch((error) => {
                   console.error(error);
