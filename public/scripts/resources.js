@@ -72,9 +72,18 @@ function createResourceElement(resource) {
         <p class="card-text">desc:${resource.description}</p>
       </div>
 
-      <div>
+      <div id='resource-img'>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
+        <div id='resource-options'>
+          <button class='like-resource-btn'>
+            <i class="fas fa-lg fa-heart"></i>
+          </button>
+          <button class='add-comment-btn'>
+            <i class="fas fa-lg fa-comment"></i>
+          </button>
+        </div>
       </div>
+
 
       <div class="card-body">
         <h6 class="card-title">Overall Ratings:</h6>
