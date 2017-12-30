@@ -30,9 +30,10 @@ module.exports = (knex) => {
           });
     } else {
       knex
+        .distinct('re.id','re.url')
         .select(
             're.id', 're.title', 're.description', 're.url', 're.screenshot',
-            'l.like', 'r.value', 'c.content', 'c.created_at',
+            'l.like', 'r.value',
             'u.username'
           )
         .from('resources AS re')

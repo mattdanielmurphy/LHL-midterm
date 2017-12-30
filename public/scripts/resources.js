@@ -5,7 +5,7 @@ function renderAllResources() {
     url: "/api/resources"
   }).then((resources) => {
     console.log("Rendering all resources: ", resources)
-    createAndAppendResource(resources);
+    createAndAppendResource(resources, filterCommentsByResourceId);
   })
 }
 
@@ -23,8 +23,7 @@ function renderFilteredResources(resourceCategories) {
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
-    console.log("before create and append: ", resources)
-    createAndAppendResource(resources);
+    createAndAppendResource(resources, filterCommentsByResourceId);
   });
 }
 
@@ -71,10 +70,59 @@ function likeResource() {
   });
 }
 
-function createAndAppendResource(resources) {
+function filterCommentsByResourceId(resourceId, idToAppend) {
+  $.ajax({
+    method: "GET",
+    url: `/api/get-comments?resid=${resourceId}`
+  }).then((result) => {
+    console.log(result)
+    console.log(idToAppend)
+    $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[0].content}</li>
+      <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+  });
+}
+
+// function createComments(comment) {
+//   $('#comment-heading').append(
+//     `<li class="list-group list-group-flush">${comment.content}</li>
+//     <li class="list-group list-group-flush"> Posted by: ${comment.username}</li>`)
+// }
+
+function createAndAppendResource(resources, cb) {
+  let counter = 0;
+
   resources.forEach(function(resource) {
-    $resource = createResourceElement(resource);
+    console.log(resource.id, '<- resourceId in createAndAppendResource')
+    let resourceId = resource.id;
+    // 1. get the resource ID to do an knex query on comments with that id!
+    // 2. append the comments with that specific resource
+
+    // $commentHeading = filterCommentsByResourceId(resource.id)
+    // console.log($commentHeading, "<--commentHeading");
+    $resource = createResourceElement(resource,counter);
     $('#resources-row').append($resource);
+    cb(resourceId, counter)
+    counter = counter + 1;
+
+    // $.ajax({
+    //   method: "GET",
+    //   url: `/api/get-comments?resid=${resourceId}`
+    // }).then((result) => {
+    //   console.log(result)
+    // //   $resource = createResourceElement(resource);
+    // //   $('#resources-row').append($resource);
+    // //   $('#comment-heading').append(`<div id='${counter}''></div`)
+    // //   console.log(result)
+    // //   console.log(counter)
+    // //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
+    // // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+    // //   counter = counter + 1;
+
+    // });
+
+    // $resource = createResourceElement(resource);
+    // $('#resources-row').append($resource);
+    // $('#comment-heading').append()
   });
   // Accessing resource's DOM object after AJAX call.
   // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
@@ -83,28 +131,29 @@ function createAndAppendResource(resources) {
   createStarRatings('.rating','.clear-rating')
 
   likeResource();
+    // TRY the AJAX call here!
+    $('.submit-comment-btn').click(function() {
+      event.preventDefault();
+      let $submitCommentBtn = $(this)
+      let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
+      let $ul = $submitCommentBtn.parent().parent();
+      let $hrefLong = $ul.siblings('#resource-url').find('a').attr('href')
+      let $hrefShort = ($hrefLong).replace('http://', '');
 
-  // TRY the AJAX call here!
-  $('.submit-comment-btn').click(function() {
-    event.preventDefault();
-    let $submitCommentBtn = $(this)
-    let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
-    console.log(commentTextArea);
-
-    // use $this to bubble up in the DOM, to get the resource.url, use it to join to get the resource_id
-    // use session to get username, do a join to find user id
-
-    $.ajax({
-      url: '/api/comments',
-      data: {text: commentTextArea},
-      method: 'POST'
-    }).then(function() {
-      console.log('Successfully Posted comment')
-    });
-  }); // submit comment btn
+      $.ajax({
+        url: '/api/comments',
+        data: {
+          text: commentTextArea,
+          url: $hrefShort
+        },
+        method: 'POST'
+      }).then(function() {
+        console.log('Successfully Posted comment')
+      });
+    }); // submit comment btn
 }
+function createResourceElement(resource, counter) {
 
-function createResourceElement(resource) {
   return (
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
@@ -114,10 +163,10 @@ function createResourceElement(resource) {
       </div>
 
       <div class="card-body">
-        <p class="card-text">desc:${resource.description}</p>
+        <p class="card-text">${resource.description}</p>
       </div>
 
-      <div id='resource-img'>
+      <div id='resource-url'>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
 
         <div id='resource-options'>
@@ -141,10 +190,11 @@ function createResourceElement(resource) {
           <li class="list-group list-group-flush"> ${resource.like}</li>
       </div>
 
-      <div class="card-body">
-        <h6 class="card-title">Comments:</h6>
-        <li class="list-group list-group-flush">${resource.content}</li>
+      <div class="card-body comment-div">
+        <h6 id="comment-heading" class="card-title">Comments:</h6>
+        <div id='${counter}'></div>
       </div>
+
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -167,30 +217,6 @@ function createResourceElement(resource) {
     </div>`
   );
 }
-
-// function loadComments() {
-//   $.ajax({
-//     url: '/resources/comment',
-//     dataType: "json",
-//     method: 'GET',
-//   }).then(function(tweets) {
-//     renderTweets(tweets);
-//   });
-// }
-
-// function postComment() {
-//   let serializeText = $("#comment-text-area").serialize();
-//   console.log(serializeText)
-
-//   $.ajax({
-//       url: '/resources/comment',
-//       data: serializeText,
-//       method: 'POST',
-//     }).then(function() {
-//       // loadComments();
-//       $("#comment-text-area").val('');
-//     });
-// }
 
 function removeResources(resourcesToRender, cb) {
   $.ajax({
@@ -237,5 +263,3 @@ $(() => {
   loadAllResources(".filter-btn");
   renderResourcesOnClick(".filter-btn", ".filter-btn.active");
 });
-
-
