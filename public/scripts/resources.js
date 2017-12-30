@@ -4,8 +4,18 @@ function renderAllResources() {
     method: "GET",
     url: "/api/resources"
   }).then((resources) => {
+    console.log("Rendering all resources: ", resources)
     createAndAppendResource(resources);
   })
+}
+
+function createStarRatings(rating, clearRating) {
+  $(rating).rating({
+      filledStar: '<i class="fa fa-star"></i>',
+      emptyStar: '<i class="fa fa-star"></i>',
+      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
+    });
+  $(clearRating).tooltip();
 }
 
 function renderFilteredResources(resourceCategories) {
@@ -13,6 +23,7 @@ function renderFilteredResources(resourceCategories) {
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
+    console.log("before create and append: ", resources)
     createAndAppendResource(resources);
   });
 }
@@ -23,27 +34,10 @@ function createAndAppendResource(resources) {
     $('#resources-row').append($resource);
   });
     // Accessing resource's DOM object after AJAX call.
-    // It's asynchronous, so you can use jquery to access the newly added resource's DOM here.
+    // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 
-
-    //   $.ajax({
-    //     url: '/api/comments',
-    //     data: {text: textAreaContent},
-    //     method: 'POST'
-    //   }).then(function() {
-    //     console.log('Successfully Posted comment')
-    //   });
-    // });
-
-    // $('#submit-comment-btn').off('click');
-
-    // Add comment ratings from font awesome
-    $('.rating').rating({
-      filledStar: '<i class="fa fa-star"></i>',
-      emptyStar: '<i class="fa fa-star"></i>',
-      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
-    });
-    $('.clear-rating').tooltip();
+    // Add star ratings from font awesome
+    createStarRatings('.rating','.clear-rating')
 
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
@@ -51,12 +45,13 @@ function createAndAppendResource(resources) {
       let $submitCommentBtn = $(this)
       let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
       console.log(commentTextArea);
-      console.log("yes")
+
+      // use $this to bubble up in the DOM, to get the resource.url, use it to join to get the resource_id
+      // use session to get username, do a join to find user id
 
       $.ajax({
         url: '/api/comments',
-        data: {text: commentTextArea
-        },
+        data: {text: commentTextArea},
         method: 'POST'
       }).then(function() {
         console.log('Successfully Posted comment')
