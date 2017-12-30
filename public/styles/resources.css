@@ -6,6 +6,10 @@ h3 {
   box-sizing: border-box;
 }
 
+#resource-img {
+  transition: .15s ease-in-out;
+}
+
 #resource-img .img-thumbnail {
   padding: 0;
   border: none;
@@ -15,24 +19,20 @@ h3 {
   padding: 0;
   margin: 0;
   border: none;
-  transition: opacity .15s ease-in-out;
 }
 
 #resource-img:hover {
   opacity: .7;
 }
 
-#resource-img:hover > #resource-options button {
-  color: #20c997;
-}
-
-#resource-img:hover > #resource-options button:hover {
-  color: #1a1a1a;
+#resource-img:hover > #resource-options {
+  background-color: #20c997;
 }
 
 #resource-options {
   text-align: center;
   background-color: #f7f7f9;
+  transition: .15s ease-in-out;
 }
 
 #resource-options button {
@@ -47,10 +47,11 @@ h3 {
 
 #resource-options button:hover {
   cursor: pointer;
+  color: white;
 }
 
-#resource-options:hover button {
-  color: #20c997;
+#resource-options:hover {
+  background-color: #20c997;
 }
 
 #new-comment-form {
