@@ -61,13 +61,24 @@ function createAndAppendResource(resources) {
     }).then((result) => {
       $resource = createResourceElement(resource);
       $('#resources-row').append($resource);
-      console.log(result +"<--result[0]")
-      console.log(resourceId + " should match: " + result[0].resource_id)
-      if (resourceId === result[0].resource_id) {
 
-        $('.insert-comments').append(`<li class="list-group list-group-flush">${result[0].content}</li>
-            <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+      // console.log(result +"<--result[0]")
+      // console.log(resourceId + " should match: " + result[0].resource_id)
+      let resources = {};
+      for (const n in result) {
+        console.log(result[n].resource_id);
+        for (const x = 0; $('#resources-row').children().length(); x++) {
+          if ($('#resources-row').hasClass()) {
+            $('.' + result[n].resource_id).append(
+              `${result[n].content}`
+            )
+          }
+        }
       }
+      // if (resourceId === result[0].resource_id) {
+      //   $('.insert-comments').append(`<li class="list-group list-group-flush">${result[0].content}</li>
+      //       <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+      // }
 
 
 
@@ -114,7 +125,7 @@ function createAndAppendResource(resources) {
 
 function createResourceElement(resource) {
   return (
-    `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
+    `<div class="${resource.id} col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
 
       <div class="card-body">
