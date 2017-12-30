@@ -67,9 +67,7 @@ main {
 article {
 	margin: 0 auto;
 	padding: 5em 0 10em 0;
-	@media (min-width: 900px) {
-	}
-	max-width: 800px;
+	max-width: 85%;
 }
 
 footer {
