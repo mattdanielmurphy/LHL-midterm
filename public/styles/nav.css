@@ -73,15 +73,13 @@
 
 #nav .navbar-toggler {
   transition: .3s ease;
+  height: 50px;
+  background-color: #20c997;
 }
 
 #nav .navbar-toggler:hover {
   cursor: pointer;
-  background: rgba(0, 0, 0, 0.2);
-}
-
-#nav .navbar-toggler:hover span {
-  filter: brightness(2);
+  background-color: #1cb386;
 }
 
 #brand {
