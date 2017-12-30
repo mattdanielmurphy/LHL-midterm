@@ -17,24 +17,26 @@
         Please fill out both fields!
       </div>
       <main id="login-main" class="container mt-5">
-        <div class="row justify-content-sm-center">
-          <div>
-            <h3>Log in to your account:</h3>
-            <form action="/login" method='POST'>
-              <table class='table'>
-                <tr>
-                  <td><label for="username">Username:</label></td>
-                  <td><input type="text" id="login-username" name="username" placeholder='username'></td>
-                </tr>
-                <tr>
-                  <td><label for="password">Password:</label></td>
-                  <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
-                </tr>
-              </table>
-              <button class='btn btn-primary' type="submit">Log in</button>
-            </form>
+        <article>
+          <div class="row justify-content-sm-center">
+            <div>
+              <h3>Log in to your account:</h3>
+              <form action="/login" method='POST'>
+                <table class='table'>
+                  <tr>
+                    <td><label for="username">Username:</label></td>
+                    <td><input type="text" id="login-username" name="username" placeholder='username'></td>
+                  </tr>
+                  <tr>
+                    <td><label for="password">Password:</label></td>
+                    <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
+                  </tr>
+                </table>
+                <button class='btn btn-primary' type="submit">Log in</button>
+              </form>
+            </div>
           </div>
-        </div>
+        </article>
       </main>
 
     <% } else if (match === true) {%>
@@ -46,29 +48,7 @@
       Username and Password did not match! Please login again.
     </div>
     <main id="login-main" class="container mt-5">
-      <div class="row justify-content-sm-center">
-        <div>
-          <h3>Log in to your account:</h3>
-          <form action="/login" method='POST'>
-            <table class='table'>
-              <tr>
-                <td><label for="username">Username:</label></td>
-                <td><input type="text" id="login-username" name="username" placeholder='username'></td>
-              </tr>
-              <tr>
-                <td><label for="password">Password:</label></td>
-                <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
-              </tr>
-            </table>
-            <button class='btn btn-primary' type="submit">Log in</button>
-          </form>
-        </div>
-      </div>
-    </main>
-
-    <% } else {%>
-
-      <main id="login-main" class="container mt-5">
+      <article>
         <div class="row justify-content-sm-center">
           <div>
             <h3>Log in to your account:</h3>
@@ -87,6 +67,32 @@
             </form>
           </div>
         </div>
+      </article>
+    </main>
+
+    <% } else {%>
+
+      <main id="login-main" class="container mt-5">
+      <article>
+        <div class="row justify-content-sm-center">
+          <div>
+            <h3>Log in to your account:</h3>
+            <form action="/login" method='POST'>
+              <table class='table'>
+                <tr>
+                  <td><label for="username">Username:</label></td>
+                  <td><input type="text" id="login-username" name="username" placeholder='username'></td>
+                </tr>
+                <tr>
+                  <td><label for="password">Password:</label></td>
+                  <td><input type="password" id="login-password" name="password" placeholder='••••••••••'></td>
+                </tr>
+              </table>
+              <button class='btn btn-primary' type="submit">Log in</button>
+            </form>
+          </div>
+        </div>
+      </article>
       </main>
 
     <% } %>
