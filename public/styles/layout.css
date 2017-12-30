@@ -17,6 +17,7 @@ tr td input {
 }
 
 tr td label {
+  text-align: right;
   float: right;
   padding: .5em 0;
 }
@@ -24,7 +25,7 @@ tr td label {
 .form-control {
   height: 17em;
   background-color: white;
-  width: 13.5em;
+  padding: 0.5em 1em;
 }
 
 .form-control option {
@@ -50,11 +51,12 @@ a {
   border-bottom: 2px solid #20c997;
   padding: .4em .3em .2em .5em;
   margin-right: .4em;
+  transition: background-color .15s ease-in-out;
 }
 
 a:hover {
   color: white;
-  background: #20c997;
+  background-color: #20c997;
   text-decoration: none;
 }
 
@@ -68,7 +70,7 @@ main {
 
 article {
   margin: 0 auto;
-  padding: 5em 5em 10em 5em;
+  padding: 5em 0 10em 0;
   max-width: 800px;
 }
 

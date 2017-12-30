@@ -11,9 +11,8 @@
 }
 
 #carousel-container #carousel-caption {
-  background-color: #F7F7F9;
+  background-color: rgba(53, 58, 63, 0.7);
   float: center;
-  opacity: 0.9;
   margin: 2%;
   border-radius: 15px;
 }
@@ -23,10 +22,13 @@
 }
 
 #carousel-container #carousel-caption #carousel-title {
+  color: #5fc59a;
+  text-shadow: 1px 1px #fff;
   opacity: 1;
 }
 
 #carousel-container #carousel-caption #carousel-description {
+  color: #fff;
   opacity: 1;
 }
 

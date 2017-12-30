@@ -23,7 +23,7 @@ function createResourceElement(resource) {
       <img id="carousel-image" class='d-block w-100' src='/resources/${resource.id}/screenshot'>
       <div id="carousel-caption" class='carousel-caption d-non d-md-block'>
         <h3 id="carousel-title" class="text-center">${resource.title}</h3>
-        <p id="carousel-description" class="text-center text-dark">${resource.description}</p>
+        <p id="carousel-description" class="text-center">${resource.description}</p>
       </div>
     </div>
     `
