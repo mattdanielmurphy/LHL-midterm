@@ -23,8 +23,9 @@ const usersRoutes       = require("./routes/users");
 const resourcesRoutes   = require("./routes/resources");
 const carouselResources = require("./routes/carousel");
 const myLikesRoutes     = require("./routes/my-likes");
-const commentsRoutes = require("./routes/comments");
+const commentsRoutes    = require("./routes/comments");
 const myResourcesRoutes = require("./routes/my-resources");
+const sameResource     = require("./routes/same-resource");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -61,6 +62,7 @@ app.use("/api/carousel", carouselResources(knex));
 app.use("/api/my-resources", myResourcesRoutes(knex));
 app.use("/api/my-likes", myLikesRoutes(knex));
 app.use("/api/comments", commentsRoutes(knex));
+app.use("/api/same-resource", sameResource(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -250,12 +252,22 @@ app.get("/resources", (req, res) => {
 app.get("/resources/new", (req, res) => {
 
   const currentUser = req.session.username;
-  if (currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("resource_new", templateVars);
-  } else {
+
+  if (!currentUser) {
     res.redirect("/");
   }
+
+  let templateVars = {
+   username: req.session.username,
+   blank: false
+ };
+
+  if (req.session.blank) {
+    templateVars.blank = true;
+    req.session.blank = null;
+  }
+
+  res.render("resource_new", templateVars);
 
 });
 
@@ -292,36 +304,64 @@ function insertResourceTags(tagsArray, resourceId) {
 app.post("/resources", (req, res) => {
   let un = req.session.username;
 
-  knex("users")
-    .select("id")
-    .where("username", un)
-    .then((resultID) => {
-      takeScreenshot(req.body.url)
-        .then((screenshot) => {
-            return knex("resources")
-              .insert({
-                url: req.body.url,
-                title: req.body.title,
-                description: req.body.description,
-                user_id: resultID[0].id,
-                screenshot: screenshot
-              })
-              .then(() => {
-                knex("resources")
-                  .select("id")
-                  .where("url", req.body.url)
-                  .then((result) => {
-                    let tagsArray = [];
-                    typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
-                    insertResourceTags(tagsArray, result[0].id);
-                  }); // .then to use resource id
-              }); // .then to select resource id
-        }) // .then to insert new resource
+  // Search if url is already in database
+  knex("resources")
+    .select("url", "id")
+    .where("url", req.body.url)
+    .then((result) => {
+      // If url is not a match
+      if (result[0] === undefined) {
+        // checks for blank input or no tag selected
+        if (req.body.url === '' || req.body.title === '' || req.body.description === '' || req.body.tags === undefined) {
+          req.session.blank = true;
+          res.redirect("/resources/new");
 
-        .then(() => {res.redirect(`/resources/${req.session.id}`);});
+        } else {
+          // adds the resource into the database
+          knex("users")
+            .select("id")
+            .where("username", un)
+            .then((resultID) => {
+              takeScreenshot(req.body.url)
+                .then((screenshot) => {
+                    return knex("resources")
+                      .insert({
+                        url: req.body.url,
+                        title: req.body.title,
+                        description: req.body.description,
+                        user_id: resultID[0].id,
+                        screenshot: screenshot
+                      })
+                      .then(() => {
+                        knex("resources")
+                          .select("id")
+                          .where("url", req.body.url)
+                          .then((result) => {
+                            let tagsArray = [];
+                            typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
+                            insertResourceTags(tagsArray, result[0].id);
+                          }); // .then to use resource id
+                      }); // .then to select resource id
+                }) // .then to insert new resource
+
+                .then(() => {res.redirect(`/resources/${req.session.id}`);});
+
+            });
+
+        }
+
+      } else {
+        // if url is a match render same resource page
+        let templateVars = {
+          username: req.session.username,
+          url: result[0].url
+        };
+        req.session.same = result[0].id;
+        res.render("same_resource", templateVars);
+
+      }
 
     });
-
 
 }); // POST resources
 
