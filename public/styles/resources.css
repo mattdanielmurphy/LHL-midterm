@@ -6,26 +6,26 @@ h3 {
   box-sizing: border-box;
 }
 
-#resource-img {
+#resource-url {
   transition: .15s ease-in-out;
 }
 
-#resource-img .img-thumbnail {
+#resource-url .img-thumbnail {
   padding: 0;
   border: none;
 }
 
-#resource-img a {
+#resource-url a {
   padding: 0;
   margin: 0;
   border: none;
 }
 
-#resource-img:hover {
+#resource-url:hover {
   opacity: .7;
 }
 
-#resource-img:hover > #resource-options {
+#resource-url:hover > #resource-options {
   background-color: #20c997;
 }
 
