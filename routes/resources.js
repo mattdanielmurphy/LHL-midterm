@@ -18,12 +18,12 @@ module.exports = (knex) => {
               'u.username'
             )
           .from('resources AS re')
-          .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
-          .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
-          .fullOuterJoin('ratings AS r', 're.id', 'r.resource_id')
-          .fullOuterJoin('users AS u', 're.user_id', 'u.id')
-          .fullOuterJoin('resources_tags AS rt', 're.id', 'rt.resource_id')
-          .fullOuterJoin('tags AS t', 't.id', 'rt.tag_id')
+          .innerJoin('likes AS l', 're.id', 'l.resource_id')
+          .innerJoin('comments AS c', 're.id', 'c.resource_id')
+          .innerJoin('ratings AS r', 're.id', 'r.resource_id')
+          .innerJoin('users AS u', 're.user_id', 'u.id')
+          .innerJoin('resources_tags AS rt', 're.id', 'rt.resource_id')
+          .innerJoin('tags AS t', 't.id', 'rt.tag_id')
           .whereIn('t.type', filterTypes)
           .then((results) => {
             res.json(results);
@@ -36,10 +36,10 @@ module.exports = (knex) => {
             'u.username'
           )
         .from('resources AS re')
-        .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
-        .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
-        .fullOuterJoin('ratings AS r', 're.id', 'r.resource_id')
-        .fullOuterJoin('users AS u', 're.user_id', 'u.id')
+        .innerJoin('likes AS l', 're.id', 'l.resource_id')
+        .innerJoin('comments AS c', 're.id', 'c.resource_id')
+        .innerJoin('ratings AS r', 're.id', 'r.resource_id')
+        .innerJoin('users AS u', 're.user_id', 'u.id')
         .then((results) => {
           res.json(results);
         });
