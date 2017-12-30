@@ -14,8 +14,6 @@ module.exports = (knex) => {
       })
       .then((result) => {
       });
-
-
   }); //router.get end
 
   return router;
