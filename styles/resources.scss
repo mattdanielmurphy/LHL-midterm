@@ -8,9 +8,14 @@ h3 {
 	box-sizing: border-box;
 }
 
-textarea {
-	width: 100%;
-	margin: 10px 0 2px 0;
+#new-comment-form {
+	padding: 1em;
+	textarea {
+		margin: 10px 0 2px 0;
+		border: 1px solid #adb5bd;
+		padding: .5em;
+		width: 100%;
+	}
 }
 
 // styling for check mark on the filter buttons

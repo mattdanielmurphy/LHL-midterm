@@ -6,9 +6,15 @@ h3 {
   box-sizing: border-box;
 }
 
-textarea {
-  width: 100%;
+#new-comment-form {
+  padding: 1em;
+}
+
+#new-comment-form textarea {
   margin: 10px 0 2px 0;
+  border: 1px solid #adb5bd;
+  padding: .5em;
+  width: 100%;
 }
 
 .filter-group .btn {
