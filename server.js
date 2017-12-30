@@ -19,10 +19,11 @@ const takeScreenshot = require('./webshot');
 const methodOverride = require("method-override");
 
 // Seperated Routes for each Resource
-const usersRoutes = require("./routes/users");
-const resourcesRoutes = require("./routes/resources");
+const usersRoutes       = require("./routes/users");
+const resourcesRoutes   = require("./routes/resources");
 const carouselResources = require("./routes/carousel");
-
+const myResourcesRoutes = require("./routes/my-resources");
+const myLikesRoutes     = require("./routes/my-likes");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -56,6 +57,8 @@ app.use(cookieSession({
 app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
+app.use("/api/my-resources", myResourcesRoutes(knex));
+app.use("/api/my-likes", myLikesRoutes(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -142,9 +145,10 @@ app.post("/registration", (req, res) => {
                   email: req.body.email,
                   password: hashedPassword
                 })
-                .then(() => {
+                .then((result) => {
                   // Sets cookie for the user
                   req.session.username = req.body.username;
+                  req.session.id = result[0].id;
                   res.redirect("/resources");
                 })
                 .catch((error) => {
@@ -198,8 +202,10 @@ app.post("/login", (req, res) => {
       .then((result) => {
         if (result.length !== 0) {
           // Sets cookie for the user
+          let userid = result[0].id;
           req.session.username = req.body.username;
-          res.redirect("/resources/:id");
+          req.session.id = userid;
+          res.redirect(`/resources/${userid}`);
         } else {
           req.session.match = true;
           res.redirect("/login");
@@ -310,7 +316,7 @@ app.post("/resources", (req, res) => {
               }); // .then to select resource id
         }) // .then to insert new resource
 
-        .then(() => {res.redirect("/resources");});
+        .then(() => {res.redirect(`/resources/${req.session.id}`);});
 
     });
 
@@ -322,12 +328,26 @@ app.post("/resources", (req, res) => {
 app.get("/resources/:id", (req, res) => {
 
   const currentUser = req.session.username;
-  if (currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("resource_user", templateVars);
-  } else {
-    res.redirect("/");
+
+  if (!currentUser) {
+    return res.redirect("/login");
   }
+
+  knex("users")
+    .select("id", "username")
+    .where("username", currentUser)
+    .then((resultID) => {
+      if (req.params.id == resultID[0].id) {
+        let templateVars = {
+          username: req.session.username,
+          id: req.session.id
+        };
+        res.render("resource_user", templateVars);
+      } else {
+        res.redirect(`/resources/${resultID[0].id}`);
+      }
+    });
+
 
 });
 

@@ -1,37 +1,51 @@
-function renderAllResources() {
-  $.ajax({
-    method: "GET",
-    url: "/api/resources"
-  }).then((resources) => {
-    createAndAppendResource(resources);
-  })
+/* ----------- My-resources functions ----------- */
+function renderResources() {
+  $(() =>
+    $.ajax({
+      method: "GET",
+      url: "/api/my-resources"
+    }).then((resources) => {
+      appendResource(resources);
+    })
+  );
 }
 
-function renderFilteredResources(resourceCategories) {
-  $.ajax({
-    method: "GET",
-    url: `/api/resources?types=${resourceCategories}`
-  }).then((resources) => {
-    createAndAppendResource(resources);
-  });
-}
-
-function createAndAppendResource(resources) {
+function appendResource(resources) {
   resources.forEach(function(resource) {
     $resource = createResourceElement(resource);
-    $('#resources-row').append($resource);
+    $('#my-resources-row').append($resource);
   });
 }
 
+/* ----------- My-likes functions ----------- */
+function renderLikesResources() {
+  $(() =>
+    $.ajax({
+      method: "GET",
+      url: "/api/my-likes"
+    }).then((resources) => {
+      appendLikesResource(resources);
+    })
+  );
+}
+
+function appendLikesResource(resources) {
+  resources.forEach(function(resource) {
+    $resource = createResourceElement(resource);
+    $('#my-likes-row').append($resource);
+  });
+}
+
+/* ----------- Function for creating each resource element ----------- */
 function createResourceElement(resource) {
   return (
-    `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
+   `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
       <div class="card-body">
         <h6 class="card-subtitle text-muted">Submitted by ${resource.username}</username></h6>
       </div>
       <div class="card-body">
-        <p class="card-text">desc:${resource.description}</p>
+        <p class="card-text">${resource.description}</p>
       </div>
       <div>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
@@ -87,50 +101,9 @@ function createResourceElement(resource) {
   );
 }
 
-function removeResources(resourcesToRender, cb) {
-  $.ajax({
-    method: "GET",
-    url: "/api/resources"
-  }).then((resources) => {
-    resources.forEach(function() {
-      $('.each-resource').remove();
-    });
-    cb(resourcesToRender);
-  });
-}
-
-function toggleBtnActive (btn) {
-  $(btn).click(function() {
-    $(this).toggleClass("active");
-  });
-}
-
-function loadAllResources(filterBtn) {
-  if(!$("filterBtn").hasClass("active")) {
-    renderAllResources();
-  }
-}
-
-function renderResourcesOnClick(filterBtn, activeFilterBtns) {
-  $(filterBtn).click(function() {
-    let resourcesToFilter = [];
-    for (btn of $(activeFilterBtns)) {
-      resourcesToFilter.push(btn.id)
-    }
-    let resourceCategories = JSON.stringify({ data: resourcesToFilter });
-    removeResources(resourceCategories, renderFilteredResources);
-
-    if (resourcesToFilter.length === 0) {
-      renderAllResources();
-    }
-  });
-}
 
 // document.ready() shorthand:
 $(() => {
-  toggleBtnActive(".filter-btn");
-  loadAllResources(".filter-btn");
-  renderResourcesOnClick(".filter-btn", ".filter-btn.active");
+  renderResources();
+  renderLikesResources();
 });
-
-
