@@ -27,10 +27,62 @@ function renderFilteredResources(resourceCategories) {
   });
 }
 
+// function filterCommentsByResourceId(id) {
+//   $.ajax({
+//     method: "GET",
+//     url: `/api/get-comments?resid=${id}`,
+//   }).then((result) => {
+//     createComments(result)
+//   });
+// }
+
+// function createComments(comment) {
+//   $('#comment-heading').append(
+//     `<li class="list-group list-group-flush">${comment.content}</li>
+//     <li class="list-group list-group-flush"> Posted by: ${comment.username}</li>`)
+// }
+
 function createAndAppendResource(resources) {
+  let counter = 0;
   resources.forEach(function(resource) {
-    $resource = createResourceElement(resource);
-    $('#resources-row').append($resource);
+    console.log(resource.id, '<- resourceId in createAndAppendResource')
+    // 1. get the resource ID to do an knex query on comments with that id!
+    // 2. append the comments with that specific resource
+
+    // $commentHeading = filterCommentsByResourceId(resource.id)
+    // console.log($commentHeading, "<--commentHeading");
+
+
+    let resourceId = resource.id;
+
+    $.ajax({
+      method: "GET",
+      url: `/api/get-comments?resid=${resourceId}`,
+    }).then((result) => {
+      $resource = createResourceElement(resource);
+      $('#resources-row').append($resource);
+      console.log(result +"<--result[0]")
+      console.log(resourceId + " should match: " + result[0].resource_id)
+      if (resourceId === result[0].resource_id) {
+
+        $('.insert-comments').append(`<li class="list-group list-group-flush">${result[0].content}</li>
+            <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+      }
+
+
+
+    //     `<div id='${counter}''></div`)
+    //   console.log(result)
+    //   console.log(counter)
+    //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
+    // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+    //   counter = counter + 1;
+
+    });
+
+    // $resource = createResourceElement(resource);
+    // $('#resources-row').append($resource);
+    // $('#comment-heading').append()
   });
     // Accessing resource's DOM object after AJAX call.
     // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
@@ -88,9 +140,12 @@ function createResourceElement(resource) {
       </div>
 
       <div class="card-body">
-        <h6 class="card-title">Comments:</h6>
-        <li class="list-group list-group-flush">${resource.content}</li>
+        <h6 id="comment-heading" class="card-title">Comments:</h6>
+          <div class="insert-comments">
+
+          </div>
       </div>
+
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">

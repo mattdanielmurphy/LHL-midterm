@@ -25,6 +25,7 @@ const carouselResources = require("./routes/carousel");
 const myLikesRoutes     = require("./routes/my-likes");
 const commentsRoutes = require("./routes/comments");
 const myResourcesRoutes = require("./routes/my-resources");
+const getComments = require("./routes/get-comments");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -61,6 +62,7 @@ app.use("/api/carousel", carouselResources(knex));
 app.use("/api/my-resources", myResourcesRoutes(knex));
 app.use("/api/my-likes", myLikesRoutes(knex));
 app.use("/api/comments", commentsRoutes(knex));
+app.use("/api/get-comments", getComments(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
@@ -231,12 +233,13 @@ app.post("/logout", (req, res) => {
 app.get("/resources", (req, res) => {
 
   const currentUser = req.session.username;
-  if (currentUser) {
-    let templateVars = { username: req.session.username,};
-    res.render("resources", templateVars);
-  } else {
+  if (!currentUser) {
     res.redirect("/");
   }
+
+    let templateVars = { username: req.session.username,};
+    res.render("resources", templateVars);
+
 
 });
 
