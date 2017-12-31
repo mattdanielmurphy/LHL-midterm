@@ -12,10 +12,10 @@ module.exports = (knex) => {
           'l.like', 'r.value', 'u.username'
         )
       .from('resources AS re')
-      .innerJoin('likes AS l', 're.id', 'l.resource_id')
-      .innerJoin('comments AS c', 're.id', 'c.resource_id')
-      .innerJoin('ratings AS r', 're.id', 'r.resource_id')
-      .innerJoin('users AS u', 're.user_id', 'u.id')
+      .fullOuterJoin('likes AS l', 're.id', 'l.resource_id')
+      .fullOuterJoin('comments AS c', 're.id', 'c.resource_id')
+      .fullOuterJoin('ratings AS r', 're.id', 'r.resource_id')
+      .fullOuterJoin('users AS u', 're.user_id', 'u.id')
       .where('l.user_id', req.session.id)
       .then((results) => {
         res.json(results);
