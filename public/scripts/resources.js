@@ -3,7 +3,6 @@ function renderAllResources() {
     method: "GET",
     url: "/api/resources"
   }).then((resources) => {
-    console.log("Rendering all resources: ", resources)
     createAndAppendResource(resources, filterCommentsByResourceId);
   })
 }
@@ -22,10 +21,10 @@ function filterCommentsByResourceId(resourceId, idToAppend) {
     method: "GET",
     url: `/api/get-comments?resid=${resourceId}`
   }).then((result) => {
-    console.log(result)
-    console.log(idToAppend)
-    $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[0].content}</li>
-      <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+    for (let i = 0; i < result.length; i ++) {
+      $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[i].content}</li>
+        <li class="list-group list-group-flush"> Posted by: ${result[i].username}</li> <br>`)
+    }
   });
 }
 
