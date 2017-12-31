@@ -15,6 +15,8 @@ function appendResource(resources) {
     $resource = createResourceElement(resource);
     $('#my-resources-row').append($resource);
   });
+  // Add star ratings from font awesome
+  createStarRatings('.rating','.clear-rating')
 }
 
 /* ----------- My-likes functions ----------- */
@@ -34,7 +36,19 @@ function appendLikesResource(resources) {
     $resource = createResourceElement(resource);
     $('#my-likes-row').append($resource);
   });
+  // Add star ratings from font awesome
+  createStarRatings('.rating','.clear-rating')
 }
+
+function createStarRatings(rating, clearRating) {
+  $(rating).rating({
+      filledStar: '<i class="fa fa-star"></i>',
+      emptyStar: '<i class="fa fa-star"></i>',
+      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
+    });
+  $(clearRating).tooltip();
+}
+
 
 /* ----------- Function for creating each resource element ----------- */
 function createResourceElement(resource) {
