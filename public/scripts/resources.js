@@ -1,4 +1,3 @@
-
 function renderAllResources() {
   $.ajax({
     method: "GET",
@@ -9,64 +8,12 @@ function renderAllResources() {
   })
 }
 
-function createStarRatings(rating, clearRating) {
-  $(rating).rating({
-      filledStar: '<i class="fa fa-star"></i>',
-      emptyStar: '<i class="fa fa-star"></i>',
-      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
-    });
-  $(clearRating).tooltip();
-}
-
 function renderFilteredResources(resourceCategories) {
   $.ajax({
     method: "GET",
     url: `/api/resources?types=${resourceCategories}`
   }).then((resources) => {
     createAndAppendResource(resources, filterCommentsByResourceId);
-  });
-}
-
-function likeResource() {
-  let liked = false;
-
-  $('.like-resource-btn').click(() => {
-    if(liked) {
-      $('.like-resource-btn')
-        .hover(
-          $('.like-resource-btn')
-            .css('color', 'white'),
-          $('.like-resource-btn')
-            .css('color', '#55595c')
-        );
-      liked = false;
-    } else {
-      $('.like-resource-btn')
-        .hover(
-          $('.like-resource-btn')
-            .css('color', 'white'),
-          $('.like-resource-btn')
-            .css('color', 'red')
-        );
-      liked = true;
-    }
-  });
-  $('.like-resource-btn').hover( () => {
-    if(liked) {
-      $('.like-resource-btn')
-      .css('color', 'pink')
-    } else {
-      $('.like-resource-btn')
-      .css('color', 'white')
-    }
-  }, () => {
-    if(liked) {
-      $('.like-resource-btn')
-      .css('color', 'red')
-    } else {
-      $('.like-resource-btn')
-      .css('color', '#55595c')
-    }
   });
 }
 
@@ -82,12 +29,44 @@ function filterCommentsByResourceId(resourceId, idToAppend) {
   });
 }
 
-// function createComments(comment) {
-//   $('#comment-heading').append(
-//     `<li class="list-group list-group-flush">${comment.content}</li>
-//     <li class="list-group list-group-flush"> Posted by: ${comment.username}</li>`)
-// }
+function createStarRatings(rating, clearRating) {
+  $(rating).rating({
+      filledStar: '<i class="fa fa-star"></i>',
+      emptyStar: '<i class="fa fa-star"></i>',
+      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
+    });
+  $(clearRating).tooltip();
+}
 
+function likeResource(likeResourceBtn) {
+  $(likeResourceBtn).click(function() {
+    let liked = false;
+    let $likeResourceBtn = $(this);
+
+    if(liked) {
+      $likeResourceBtn
+        .hover(
+          $likeResourceBtn
+            .css('color', 'white'),
+          $likeResourceBtn
+            .css('color', '#55595c')
+        );
+      liked = false;
+    } else {
+      $likeResourceBtn
+        .hover(
+          $likeResourceBtn
+            .css('color', 'white'),
+          $likeResourceBtn
+            .css('color', 'red')
+        );
+      liked = true;
+    }
+  });
+}
+
+// Access resource's DOM object after AJAX call.
+// It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 function createAndAppendResource(resources, cb) {
   let counter = 0;
 
@@ -97,40 +76,17 @@ function createAndAppendResource(resources, cb) {
     // 1. get the resource ID to do an knex query on comments with that id!
     // 2. append the comments with that specific resource
 
-    // $commentHeading = filterCommentsByResourceId(resource.id)
-    // console.log($commentHeading, "<--commentHeading");
     $resource = createResourceElement(resource,counter);
     $('#resources-row').append($resource);
     cb(resourceId, counter)
     counter = counter + 1;
 
-    // $.ajax({
-    //   method: "GET",
-    //   url: `/api/get-comments?resid=${resourceId}`
-    // }).then((result) => {
-    //   console.log(result)
-    // //   $resource = createResourceElement(resource);
-    // //   $('#resources-row').append($resource);
-    // //   $('#comment-heading').append(`<div id='${counter}''></div`)
-    // //   console.log(result)
-    // //   console.log(counter)
-    // //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
-    // // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
-    // //   counter = counter + 1;
-
-    // });
-
-    // $resource = createResourceElement(resource);
-    // $('#resources-row').append($resource);
-    // $('#comment-heading').append()
   });
-  // Accessing resource's DOM object after AJAX call.
-  // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 
   // Add star ratings from font awesome
   createStarRatings('.rating','.clear-rating')
+  likeResource('.like-resource-btn')
 
-  likeResource();
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
       event.preventDefault();
@@ -152,8 +108,8 @@ function createAndAppendResource(resources, cb) {
       });
     }); // submit comment btn
 }
-function createResourceElement(resource, counter) {
 
+function createResourceElement(resource, counter) {
   return (
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
@@ -173,28 +129,8 @@ function createResourceElement(resource, counter) {
           <button class='like-resource-btn'>
             <i class="fas fa-lg fa-heart"></i>
           </button>
-          <button class='add-comment-btn'>
-            <i class="fas fa-lg fa-comment"></i>
-          </button>
         </div>
       </div>
-
-
-      <div class="card-body">
-        <h6 class="card-title">Overall Ratings:</h6>
-        <li class="list-group list-group-flush">${resource.value}</li>
-      </div>
-
-      <div class="card-body">
-        <h6 class="card-title">Overall Likes:</h6>
-          <li class="list-group list-group-flush"> ${resource.like}</li>
-      </div>
-
-      <div class="card-body comment-div">
-        <h6 id="comment-heading" class="card-title">Comments:</h6>
-        <div id='${counter}'></div>
-      </div>
-
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -206,6 +142,11 @@ function createResourceElement(resource, counter) {
           </p>
         </li>
       </ul>
+
+      <div class="card-body comment-div">
+        <h6 id="comment-heading" class="card-title">Comments:</h6>
+        <div id='${counter}'></div>
+      </div>
 
       <ul class="list-group list-group-flush">
         <form id="new-comment-form" method="POST" action="/api/comments">
