@@ -75,7 +75,6 @@ function createResourceElement(resource) {
   );
 }
 
-
 // document.ready() shorthand:
 $(() => {
   renderResource();

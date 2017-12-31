@@ -4,7 +4,7 @@ function renderAllResources() {
     url: "/api/resources"
   }).then((resources) => {
     createAndAppendResource(resources, filterCommentsByResourceId);
-  })
+  });
 }
 
 function renderFilteredResources(resourceCategories) {
@@ -23,7 +23,7 @@ function filterCommentsByResourceId(resourceId, idToAppend) {
   }).then((result) => {
     for (let i = 0; i < result.length; i ++) {
       $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[i].content}</li>
-        <li class="list-group list-group-flush"> Posted by: ${result[i].username}</li> <br>`)
+        <li class="list-group list-group-flush"> Posted by: ${result[i].username}</li> <br>`);
     }
   });
 }
@@ -46,12 +46,10 @@ function postLike(boolean, likeValue, resourceURL) {
       url: resourceURL
     },
     method: 'POST'
-    }).then(function() {
-        console.log('Successfully Posted comment')
-    });
+    }).then();
 }
 
-// It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
+
 function createAndAppendResource(resources, cb) {
   // divCount is used to append <div> with a unique id, this is used to append the comments that match the correct resource
   let divCount = 0;
@@ -61,37 +59,37 @@ function createAndAppendResource(resources, cb) {
 
     $resource = createResourceElement(resource,divCount);
     $('#resources-row').append($resource);
-    cb(resourceId, divCount)
+    cb(resourceId, divCount);
     divCount = divCount + 1;
   });
 
   // Add star ratings from font awesome
-  createStarRatings('.rating','.clear-rating')
+  createStarRatings('.rating','.clear-rating');
 
   $('.like-btn').click(function() {
-    let $likeBtn = $(this)
-    let $hrefLong = $likeBtn.parent().siblings().attr('href')
+    let $likeBtn = $(this);
+    let $hrefLong = $likeBtn.parent().siblings().attr('href');
     let $hrefShort = ($hrefLong).replace('http://', '');
 
     if (!$likeBtn.hasClass('liked')) {
-      $likeBtn.css('color', 'red')
-      $likeBtn.addClass('liked')
-      postLike(true, 1, $hrefShort)
+      $likeBtn.css('color', 'red');
+      $likeBtn.addClass('liked');
+      postLike(true, 1, $hrefShort);
 
     } else {
-      $likeBtn.css('color', 'white')
-      $likeBtn.removeClass('liked')
-      postLike(false, 0, $hrefShort)
+      $likeBtn.css('color', 'white');
+      $likeBtn.removeClass('liked');
+      postLike(false, 0, $hrefShort);
     }
   });
 
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
       event.preventDefault();
-      let $submitCommentBtn = $(this)
+      let $submitCommentBtn = $(this);
       let commentTextArea = $submitCommentBtn.siblings('#comment-text-area').val();
       let $ul = $submitCommentBtn.parent().parent();
-      let $hrefLong = $ul.siblings('#resource-url').find('a').attr('href')
+      let $hrefLong = $ul.siblings('#resource-url').find('a').attr('href');
       let $hrefShort = ($hrefLong).replace('http://', '');
 
       $.ajax({
@@ -101,9 +99,7 @@ function createAndAppendResource(resources, cb) {
           url: $hrefShort
         },
         method: 'POST'
-      }).then(function() {
-        console.log('Successfully Posted comment')
-      }); // ajax
+      }).then(); // ajax
     }); // submit comment btn
 }
 
@@ -185,7 +181,7 @@ function renderResourcesOnClick(filterBtn, activeFilterBtns) {
   $(filterBtn).click(function() {
     let resourcesToFilter = [];
     for (btn of $(activeFilterBtns)) {
-      resourcesToFilter.push(btn.id)
+      resourcesToFilter.push(btn.id);
     }
     let resourceCategories = JSON.stringify({ data: resourcesToFilter });
     removeResources(resourceCategories, renderFilteredResources);

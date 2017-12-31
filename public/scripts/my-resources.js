@@ -16,7 +16,7 @@ function appendResource(resources) {
     $('#my-resources-row').append($resource);
   });
   // Add star ratings from font awesome
-  createStarRatings('.rating','.clear-rating')
+  createStarRatings('.rating','.clear-rating');
 }
 
 /* ----------- My-likes functions ----------- */
@@ -37,9 +37,11 @@ function appendLikesResource(resources) {
     $('#my-likes-row').append($resource);
   });
   // Add star ratings from font awesome
-  createStarRatings('.rating','.clear-rating')
+  createStarRatings('.rating','.clear-rating');
 }
 
+
+/* ----------- Star Rating Function ----------- */
 function createStarRatings(rating, clearRating) {
   $(rating).rating({
       filledStar: '<i class="fa fa-star"></i>',
@@ -48,7 +50,6 @@ function createStarRatings(rating, clearRating) {
     });
   $(clearRating).tooltip();
 }
-
 
 /* ----------- Function for creating each resource element ----------- */
 function createResourceElement(resource) {
@@ -81,7 +82,6 @@ function createResourceElement(resource) {
     </div>`
   );
 }
-
 
 // document.ready() shorthand:
 $(() => {

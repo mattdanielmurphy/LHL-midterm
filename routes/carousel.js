@@ -2,12 +2,11 @@
 
 const express = require('express');
 const router  = express.Router();
-let total = 0
+let total = 0;
 
 module.exports = (knex) => {
 
   router.get("/", (req, res) => {
-
     knex('resources')
       .count('id')
       .then((count) => {
@@ -19,8 +18,6 @@ module.exports = (knex) => {
             res.json(results);
           });
       });
-
-
   }); //router.get end
 
   return router;

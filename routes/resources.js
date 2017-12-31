@@ -8,8 +8,6 @@ module.exports = (knex) => {
   router.get("/", (req, res) => {
     if (req.query["types"]) {
       let filterTypes = JSON.parse(req.query.types).data;
-
-      console.log(filterTypes, 'filter types')
         knex
           .distinct('re.id','re.url')
           .select(
