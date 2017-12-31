@@ -37,10 +37,10 @@ function createStarRatings(rating, clearRating) {
     });
   $(clearRating).tooltip();
 }
-
-function likeResource(likeResourceBtn) {
+let liked = false;
+function likeResource(likeResourceBtn, liked) {
   $(likeResourceBtn).click(function() {
-    let liked = false;
+    // let liked = false;
     let $likeResourceBtn = $(this);
 
     if(liked) {
