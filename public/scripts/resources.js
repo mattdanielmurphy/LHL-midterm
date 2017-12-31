@@ -47,8 +47,10 @@ function postLike(boolean, likeValue, resourceURL) {
     },
     method: 'POST'
     }).then(function() {
-        console.log('Successfully Posted comment')
-    });
+      console.log("PostLike: done")
+    })
+    .then(() => knex.destroy());
+
 }
 
 // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
@@ -85,7 +87,6 @@ function createAndAppendResource(resources, cb) {
     }
   });
 
-    // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
       event.preventDefault();
       let $submitCommentBtn = $(this)
@@ -102,6 +103,7 @@ function createAndAppendResource(resources, cb) {
         },
         method: 'POST'
       }).then(function() {
+        $submitCommentBtn.siblings('#comment-text-area').val('');
         console.log('Successfully Posted comment')
       }); // ajax
     }); // submit comment btn

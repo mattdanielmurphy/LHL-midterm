@@ -8,7 +8,6 @@ module.exports = (knex) => {
   router.get("/", (req, res) => {
     if (req.query.resid) {
       let resourceId = JSON.parse(req.query.resid)
-      console.log(resourceId, '<-- reosurce id in commentsByResourceId.js')
       knex
         .select('c.content', 'u.username', 'c.resource_id')
         .from('comments as c')

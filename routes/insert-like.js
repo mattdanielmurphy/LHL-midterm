@@ -14,6 +14,8 @@ module.exports = (knex) => {
     // true is a string because it's inside data object
     if (like === 'true') {
       console.log("inside if")
+
+
       knex('resources')
         .select('id')
         .where('url',req.body.url)
@@ -24,28 +26,24 @@ module.exports = (knex) => {
               user_id: req.session.id,
               like: req.body.likeValue
             })
-            .then(() => {
-            })
-            .catch((err) => {
-              console.log(err)
-            });
         })
+        .then((results) => {
+          res.json(results);
+        })
+
+
     } else {
       console.log("inside else")
-        knex('resources')
-        .select('id')
-        .where('url',req.body.url)
-        .then((result) => {
-          knex('likes')
-            .where('resource_id', result[0].id)
-            .andWhere('user_id',req.session.id)
-            .del()
-            .then(() => {
-            })
-            .catch((err) => {
-              console.log(err)
-            });
-        })
+    //     knex('resources')
+    //     .select('id')
+    //     .where('url',req.body.url)
+    //     .then((result) => {
+    //       knex('likes')
+    //         .where('resource_id', result[0].id)
+    //         .andWhere('user_id',req.session.id)
+    //         .del()
+    //     })
+    //     .then(() => knex.destroy())
     }
   }); //router.get end
 
