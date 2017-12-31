@@ -39,49 +39,49 @@ exports.seed = function(knex, Promise) {
     }).then((screenshots) => {
       return Promise.all([
         knex('resources').insert({
-          id: 1, user_id: 2, url: 'www.sqlcourse.com', title: 'SQL Course', description: 'Learning SQL. Interactive Online SQL Training', screenshot: screenshots[0]
+          user_id: 2, url: 'www.sqlcourse.com', title: 'SQL Course', description: 'Learning SQL. Interactive Online SQL Training', screenshot: screenshots[0]
         }),
         knex('resources').insert({
-          id: 2, user_id: 4, url: 'eloquentjavascript.net', title: 'Eloquent Javascript', description: 'This is an online book about JavaScript, programming, and the wonders of the digital. ', screenshot: screenshots[1]
+          user_id: 4, url: 'eloquentjavascript.net', title: 'Eloquent Javascript', description: 'This is an online book about JavaScript, programming, and the wonders of the digital. ', screenshot: screenshots[1]
         }),
         knex('resources').insert({
-          id: 3, user_id: 3, url: 'davidwalsh.name', title: 'David Walsh Blog', description: 'This blog composes of topics related to JavaScript, personal thoughts, guides and much more. The blog design is captivating and is going to hook you up on the first visit.',  screenshot: screenshots[2]
+          user_id: 3, url: 'davidwalsh.name', title: 'David Walsh Blog', description: 'This blog composes of topics related to JavaScript, personal thoughts, guides and much more. The blog design is captivating and is going to hook you up on the first visit.',  screenshot: screenshots[2]
         }),
         knex('resources').insert({
-          id: 4, user_id: 1, url: 'www.lynda.com/JavaScript-training-tutorials/244-0.html', title: 'Lynda - Javascript Training and Tutorials', description: 'Watch our JavaScript how-to videos and learn to code, create, and build JavaScript arrays and functions. Understand how to write JavaScript code to create HTML5 sites and other interactive websites.',  screenshot: screenshots[3]
+          user_id: 1, url: 'www.lynda.com/JavaScript-training-tutorials/244-0.html', title: 'Lynda - Javascript Training and Tutorials', description: 'Watch our JavaScript how-to videos and learn to code, create, and build JavaScript arrays and functions. Understand how to write JavaScript code to create HTML5 sites and other interactive websites.',  screenshot: screenshots[3]
         }),
         knex('resources').insert({
-          id: 5, user_id: 5, url: 'www.youtube.com/user/TechGuyWeb', title: 'Traversy Media', description: 'Web development and programming tutorials on YouTube',  screenshot: screenshots[4]
+          user_id: 5, url: 'www.youtube.com/user/TechGuyWeb', title: 'Traversy Media', description: 'Web development and programming tutorials on YouTube',  screenshot: screenshots[4]
         }),
         knex('resources').insert({
-          id: 6, user_id: 4, url: 'www.smashingmagazine.com', title: 'Smashing Magazine', description: 'Smashing Magazine delivers reliable, useful, but most importantly practical articles to web designers and developers.',  screenshot: screenshots[5]
+          user_id: 4, url: 'www.smashingmagazine.com', title: 'Smashing Magazine', description: 'Smashing Magazine delivers reliable, useful, but most importantly practical articles to web designers and developers.',  screenshot: screenshots[5]
         }),
         knex('resources').insert({
-          id: 7, user_id: 1, url: 'howtocodeinhtml.com', title: 'How to code in HTML5 and CSS3', description: 'A book that helps people start making websites.',  screenshot: screenshots[6]
+          user_id: 1, url: 'howtocodeinhtml.com', title: 'How to code in HTML5 and CSS3', description: 'A book that helps people start making websites.',  screenshot: screenshots[6]
         })
       ])
     }).then(()=> {
       return Promise.all([
         knex('comments').insert({
-          user_id: 1, resource_id: 1, created_at:'january 1, 2017', updated_at: 'february 1, 2017', content: 'SQL course was great!'
+          user_id: 1, resource_id: 1, created_at:'january 1, 2017', updated_at: 'february 1, 2017', content: 'So useful!'
         }),
         knex('comments').insert({
-          user_id: 2, resource_id: 2, created_at:'january 8, 2017', updated_at: 'february 2, 2017', content: 'Loved this book :)'
+          user_id: 2, resource_id: 2, created_at:'january 8, 2017', updated_at: 'february 2, 2017', content: 'Loved this :)'
         }),
         knex('comments').insert({
-          user_id: 3, resource_id: 3, created_at:'january 12, 2017', updated_at: 'february 3, 2017', content: 'Most articles were spot on. Great insight into the industry'
+          user_id: 3, resource_id: 3, created_at:'january 12, 2017', updated_at: 'february 3, 2017', content: 'Spot on. I learnt so much.'
         }),
         knex('comments').insert({
-          user_id: 4, resource_id: 4, created_at:'january 16, 2017', updated_at: 'february 4, 2017', content: "Can't believe I learnt Javascript so quickly with the Lynda tutorials! Videos were amazing."
+          user_id: 4, resource_id: 4, created_at:'january 16, 2017', updated_at: 'february 4, 2017', content: 'Use this. NOW!'
         }),
         knex('comments').insert({
-          user_id: 5, resource_id: 5, created_at:'january 19, 2017', updated_at: 'february 5, 2017', content: 'The video tutorials were so useful!'
+          user_id: 5, resource_id: 5, created_at:'january 19, 2017', updated_at: 'february 5, 2017', content: 'So goooood.'
         }),
         knex('comments').insert({
-          user_id: 4, resource_id: 6, created_at:'january 20, 2017', updated_at: 'february 6, 2017', content: 'Love love love Smashing magazine.'
+          user_id: 4, resource_id: 6, created_at:'january 20, 2017', updated_at: 'february 6, 2017', content: 'A+++++'
         }),
         knex('comments').insert({
-          user_id: 5, resource_id: 7, created_at:'january 26, 2017', updated_at: 'february 7, 2017', content: 'This book made learning html5 and css3 a breeze.'
+          user_id: 5, resource_id: 7, created_at:'january 26, 2017', updated_at: 'february 7, 2017', content: 'This made learning a breeze.'
         })
       ])
     }).then(()=> {
