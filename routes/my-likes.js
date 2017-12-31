@@ -19,8 +19,8 @@ module.exports = (knex) => {
       .innerJoin('users AS u', 're.user_id', 'u.id')
       .where('l.user_id', req.session.id)
       .then((results) => {
-          res.json(results);
-        });
+        res.json(results);
+      });
 
 
   }); //router.get end

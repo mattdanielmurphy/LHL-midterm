@@ -1,21 +1,10 @@
-
 function renderAllResources() {
   $.ajax({
     method: "GET",
     url: "/api/resources"
   }).then((resources) => {
-    console.log("Rendering all resources: ", resources)
     createAndAppendResource(resources, filterCommentsByResourceId);
   })
-}
-
-function createStarRatings(rating, clearRating) {
-  $(rating).rating({
-      filledStar: '<i class="fa fa-star"></i>',
-      emptyStar: '<i class="fa fa-star"></i>',
-      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
-    });
-  $(clearRating).tooltip();
 }
 
 function renderFilteredResources(resourceCategories) {
@@ -27,110 +16,75 @@ function renderFilteredResources(resourceCategories) {
   });
 }
 
-function likeResource() {
-  let liked = false;
-
-  $('.like-resource-btn').click(() => {
-    if(liked) {
-      $('.like-resource-btn')
-        .hover(
-          $('.like-resource-btn')
-            .css('color', 'white'),
-          $('.like-resource-btn')
-            .css('color', '#55595c')
-        );
-      liked = false;
-    } else {
-      $('.like-resource-btn')
-        .hover(
-          $('.like-resource-btn')
-            .css('color', 'white'),
-          $('.like-resource-btn')
-            .css('color', 'red')
-        );
-      liked = true;
-    }
-  });
-  $('.like-resource-btn').hover( () => {
-    if(liked) {
-      $('.like-resource-btn')
-      .css('color', 'pink')
-    } else {
-      $('.like-resource-btn')
-      .css('color', 'white')
-    }
-  }, () => {
-    if(liked) {
-      $('.like-resource-btn')
-      .css('color', 'red')
-    } else {
-      $('.like-resource-btn')
-      .css('color', '#55595c')
-    }
-  });
-}
-
 function filterCommentsByResourceId(resourceId, idToAppend) {
   $.ajax({
     method: "GET",
     url: `/api/get-comments?resid=${resourceId}`
   }).then((result) => {
-    console.log(result)
-    console.log(idToAppend)
-    $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[0].content}</li>
-      <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
+    for (let i = 0; i < result.length; i ++) {
+      $(`#${idToAppend}`).append(`<li class="list-group list-group-flush">${result[i].content}</li>
+        <li class="list-group list-group-flush"> Posted by: ${result[i].username}</li> <br>`)
+    }
   });
 }
 
-// function createComments(comment) {
-//   $('#comment-heading').append(
-//     `<li class="list-group list-group-flush">${comment.content}</li>
-//     <li class="list-group list-group-flush"> Posted by: ${comment.username}</li>`)
-// }
+function createStarRatings(rating, clearRating) {
+  $(rating).rating({
+      filledStar: '<i class="fa fa-star"></i>',
+      emptyStar: '<i class="fa fa-star"></i>',
+      clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
+    });
+  $(clearRating).tooltip();
+}
 
+function postLike(boolean, likeValue, resourceURL) {
+    $.ajax({
+    url: '/api/insert-like',
+    data: {
+      like: boolean,
+      likeValue: likeValue,
+      url: resourceURL
+    },
+    method: 'POST'
+    }).then(function() {
+        console.log('Successfully Posted comment')
+    });
+}
+
+// It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 function createAndAppendResource(resources, cb) {
-  let counter = 0;
+  // divCount is used to append <div> with a unique id, this is used to append the comments that match the correct resource
+  let divCount = 0;
 
   resources.forEach(function(resource) {
-    console.log(resource.id, '<- resourceId in createAndAppendResource')
     let resourceId = resource.id;
-    // 1. get the resource ID to do an knex query on comments with that id!
-    // 2. append the comments with that specific resource
 
-    // $commentHeading = filterCommentsByResourceId(resource.id)
-    // console.log($commentHeading, "<--commentHeading");
-    $resource = createResourceElement(resource,counter);
+    $resource = createResourceElement(resource,divCount);
     $('#resources-row').append($resource);
-    cb(resourceId, counter)
-    counter = counter + 1;
-
-    // $.ajax({
-    //   method: "GET",
-    //   url: `/api/get-comments?resid=${resourceId}`
-    // }).then((result) => {
-    //   console.log(result)
-    // //   $resource = createResourceElement(resource);
-    // //   $('#resources-row').append($resource);
-    // //   $('#comment-heading').append(`<div id='${counter}''></div`)
-    // //   console.log(result)
-    // //   console.log(counter)
-    // //   $(`#${counter}`).append( `<li class="list-group list-group-flush">${result[0].content}</li>
-    // // <li class="list-group list-group-flush"> Posted by: ${result[0].username}</li>`)
-    // //   counter = counter + 1;
-
-    // });
-
-    // $resource = createResourceElement(resource);
-    // $('#resources-row').append($resource);
-    // $('#comment-heading').append()
+    cb(resourceId, divCount)
+    divCount = divCount + 1;
   });
-  // Accessing resource's DOM object after AJAX call.
-  // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 
   // Add star ratings from font awesome
   createStarRatings('.rating','.clear-rating')
 
-  likeResource();
+  $('.like-btn').click(function() {
+    let $likeBtn = $(this)
+    let $hrefLong = $likeBtn.parent().siblings().attr('href')
+    let $hrefShort = ($hrefLong).replace('http://', '');
+
+    if (!$likeBtn.hasClass('liked')) {
+      $likeBtn.css('color', 'red')
+      $likeBtn.addClass('liked')
+      postLike(true, 1, $hrefShort)
+
+    } else {
+      $likeBtn.css('color', 'white')
+      $likeBtn.removeClass('liked')
+      postLike(false, 0, $hrefShort)
+    }
+  });
+
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
       event.preventDefault();
@@ -149,11 +103,11 @@ function createAndAppendResource(resources, cb) {
         method: 'POST'
       }).then(function() {
         console.log('Successfully Posted comment')
-      });
+      }); // ajax
     }); // submit comment btn
 }
-function createResourceElement(resource, counter) {
 
+function createResourceElement(resource, divCount) {
   return (
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
@@ -170,31 +124,11 @@ function createResourceElement(resource, counter) {
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
 
         <div id='resource-options'>
-          <button class='like-resource-btn'>
-            <i class="fas fa-lg fa-heart"></i>
-          </button>
-          <button class='add-comment-btn'>
-            <i class="fas fa-lg fa-comment"></i>
+          <button class='like-btn'>
+          <i class="fas fa-lg fa-heart"></i>
           </button>
         </div>
       </div>
-
-
-      <div class="card-body">
-        <h6 class="card-title">Overall Ratings:</h6>
-        <li class="list-group list-group-flush">${resource.value}</li>
-      </div>
-
-      <div class="card-body">
-        <h6 class="card-title">Overall Likes:</h6>
-          <li class="list-group list-group-flush"> ${resource.like}</li>
-      </div>
-
-      <div class="card-body comment-div">
-        <h6 id="comment-heading" class="card-title">Comments:</h6>
-        <div id='${counter}'></div>
-      </div>
-
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -206,6 +140,11 @@ function createResourceElement(resource, counter) {
           </p>
         </li>
       </ul>
+
+      <div class="card-body comment-div">
+        <h6 id="comment-heading" class="card-title">Comments:</h6>
+        <div id='${divCount}'></div>
+      </div>
 
       <ul class="list-group list-group-flush">
         <form id="new-comment-form" method="POST" action="/api/comments">

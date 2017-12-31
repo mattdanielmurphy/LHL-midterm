@@ -19,7 +19,6 @@ const takeScreenshot = require('./webshot');
 const methodOverride = require("method-override");
 
 // Seperated Routes for each Resource
-const usersRoutes       = require("./routes/users");
 const resourcesRoutes   = require("./routes/resources");
 const carouselResources = require("./routes/carousel");
 const myLikesRoutes     = require("./routes/my-likes");
@@ -27,6 +26,7 @@ const commentsRoutes    = require("./routes/comments");
 const myResourcesRoutes = require("./routes/my-resources");
 const sameResource      = require("./routes/same-resource");
 const getComments = require("./routes/get-comments");
+const insertLike = require("./routes/insert-like");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
@@ -57,7 +57,6 @@ app.use(cookieSession({
 }));
 
 // Mount all resource routes
-app.use("/api/users", usersRoutes(knex));
 app.use("/api/resources", resourcesRoutes(knex));
 app.use("/api/carousel", carouselResources(knex));
 app.use("/api/my-resources", myResourcesRoutes(knex));
@@ -65,6 +64,7 @@ app.use("/api/my-likes", myLikesRoutes(knex));
 app.use("/api/comments", commentsRoutes(knex));
 app.use("/api/same-resource", sameResource(knex));
 app.use("/api/get-comments", getComments(knex));
+app.use("/api/insert-like", insertLike(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
