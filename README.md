@@ -15,13 +15,12 @@ Sign up and you will be able to see the entire database of resources. Registered
 8. Go to <http://localhost:8080/>
 
 ## Final Product
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
-<img src="" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/all-resources.png" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/landing-page.png" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/filter-resource.png" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/my-resources.png" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/update-profile.png" width="600px" height="400px" />
+<img src="https://github.com/mandysGit/LHL-midterm/blob/master/docs/add-new-resource.png" width="600px" height="400px" />
 
 ## Dependencies
 
