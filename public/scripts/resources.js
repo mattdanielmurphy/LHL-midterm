@@ -37,21 +37,32 @@ function createStarRatings(rating, clearRating) {
   $(clearRating).tooltip();
 }
 
-// Access resource's DOM object after AJAX call.
+function postLike(boolean, likeValue, resourceURL) {
+    $.ajax({
+    url: '/api/insert-like',
+    data: {
+      like: boolean,
+      likeValue: likeValue,
+      url: resourceURL
+    },
+    method: 'POST'
+    }).then(function() {
+        console.log('Successfully Posted comment')
+    });
+}
+
 // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
 function createAndAppendResource(resources, cb) {
-  let counter = 0;
+  // divCount is used to append <div> with a unique id, this is used to append the comments that match the correct resource
+  let divCount = 0;
 
   resources.forEach(function(resource) {
     let resourceId = resource.id;
-    // 1. get the resource ID to do an knex query on comments with that id!
-    // 2. append the comments with that specific resource
 
-    $resource = createResourceElement(resource,counter);
+    $resource = createResourceElement(resource,divCount);
     $('#resources-row').append($resource);
-    cb(resourceId, counter)
-    counter = counter + 1;
-
+    cb(resourceId, divCount)
+    divCount = divCount + 1;
   });
 
   // Add star ratings from font awesome
@@ -65,36 +76,14 @@ function createAndAppendResource(resources, cb) {
     if (!$likeBtn.hasClass('liked')) {
       $likeBtn.css('color', 'red')
       $likeBtn.addClass('liked')
-
-      $.ajax({
-        url: '/api/my-likes',
-        data: {
-          like: true,
-          likeValue: 1,
-          url: $hrefShort
-        },
-        method: 'POST'
-      }).then(function() {
-        console.log('Successfully Posted comment')
-      }); // ajax
+      postLike(true, 1, $hrefShort)
 
     } else {
       $likeBtn.css('color', 'white')
       $likeBtn.removeClass('liked')
-
-      $.ajax({
-        url: '/api/my-likes',
-        data: {
-          like: false,
-          url: $hrefShort
-        },
-        method: 'POST'
-      }).then(function() {
-        console.log('Successfully Posted comment')
-      }); // ajax
+      postLike(false, 0, $hrefShort)
     }
   });
-
 
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
@@ -118,7 +107,7 @@ function createAndAppendResource(resources, cb) {
     }); // submit comment btn
 }
 
-function createResourceElement(resource, counter) {
+function createResourceElement(resource, divCount) {
   return (
     `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
@@ -154,7 +143,7 @@ function createResourceElement(resource, counter) {
 
       <div class="card-body comment-div">
         <h6 id="comment-heading" class="card-title">Comments:</h6>
-        <div id='${counter}'></div>
+        <div id='${divCount}'></div>
       </div>
 
       <ul class="list-group list-group-flush">

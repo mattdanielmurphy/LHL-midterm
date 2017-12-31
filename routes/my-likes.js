@@ -5,43 +5,24 @@ const router  = express.Router();
 
 module.exports = (knex) => {
 
-  router.post("/", (req, res) => {
-    let like = req.body.like
+  router.get("/", (req, res) => {
+    knex
+      .select(
+          're.id', 're.title', 're.description', 're.url', 're.screenshot',
+          'l.like', 'r.value', 'c.content', 'c.created_at',
+          'u.username'
+        )
+      .from('resources AS re')
+      .innerJoin('likes AS l', 're.id', 'l.resource_id')
+      .innerJoin('comments AS c', 're.id', 'c.resource_id')
+      .innerJoin('ratings AS r', 're.id', 'r.resource_id')
+      .innerJoin('users AS u', 're.user_id', 'u.id')
+      .where('l.user_id', req.session.id)
+      .then((results) => {
+        res.json(results);
+      });
 
-    // true is a string because it's inside data object
-    if (like === 'true') {
-      knex('resources')
-        .select('id')
-        .where('url',req.body.url)
-        .then((result) => {
-          knex('likes')
-            .insert({
-              resource_id: result[0].id,
-              user_id: req.session.id,
-              like: req.body.likeValue
-            })
-            .then((result) => {
-            })
-            .catch((err) => {
-              console.log(err)
-            });
-        })
-    } else {
-        knex('resources')
-        .select('id')
-        .where('url',req.body.url)
-        .then((result) => {
-          knex('likes')
-            .where('resource_id', result[0].id)
-            .andWhere('user_id',req.session.id)
-            .del()
-            .then((result) => {
-            })
-            .catch((err) => {
-              console.log(err)
-            });
-        })
-    }
+
   }); //router.get end
 
   return router;
