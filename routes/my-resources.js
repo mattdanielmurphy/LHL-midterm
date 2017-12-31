@@ -9,8 +9,7 @@ module.exports = (knex) => {
     knex
       .select(
           're.id', 're.title', 're.description', 're.url', 're.screenshot',
-          'l.like', 'r.value', 'c.content', 'c.created_at',
-          'u.username'
+          'l.like', 'r.value', 'u.username'
         )
       .from('resources AS re')
       .innerJoin('likes AS l', 're.id', 'l.resource_id')

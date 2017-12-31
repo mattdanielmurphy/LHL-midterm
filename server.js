@@ -35,7 +35,7 @@ app.use(methodOverride("_method"));
 app.use(morgan('dev'));
 app.use(cookieSession({
   name: 'session',
-  keys: ['keys1', 'keys2']
+  keys: [process.env.KEYS1, process.env.KEYS2]
 }));
 
 // Log knex SQL queries to STDOUT as well

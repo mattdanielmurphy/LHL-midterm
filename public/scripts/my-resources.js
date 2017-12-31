@@ -39,29 +39,19 @@ function appendLikesResource(resources) {
 /* ----------- Function for creating each resource element ----------- */
 function createResourceElement(resource) {
   return (
-   `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
+    `<div class="col-lg-4 col-md-6 card p-0 mb-3 each-resource">
       <h3 class="card-header">${resource.title}</h3>
+
       <div class="card-body">
         <h6 class="card-subtitle text-muted">Submitted by ${resource.username}</username></h6>
       </div>
+
       <div class="card-body">
         <p class="card-text">${resource.description}</p>
       </div>
-      <div>
+
+      <div id='resource-url'>
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
-      </div>
-      <div class="card-body">
-        <h6 class="card-title">Overall Ratings:</h6>
-        <li class="list-group list-group-flush">${resource.value}</li>
-      </div>
-      <div class="card-body">
-        <h6 class="card-title">Overall Likes:</h6>
-          <li class="list-group list-group-flush"> ${resource.like}</li>
-      </div>
-      <div class="card-body">
-        <h6 class="card-title">Comments:</h6>
-        <li class="list-group list-group-flush">${resource.content}</li>
-      </div>
 
       <ul class="list-group list-group-flush">
         <li class="list-group-item">
@@ -74,30 +64,7 @@ function createResourceElement(resource) {
         </li>
       </ul>
 
-      <ul class="list-group list-group-flush">
-        <button class='toggle-comment'>Add comment</button>
-        <form class='new-comment' method="POST" action="/resources/comment">
-          <textarea name="new-comment" cols="26" rows="4"></textarea>
-          <input type="submit" value="Submit comment" />
-        </form>
-      </ul>
-
-    </div>
-    <script>
-      $('.rating').rating({
-        filledStar: '<i class="fa fa-star"></i>',
-        emptyStar: '<i class="fa fa-star"></i>',
-        clearButton: '<i class="fa fa-lg fa-minus-circle"></i>'
-      });
-
-      $('.clear-rating').tooltip();
-
-      $('.new-comment').hide();
-
-      $('.toggle-comment').unbind('click').click(function() {
-        $(this).siblings('.new-comment').slideToggle();
-      });
-    </script>`
+    </div>`
   );
 }
 

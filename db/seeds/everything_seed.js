@@ -39,25 +39,25 @@ exports.seed = function(knex, Promise) {
     }).then((screenshots) => {
       return Promise.all([
         knex('resources').insert({
-          id: 1, user_id: 2, url: 'www.sqlcourse.com', title: 'SQL Course', description: 'Learning SQL. Interactive Online SQL Training', screenshot: screenshots[0]
+          user_id: 2, url: 'www.sqlcourse.com', title: 'SQL Course', description: 'Learning SQL. Interactive Online SQL Training', screenshot: screenshots[0]
         }),
         knex('resources').insert({
-          id: 2, user_id: 4, url: 'eloquentjavascript.net', title: 'Eloquent Javascript', description: 'This is an online book about JavaScript, programming, and the wonders of the digital. ', screenshot: screenshots[1]
+          user_id: 4, url: 'eloquentjavascript.net', title: 'Eloquent Javascript', description: 'This is an online book about JavaScript, programming, and the wonders of the digital. ', screenshot: screenshots[1]
         }),
         knex('resources').insert({
-          id: 3, user_id: 3, url: 'davidwalsh.name', title: 'David Walsh Blog', description: 'This blog composes of topics related to JavaScript, personal thoughts, guides and much more. The blog design is captivating and is going to hook you up on the first visit.',  screenshot: screenshots[2]
+          user_id: 3, url: 'davidwalsh.name', title: 'David Walsh Blog', description: 'This blog composes of topics related to JavaScript, personal thoughts, guides and much more. The blog design is captivating and is going to hook you up on the first visit.',  screenshot: screenshots[2]
         }),
         knex('resources').insert({
-          id: 4, user_id: 1, url: 'www.lynda.com/JavaScript-training-tutorials/244-0.html', title: 'Lynda - Javascript Training and Tutorials', description: 'Watch our JavaScript how-to videos and learn to code, create, and build JavaScript arrays and functions. Understand how to write JavaScript code to create HTML5 sites and other interactive websites.',  screenshot: screenshots[3]
+          user_id: 1, url: 'www.lynda.com/JavaScript-training-tutorials/244-0.html', title: 'Lynda - Javascript Training and Tutorials', description: 'Watch our JavaScript how-to videos and learn to code, create, and build JavaScript arrays and functions. Understand how to write JavaScript code to create HTML5 sites and other interactive websites.',  screenshot: screenshots[3]
         }),
         knex('resources').insert({
-          id: 5, user_id: 5, url: 'www.youtube.com/user/TechGuyWeb', title: 'Traversy Media', description: 'Web development and programming tutorials on YouTube',  screenshot: screenshots[4]
+          user_id: 5, url: 'www.youtube.com/user/TechGuyWeb', title: 'Traversy Media', description: 'Web development and programming tutorials on YouTube',  screenshot: screenshots[4]
         }),
         knex('resources').insert({
-          id: 6, user_id: 4, url: 'www.smashingmagazine.com', title: 'Smashing Magazine', description: 'Smashing Magazine delivers reliable, useful, but most importantly practical articles to web designers and developers.',  screenshot: screenshots[5]
+          user_id: 4, url: 'www.smashingmagazine.com', title: 'Smashing Magazine', description: 'Smashing Magazine delivers reliable, useful, but most importantly practical articles to web designers and developers.',  screenshot: screenshots[5]
         }),
         knex('resources').insert({
-          id: 7, user_id: 1, url: 'howtocodeinhtml.com', title: 'How to code in HTML5 and CSS3', description: 'A book that helps people start making websites.',  screenshot: screenshots[6]
+          user_id: 1, url: 'howtocodeinhtml.com', title: 'How to code in HTML5 and CSS3', description: 'A book that helps people start making websites.',  screenshot: screenshots[6]
         })
       ])
     }).then(()=> {
