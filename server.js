@@ -25,36 +25,30 @@ const myLikesRoutes     = require("./routes/my-likes");
 const commentsRoutes    = require("./routes/comments");
 const myResourcesRoutes = require("./routes/my-resources");
 const sameResource      = require("./routes/same-resource");
-const getComments = require("./routes/get-comments");
-const insertLike = require("./routes/insert-like");
+const getComments       = require("./routes/get-comments");
+const insertLike        = require("./routes/insert-like");
 
 // Load the logger first so all (static) HTTP requests are logged to STDOUT
 // 'dev' = Concise output colored by response status for development use.
 //         The :status token will be colored red for server error codes, yellow for client error codes, cyan for redirection codes, and uncolored for all other codes.
 app.use(methodOverride("_method"));
-app.use(morgan('dev'));
+app.use(morgan("dev"));
 app.use(cookieSession({
-  name: 'session',
+  name: "session",
   keys: [process.env.KEYS1, process.env.KEYS2]
 }));
 
 // Log knex SQL queries to STDOUT as well
 //app.use(knexLogger(knex));
-
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/styles", sass({
   src: __dirname + "/styles",
   dest: __dirname + "/public/styles",
   debug: true,
-  outputStyle: 'expanded'
+  outputStyle: "expanded"
 }));
 app.use(express.static("public"));
-
-app.use(cookieSession({
-  name: "session",
-  keys: ['key1', 'key2']
-}));
 
 // Mount all resource routes
 app.use("/api/resources", resourcesRoutes(knex));
@@ -68,26 +62,24 @@ app.use("/api/insert-like", insertLike(knex));
 
 /* ----------- LANDING PAGE ---------- */
 app.get("/", (req, res) => {
-  knex('resources')
-    .count('id')
+  knex("resources")
+    .count("id")
     .then((count) => {
-      knex('resources')
-        .select('id', 'title', 'description', 'screenshot')
-        .where('id', ((count[0].count) - 2))
+      knex("resources")
+        .select("id", "title", "description", "screenshot")
+        .where("id", ((count[0].count) - 2))
         .then((results) => {
           let templateVars = {
             username: req.session.username,
             resourceActive: results[0]
           };
-          res.render('index', templateVars);
+          res.render("index", templateVars);
         });
     })
     .catch((error) => console.log(error));
 });
 
 /* ----------- REGISTRATION ---------- */
-  // TO DO:
-  // ADD ERROR CHECKS FOR BLANK INPUTS OR IF USERNAME/EMAIL/PASSWORD ALREADY IN DATABASE
 app.get("/registration", (req, res) => {
   const currentUser = req.session.username;
   if (currentUser) {
@@ -117,17 +109,17 @@ app.get("/registration", (req, res) => {
 app.post("/registration", (req, res) => {
 
   // Checks for blank inputs as well as duplicates in the database
-  if (req.body.username === '' || req.body.email === '' || req.body.password === '') {
+  if (req.body.username === "" || req.body.email === "" || req.body.password === "" ) {
     req.session.blank = true;
     res.redirect("/registration");
   } else {
-      knex('users')
-        .where('username', req.body.username)
-        .orWhere('email', req.body.email)
+      knex("users")
+        .where("username", req.body.username)
+        .orWhere("email", req.body.email)
         .then((result) => {
           if (result.length !== 0) { // username or email already exists in database
-            knex.column('username').select().from('users')
-              .where('username', req.body.username)
+            knex.column("username").select().from("users")
+              .where("username", req.body.username)
               .then((result) => {
                 if (result.length !== 0) { // username exists
                   req.session.un = true;
@@ -175,7 +167,6 @@ app.post("/registration", (req, res) => {
 
 
 /* ---------- LOGIN ---------- */
-// Login Page
 app.get("/login", (req, res) => {
 
   const currentUser = req.session.username;
@@ -207,9 +198,9 @@ app.post("/login", (req, res) => {
     res.redirect("/login");
   } else {
 
-    knex('users')
-      .where('username', req.body.username)
-      .andWhere('password', req.body.password)
+    knex("users")
+      .where("username", req.body.username)
+      .andWhere("password", req.body.password)
       .then((result) => {
         if (result.length !== 0) {
           // Sets cookie for the user
@@ -223,7 +214,6 @@ app.post("/login", (req, res) => {
         }
       })
       .catch((error) => console.log(error));
-
   }
 
 });
@@ -244,17 +234,10 @@ app.get("/resources", (req, res) => {
     res.redirect("/");
   }
 
-    let templateVars = { username: req.session.username,};
-    res.render("resources", templateVars);
-
+  let templateVars = { username: req.session.username,};
+  res.render("resources", templateVars);
 
 });
-
-/* ----------- ADD RESOURCE COMMENT ---------- */
-// app.post("/resources/comment", (req,res) => {
-//   console.log("hello");
-//   res.redirect("/");
-// });
 
 /* ----------- ADD NEW RESOURCE ---------- */
 app.get("/resources/new", (req, res) => {
@@ -282,9 +265,9 @@ app.get("/resources/new", (req, res) => {
 // Retrieves the screenshot from the database
 app.get("/resources/:id/screenshot", (req, res) => {
 
-  knex.select('screenshot')
-    .from('resources')
-    .where('id', req.params.id)
+  knex.select("screenshot")
+    .from("resources")
+    .where("id", req.params.id)
     .then((results) => {
 
         res.header('Content-Type', 'image/png');
@@ -294,7 +277,6 @@ app.get("/resources/:id/screenshot", (req, res) => {
 
 // Stores new resources into the database
 // and including screenshot taken by webshot
-// ***************** REMINDER: Add user_id to the new resource!!**********************
 function insertResourceTags(tagsArray, resourceId) {
   tagsArray.forEach((tag) => {
     knex("tags")
@@ -346,16 +328,14 @@ app.post("/resources", (req, res) => {
                           .where("url", req.body.url)
                           .then((result) => {
                             let tagsArray = [];
-                            typeof(req.body.tags) === 'string' ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
+                            typeof(req.body.tags) === "string" ? tagsArray.push(req.body.tags) : tagsArray = req.body.tags;
                             insertResourceTags(tagsArray, result[0].id);
                           }); // .then to use resource id
                       }); // .then to select resource id
                 }) // .then to insert new resource
 
                 .then(() => {res.redirect(`/resources/${req.session.id}`);});
-
             });
-
         }
 
       } else {
@@ -366,11 +346,8 @@ app.post("/resources", (req, res) => {
         };
         req.session.same = result[0].id;
         res.render("same_resource", templateVars);
-
       }
-
     });
-
 }); // POST resources
 
 
@@ -397,8 +374,6 @@ app.get("/resources/:id", (req, res) => {
         res.redirect(`/resources/${resultID[0].id}`);
       }
     });
-
-
 });
 
 /* ----------- UPDATE PROFILE ---------- */
@@ -427,10 +402,10 @@ app.put("/update_profile", (req, res) => {
           password: req.body.password
         })
         .then((result) => {
-            res.redirect("/resources")
+            res.redirect("/resources");
         })
         .catch((error) => {
-            console.log(error);
+            console.error(error);
         });
     } // else
 }); // Put profile_update
@@ -440,7 +415,6 @@ app.listen(PORT, () => {
 });
 
 /* ----------- 404 Page ---------- */
-
 app.use(function (req, res, next) {
   res.render("404");
-})
+});

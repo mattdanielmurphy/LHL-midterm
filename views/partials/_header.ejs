@@ -4,31 +4,33 @@
       <a id='brand' href="/"><img src="/images/MPS.png" width="175px"></a>
 
       <% if (username) { %>
-      <button class="mt-4 ml-auto navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-links-container" aria-controls="nav-links-container" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" deluminate_imagetype="unknown"></span>
-      </button>
-      <div class='ml-auto'>
-        <div class="form-inline">
-          <h6 class="mt-1 text-light">Logged in as <a href="/update_profile"><%= username %></a></h6>
-          <form action="/logout" method="POST" title="LOGOUT" class="mx-3 form-inline">
-            <button class="btn" type="submit">Log out</button>
-          </form>
-          <a class='nav-link button d-inline-block' href="/update_profile">Update profile</a>
-        </div>
-      </div>
-    </div>
 
-    <div class="row">
-      <div id='nav-links-container' class="collapse navbar-collapse">
-        <div class='container-fluid d-flex justify-content-center' id="nav-links">
-          <a href="/resources">All&nbsp;resources</a>
-          <a href="/resources/:id">My&nbsp;resources<span class="sr-only">(current)</span></a>
-          <a href="/resources/new">New&nbsp;resource</a>
+        <button class="mt-4 ml-auto navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-links-container" aria-controls="nav-links-container" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon" deluminate_imagetype="unknown"></span>
+        </button>
+        <div class='ml-auto'>
+          <div class="form-inline">
+            <h6 class="mt-1 text-light">Logged in as <a href="/update_profile"><%= username %></a></h6>
+            <form action="/logout" method="POST" title="LOGOUT" class="mx-3 form-inline">
+              <button class="btn" type="submit">Log out</button>
+            </form>
+            <a class='nav-link button d-inline-block' href="/update_profile">Update profile</a>
+          </div>
         </div>
       </div>
-    </div>
+
+      <div class="row">
+        <div id='nav-links-container' class="collapse navbar-collapse">
+          <div class='container-fluid d-flex justify-content-center' id="nav-links">
+            <a href="/resources">All&nbsp;resources</a>
+            <a href="/resources/:id">My&nbsp;resources<span class="sr-only">(current)</span></a>
+            <a href="/resources/new">New&nbsp;resource</a>
+          </div>
+        </div>
+      </div>
 
     <%  } else { %>
+
       <div class='ml-auto'>
           <div class="form-inline">
             <form action="/login" method="GET" title="Log in" class="d-inline nav-item mx-3">
@@ -38,6 +40,8 @@
           </div>
         </div>
       </div>
+
     <%  } %>
+
   </nav>
 </nav>

@@ -20,8 +20,6 @@ module.exports = (knex) => {
       .then((results) => {
         res.json(results);
       });
-
-
   }); //router.get end
 
   return router;

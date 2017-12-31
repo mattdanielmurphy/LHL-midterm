@@ -6,9 +6,6 @@ const router  = express.Router();
 module.exports = (knex) => {
 
   router.post("/", (req, res) => {
-    // console.log(req.body.text, "<-- text area content");
-    // console.log(req.session.id, "<-- user id");
-    // console.log(req.body.url, "<--backend url")
     knex('resources')
       .select('id')
       .where('url',req.body.url)
@@ -22,9 +19,9 @@ module.exports = (knex) => {
           .then((result) => {
           })
           .catch((err) => {
-            console.log(err)
+            console.error(err);
           });
-      })
+      });
   }); //router.get end
 
   return router;
