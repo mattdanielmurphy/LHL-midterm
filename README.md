@@ -15,11 +15,17 @@ Sign up and you will be able to see the entire database of resources. Registered
 8. Go to <http://localhost:8080/>
 
 ## Final Product
+All Resources:
 !["Screenshot of All Resources"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/all-resources.png)
+Landing Page:
 !["Screenshot of Landing Page"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/landing-page.png)
+Filtering Resources:
 !["Screenshot of Filtering Resources"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/filter-resource.png)
+My Resources:
 !["Screenshot of My Resources"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/my-resources.png)
+Update Profile:
 !["Screenshot of Update Profile"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/update-profile.png)
+Add New Resource:
 !["Screenshot of Add New Resource"](https://github.com/mandysGit/LHL-midterm/blob/master/docs/add-new-resource.png)
 
 ## Dependencies
