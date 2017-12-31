@@ -7,8 +7,13 @@ Sign up and you will be able to see the entire database of resources. Registered
 
 1. Clone this repository
 2. Install all dependencies using `npm install i` 
-3. Edit the .env file and put in your own secret keys `KEY1 = <secretkey>` `KEY2 = <secret key>`
-4. Install psql and `create database midterm`
+3. Create a .env file in the same directory and add: `DB_HOST=localhost`
+`DB_USER=labber`
+`DB_PASS=labber`
+`DB_NAME=midterm`
+`DB_PORT=5432`
+into the .env file. Also type in your own secret keys `KEY1 = <secretkey>` `KEY2 = <secret key>`
+4. Install psql and `create database midterm;`
 5. Migrate the latest database version to create the tables using `knex migrate:latest`
 6. To seed some sample data, run the command `knex seed:run`
 7. Start the web server using `npm run local`. The app will be served at <http://localhost:8080/>
