@@ -44,7 +44,6 @@ function createAndAppendResource(resources, cb) {
   let counter = 0;
 
   resources.forEach(function(resource) {
-    console.log(resource.id, '<- resourceId in createAndAppendResource')
     let resourceId = resource.id;
     // 1. get the resource ID to do an knex query on comments with that id!
     // 2. append the comments with that specific resource
@@ -71,6 +70,7 @@ function createAndAppendResource(resources, cb) {
       $.ajax({
         url: '/api/my-likes',
         data: {
+          like: true,
           likeValue: 1,
           url: $hrefShort
         },
@@ -82,6 +82,17 @@ function createAndAppendResource(resources, cb) {
     } else {
       $likeBtn.css('color', 'white')
       $likeBtn.removeClass('liked')
+
+      $.ajax({
+        url: '/api/my-likes',
+        data: {
+          like: false,
+          url: $hrefShort
+        },
+        method: 'POST'
+      }).then(function() {
+        console.log('Successfully Posted comment')
+      }); // ajax
     }
   });
 
