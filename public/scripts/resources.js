@@ -37,33 +37,6 @@ function createStarRatings(rating, clearRating) {
     });
   $(clearRating).tooltip();
 }
-let liked = false;
-function likeResource(likeResourceBtn, liked) {
-  $(likeResourceBtn).click(function() {
-    // let liked = false;
-    let $likeResourceBtn = $(this);
-
-    if(liked) {
-      $likeResourceBtn
-        .hover(
-          $likeResourceBtn
-            .css('color', 'white'),
-          $likeResourceBtn
-            .css('color', '#55595c')
-        );
-      liked = false;
-    } else {
-      $likeResourceBtn
-        .hover(
-          $likeResourceBtn
-            .css('color', 'white'),
-          $likeResourceBtn
-            .css('color', 'red')
-        );
-      liked = true;
-    }
-  });
-}
 
 // Access resource's DOM object after AJAX call.
 // It's asynchronous, so you can use jquery to access the newly added resource's DOM in here.
@@ -85,7 +58,20 @@ function createAndAppendResource(resources, cb) {
 
   // Add star ratings from font awesome
   createStarRatings('.rating','.clear-rating')
-  likeResource('.like-resource-btn')
+  // likeResource('.like-btn')
+
+  $('.like-btn').click(function() {
+    let $likeBtn = $(this)
+
+    if (!$likeBtn.hasClass('liked')) {
+      $likeBtn.css('color', 'red')
+      $likeBtn.addClass('liked')
+    } else {
+      $likeBtn.css('color', 'white')
+      $likeBtn.removeClass('liked')
+    }
+  });
+
 
     // TRY the AJAX call here!
     $('.submit-comment-btn').click(function() {
@@ -126,7 +112,7 @@ function createResourceElement(resource, counter) {
         <a class='d-block text-center' href='http://${resource.url}'><img class="img-thumbnail img-rounded" height='200px' src='/resources/${resource.id}/screenshot'></a>
 
         <div id='resource-options'>
-          <button class='like-resource-btn'>
+          <button class='like-btn'>
             <i class="fas fa-lg fa-heart"></i>
           </button>
         </div>
