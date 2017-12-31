@@ -58,14 +58,27 @@ function createAndAppendResource(resources, cb) {
 
   // Add star ratings from font awesome
   createStarRatings('.rating','.clear-rating')
-  // likeResource('.like-btn')
 
   $('.like-btn').click(function() {
     let $likeBtn = $(this)
+    let $hrefLong = $likeBtn.parent().siblings().attr('href')
+    let $hrefShort = ($hrefLong).replace('http://', '');
 
     if (!$likeBtn.hasClass('liked')) {
       $likeBtn.css('color', 'red')
       $likeBtn.addClass('liked')
+
+      $.ajax({
+        url: '/api/my-likes',
+        data: {
+          likeValue: 1,
+          url: $hrefShort
+        },
+        method: 'POST'
+      }).then(function() {
+        console.log('Successfully Posted comment')
+      }); // ajax
+
     } else {
       $likeBtn.css('color', 'white')
       $likeBtn.removeClass('liked')
@@ -91,7 +104,7 @@ function createAndAppendResource(resources, cb) {
         method: 'POST'
       }).then(function() {
         console.log('Successfully Posted comment')
-      });
+      }); // ajax
     }); // submit comment btn
 }
 
@@ -113,7 +126,7 @@ function createResourceElement(resource, counter) {
 
         <div id='resource-options'>
           <button class='like-btn'>
-            <i class="fas fa-lg fa-heart"></i>
+          <i class="fas fa-lg fa-heart"></i>
           </button>
         </div>
       </div>
