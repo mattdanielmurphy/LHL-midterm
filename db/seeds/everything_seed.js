@@ -63,25 +63,25 @@ exports.seed = function(knex, Promise) {
     }).then(()=> {
       return Promise.all([
         knex('comments').insert({
-          user_id: 1, resource_id: 1, created_at:'january 1, 2017', updated_at: 'february 1, 2017', content: 'SQL course was great!'
+          user_id: 1, resource_id: 1, created_at:'january 1, 2017', updated_at: 'february 1, 2017', content: 'So useful!'
         }),
         knex('comments').insert({
-          user_id: 2, resource_id: 2, created_at:'january 8, 2017', updated_at: 'february 2, 2017', content: 'Loved this book :)'
+          user_id: 2, resource_id: 2, created_at:'january 8, 2017', updated_at: 'february 2, 2017', content: 'Loved this :)'
         }),
         knex('comments').insert({
-          user_id: 3, resource_id: 3, created_at:'january 12, 2017', updated_at: 'february 3, 2017', content: 'Most articles were spot on. Great insight into the industry'
+          user_id: 3, resource_id: 3, created_at:'january 12, 2017', updated_at: 'february 3, 2017', content: 'Spot on. I learnt so much.'
         }),
         knex('comments').insert({
-          user_id: 4, resource_id: 4, created_at:'january 16, 2017', updated_at: 'february 4, 2017', content: "Can't believe I learnt Javascript so quickly with the Lynda tutorials! Videos were amazing."
+          user_id: 4, resource_id: 4, created_at:'january 16, 2017', updated_at: 'february 4, 2017', content: 'Use this. NOW!'
         }),
         knex('comments').insert({
-          user_id: 5, resource_id: 5, created_at:'january 19, 2017', updated_at: 'february 5, 2017', content: 'The video tutorials were so useful!'
+          user_id: 5, resource_id: 5, created_at:'january 19, 2017', updated_at: 'february 5, 2017', content: 'So goooood.'
         }),
         knex('comments').insert({
-          user_id: 4, resource_id: 6, created_at:'january 20, 2017', updated_at: 'february 6, 2017', content: 'Love love love Smashing magazine.'
+          user_id: 4, resource_id: 6, created_at:'january 20, 2017', updated_at: 'february 6, 2017', content: 'A+++++'
         }),
         knex('comments').insert({
-          user_id: 5, resource_id: 7, created_at:'january 26, 2017', updated_at: 'february 7, 2017', content: 'This book made learning html5 and css3 a breeze.'
+          user_id: 5, resource_id: 7, created_at:'january 26, 2017', updated_at: 'february 7, 2017', content: 'This made learning a breeze.'
         })
       ])
     }).then(()=> {
